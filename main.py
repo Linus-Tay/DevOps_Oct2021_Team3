@@ -13,6 +13,9 @@ while True:
     if choice=='1':
         print('New Game')
         break
+    elif (choice == '0'):
+        print('\nThank you for playing Simp City!')
+        break
     else:
         print('\nInvalid option, please try again!')
     
