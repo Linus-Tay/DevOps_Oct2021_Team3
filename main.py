@@ -120,6 +120,9 @@ while True:
         gameMenu(buildingPools)
     elif choice =='0':
         break
+    elif (choice == '0'):
+        print('\nThank you for playing Simp City!')
+        break
     else:
         print('\nInvalid option, please try again!')
     
