@@ -9,7 +9,7 @@ from numpy.core.numeric import roll
 #Variables
 loc_col = []
 loc_row = []
-inserted_Buildings = []
+
 
 #Functions
 
@@ -143,14 +143,14 @@ def insertBuilding(arr,bPool,bName,row,col,t):
         x = np.where(bPool['Building']==bName)
         index = x[0][0]
         bPool[index]['Copies']-=1
-        inserted_Buildings.insert(0, bName)
-        #checkCityScore(arr,bName)
-        return (bPool)
+        t +=1
+        
     elif t > 1:
         if checkCord(arr,row,col,loc_row[1],loc_col[1]) == True:
             mSwap(arr,bName,row,col,t)
-            inserted_Buildings.insert(0, bName)
-            #checkCityScore(arr,bName)
+            x = np.where(bPool['Building']==bName)
+            index = x[0][0]
+            bPool[index]['Copies']-=1 
     return (bPool)
 
 #---------------------end of Building functions----------------------------
