@@ -21,7 +21,48 @@ def mainMenu():
         print('[{}] {}'.format(i+1,option_list[i]))
     print('\n[0] Exit')
     
+# MenuMenu Option 2 - Load Saved Game
+def loadSavedGame():
+    try:
+        file=open('savedGame.csv','r')
+        mainCity=[]
+        lineList=[]
+        for line in file:
+            line=line.strip('\n')
+            lineList=list(line)
+            mainCity.append(lineList)
+        return mainCity
+    except Exception as e:
+        print('\nThere is no saved game.')
+        return ''
 
+# MenuMenu Option 2 - Load Saved Building Pools
+def loadSavedBuildingPools():
+    try:
+        file=open('savedBuildingPools.csv','r')
+        varList=[]
+        for line in file:
+            line=line.strip('\n')
+            bName = str(line[0:3])
+            bAmount = int(line[-1])
+            var = (bName, bAmount)
+            varList.append(var)
+        bPools = np.array(varList, dtype=[('Building','U5'),('Copies','<i4')])
+        return bPools
+    except Exception as e:
+        print('\nThere is no saved Building Pools.')
+        return ''
+
+# MenuMenu Option 2 - Load Saved Turns
+def loadSavedTurns():
+    try:
+        file=open('savedTurns.csv','r')
+        for line in file:
+            turn = int(line)
+        return turn
+    except Exception as e:
+        print('\nThere is no saved turns.')
+        return ''
 
 def viewCity(map):
     for i in map:
@@ -267,7 +308,12 @@ while True:
         gameMenu(buildingPools,playCity,turn=1)
     # Load Saved game
     elif (choice == '2'): 
-        pass
+        playCity = loadSavedGame()
+        if (playCity != ''):
+            buildingPools = loadSavedBuildingPools()
+            gameMenu(buildingPools,playCity,turn=loadSavedTurns())
+        else:
+            pass 
     # Exit Menu
     elif (choice == '0'):
         print('\nThank you for playing Simp City!\n')
