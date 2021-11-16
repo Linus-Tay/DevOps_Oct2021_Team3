@@ -313,7 +313,7 @@ while True:
             buildingPools = loadSavedBuildingPools()
             gameMenu(buildingPools,playCity,turn=loadSavedTurns())
         else:
-            pass
+            pass 
     # Exit Menu
     elif (choice == '0'):
         print('\nThank you for playing Simp City!\n')
