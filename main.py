@@ -169,6 +169,25 @@ def insertBuilding(arr,bPool,bName,row,col,t):
 
 #---------------------end of Building functions----------------------------
 
+# Game Option 5 - Save Game
+def saveGame(playCity,bPool,turn):
+    file=open('savedGame.csv','w')
+    for i in range(len(playCity)):
+        file.write(str(''.join(playCity[i])))
+        file.write('\n')
+    file.close()
+    file=open('savedBuildingPools.csv','w')
+    for i in range(len(bPool)):
+        file.write(str(bPool[i][0]))
+        file.write(',')
+        file.write(str(bPool[i][-1]))
+        file.write('\n')
+    file.close()
+    file=open('savedTurns.csv','w')
+    file.write(str(turn))
+    file.close()
+    print('\nGame saved!')
+
 # Game Menu
 def gameMenu(bPool,playCity,turn):
 
@@ -225,7 +244,8 @@ def gameMenu(bPool,playCity,turn):
                 pass
             # GameOption 5 - Save Game
             elif game_option =='5':
-                pass
+                saveGame(playCity,bPool,turn)
+                break
             # GameOption 0 - Exit To Main Menu
             elif game_option =='0':
                 return
