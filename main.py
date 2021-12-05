@@ -1,10 +1,6 @@
 # Imports
-import numpy as np
-import csv
-import copy
-from random import randrange
-from numpy.core.numeric import roll
-
+from Buildings import *
+from buildingPools import *
 
 #Variables
 
@@ -19,59 +15,15 @@ def mainMenu():
         print('[{}] {}'.format(i+1,option_list[i]))
     print('\n[0] Exit')
     
-#initiate building pools with 8 copies of each building for new game
-def initBuildingPools():
-    #Beach: 3 points if it is built on the left or right side of the city, 1 point otherwise.
-    #Factory: 1 point per factory in the city, up to a maximum of 4points for the first 4 factories. All subsequent factories only score 1 point each.
-    #House: if its beside a factory then it scores 1 point only. Other wise it scores 1 point for each adjacent house or shop, and 2 points for each adjacent beach
-    #Shop: scores 1 point per different type of building adjacent to it
-    #Highway: Scores 1 point per connected highway in the same row
-
-    #Structured array for buildings pool
-    buildingPools = np.array([('BCH',8),('FAC',8),('HSE',8),('SHP',8),('HWY',8)],
-                dtype=[('Building','U5'),('Copies','<i4')])
-    return buildingPools
-
-def viewCity(map):
-    for i in map:
-        print(*i)
-    print()
-
-
-#for loading of new game by reading start.txt which will load the city map
-def loadCity(file):
-    mainCity = []
-    with open(file,encoding='utf-8-sig',newline='') as csvfile:
-        spamreader = csv.reader(csvfile)
-        for x in spamreader:
-            col = []
-            for i in x:
-                if i == '*':
-                    i = ' '
-                col.append(i)
-            mainCity.append(col)  
-    playCity=copy.deepcopy(mainCity)
-    return playCity
-
-
-#randomnize 2 building for every turn
-def rollBuilding(bPool):
-
-    b = bPool[randrange(5)]['Building']
-    return b
-                
-def viewRemainingBuilds(bPool):
-    print('Buildings\tRemaining\n----------\t----------')
-    for i in range(len(bPool)):
-        print('{}\t\t{}'.format(bPool['Building'][i],bPool['Copies'][i]))
 
 # Game Menu
 def gameMenu(bPool,playCity,turn):
 
         while True:
-            # Get Random Building Options
-            b1 = rollBuilding(bPool)
-            b2 = rollBuilding(bPool)
+            if turn == 1:
+                # Get Random Building Options
+                b1 = rollBuilding(bPool)
+                b2 = rollBuilding(bPool)
 
             # Game Menu Options
             game_menu = [[1,'Build a ' + b1],[2,'Build a '+b2],
@@ -95,7 +47,23 @@ def gameMenu(bPool,playCity,turn):
 
             # GameOption 1 - Build A Building
             if game_option == '1':
-                pass
+                currentT = turn
+                x = np.where(bPool['Building'] == b1)
+                currBuild = bPool['Building'][x]
+                build_loc = input(str('Build Where? '))
+                
+                
+                turn = insertBuild(playCity,bPool,build_loc,currBuild,turn)
+                    
+            
+  
+                if currentT == turn:
+                    b1 = rollBuilding(bPool)
+                    b2 = rollBuilding(bPool)
+                else:
+                    b1 = rollBuilding(bPool)
+                    b2 = rollBuilding(bPool)
+            
             # GameOption 2 - Build A Building
             elif game_option == '2':
                pass
@@ -120,13 +88,14 @@ def gameMenu(bPool,playCity,turn):
 
 # Menu Menu
 while True:
+    turn = 1
     mainMenu()
     choice = input(str('\nEnter your choice? '))
     # Start New Game
     if (choice == '1'):    
         playCity = loadCity('start.csv')
         buildingPools = initBuildingPools()
-        gameMenu(buildingPools,playCity,turn=1)
+        gameMenu(buildingPools,playCity,turn)
     # Load Saved game
     elif (choice == '2'): 
         pass
