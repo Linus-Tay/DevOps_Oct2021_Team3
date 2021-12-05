@@ -36,13 +36,17 @@ def viewCity(map):
 
 
 def getBuildName(arrMap,x,y):
-
-    a = arrMap[x][y-1]
-    b = arrMap[x][y]
-    c = arrMap[x][y+1]
-    if a + b + c == "   ":
+    #print("len: {}".format(len(arrMap[0])))
+    #print("getting build name for x: {} y: {}".format(x,y))
+    if x == 0 or x == len(arrMap) or y > len(arrMap[0]) or y == 1:
         return None
-    return a + b + c
+    else:
+        a = arrMap[x][y-1]
+        b = arrMap[x][y]
+        c = arrMap[x][y+1]
+        if a + b + c == "   ":
+            return None
+        return a + b + c
 
 def checkExists(arrMap,x,y):
     if getBuildName(arrMap,x,y) == None:
@@ -85,16 +89,16 @@ def insertRowCol(playMap,userinput):
         return None
 
 def checkAdjBuild(arrMap,x,y):
-    
-   
-    if y+6 < len(arrMap[0]) or y-6 > len(arrMap[0]):
-        leftBuild = getBuildName(arrMap,x,y-6)
-        rightBuild = getBuildName(arrMap,x,y+6)
 
+    #print("Checking adj x:{} y:{}".format(x,y))
     topBuild = getBuildName(arrMap,x-2,y)
     btmBuild = getBuildName(arrMap,x+2,y)
-    
-    if topBuild != "   " or btmBuild != "   " or leftBuild != "   " or rightBuild != "   ":
+    leftBuild = getBuildName(arrMap,x,y-6)
+    rightBuild = getBuildName(arrMap,x,y+6)
+
+        
+    print("Left: {} Right: {} Up: {} Down: {}".format(leftBuild,rightBuild,topBuild,btmBuild))
+    if topBuild != None or btmBuild != None or leftBuild != None or rightBuild != None:
         return True
     return False
 
@@ -102,7 +106,8 @@ def checkAdjBuild(arrMap,x,y):
 # takes in row and col to check 
 # check if valid and return bool accordingly
 def validateXYInput(playMap,x,y):
-    #print("Checking row: {} and col: {} validity".format(x,y))
+    print("row: {} col: {}".format(row,col))
+    print("Checking row: {} and col: {} validity".format(x,y))
 
     old_row = row[1]
     old_col = col[1]
@@ -112,7 +117,7 @@ def validateXYInput(playMap,x,y):
         col.pop(0)
         return False
     elif old_col == y:
-        #print("Check #2 - Building on same column")
+        #print("Check #2 - Building on same Col")
         if x -2 == old_row or x + 2 == old_row:
             if checkExists(playMap,x,y) == False:
                 return True
@@ -122,11 +127,17 @@ def validateXYInput(playMap,x,y):
                 col.pop(0)
                 return False
         elif checkAdjBuild(playMap,x,y) == True:
+            #print("Check #2 - Adjacent building")
             return True
+        else:
+            row.pop(0)
+            col.pop(0)
+            return False
         
     elif old_row == x:
-        #print("Check #3 - Building on same row")
+        #print("Check #3 - Building on same Row")
         if y - 6 == old_col or y + 6 == old_col:
+            #print("Check #3 - checking col validity")
             if checkExists(playMap,x,y) == False:
                 return True
             else:
@@ -135,15 +146,25 @@ def validateXYInput(playMap,x,y):
                 col.pop(0)
                 return False
         elif checkAdjBuild(playMap,x,y) == True:
-            return True
-    elif x - 2 == old_row or x + 2 == old_row or y - 6 == old_col or y + 6 == old_col:
-        #print("Check #4 - checking for adjacent building")
-        if checkAdjBuild(playMap,x,y) == True:
+            #print("Check #3 - Adjacent building")
             return True
         else:
             row.pop(0)
             col.pop(0)
             return False
+    elif x - 2 == old_row or x + 2 == old_row or y - 6 == old_col or y + 6 == old_col:
+        #print("Check #4 - checking for adjacent building")
+        if checkAdjBuild(playMap,x,y) == True:
+            #print("Check #4 adjacent building true")
+            return True
+        else:
+            row.pop(0)
+            col.pop(0)
+            return False
+    else:
+        row.pop(0)
+        col.pop(0)
+        return False
 
 
 
@@ -153,13 +174,13 @@ def insertBuild(playMap, bPool, userinput, bName, t):
     new_col = x_y[1][0]
     #print("Turn: {}, Inserting row: {} col:{}".format(t,new_row,new_col))
     if t == 1:
-        print("1st insertion")
+        #print("1st insertion")
         playMap[new_row][new_col-1] = bName[0][0]
         playMap[new_row][new_col] = bName[0][1]
         playMap[new_row][new_col+1] = bName[0][2]
         t+=1
         bPool = deductBPoolCopies(bPool,bName)
-    elif t>1:
+    elif t >1:
         #print("Turn {} insertion".format(t))
         if validateXYInput(playMap,new_row,new_col) == True:
             playMap[new_row][new_col-1] = bName[0][0]
@@ -167,8 +188,7 @@ def insertBuild(playMap, bPool, userinput, bName, t):
             playMap[new_row][new_col+1] = bName[0][2]
             t+=1
             bPool = deductBPoolCopies(bPool,bName)
-        else:
-            return t
+    
 
     return t
         

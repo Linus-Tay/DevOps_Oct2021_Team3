@@ -1,4 +1,5 @@
 # Imports
+from copy import error
 from Buildings import *
 from buildingPools import *
 
@@ -18,12 +19,12 @@ def mainMenu():
 
 # Game Menu
 def gameMenu(bPool,playCity,turn):
-
-        while True:
-            if turn == 1:
+        if turn == 1:
                 # Get Random Building Options
                 b1 = rollBuilding(bPool)
                 b2 = rollBuilding(bPool)
+
+        while True:
 
             # Game Menu Options
             game_menu = [[1,'Build a ' + b1],[2,'Build a '+b2],
@@ -52,17 +53,18 @@ def gameMenu(bPool,playCity,turn):
                 currBuild = bPool['Building'][x]
                 build_loc = input(str('Build Where? '))
                 
-                
-                turn = insertBuild(playCity,bPool,build_loc,currBuild,turn)
-                    
-            
+                try:
+                    turn = insertBuild(playCity,bPool,build_loc,currBuild,turn)
+                except Exception as e:
+                    print(e)
+
+                   
+
   
-                if currentT == turn:
+                if turn> currentT:
                     b1 = rollBuilding(bPool)
                     b2 = rollBuilding(bPool)
-                else:
-                    b1 = rollBuilding(bPool)
-                    b2 = rollBuilding(bPool)
+             
             
             # GameOption 2 - Build A Building
             elif game_option == '2':
