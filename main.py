@@ -10,17 +10,17 @@ def mainMenu():
     for i in range(len(option_list)):
         print('[{}] {}'.format(i+1,option_list[i]))
     print('\n[0] Exit')
-    
-while True:
-    mainMenu()
-    choice = input(str('\nEnter your choice? '))
-    if choice=='1':
-        print("\noption 1")
-    elif choice =='2':
-        print("\noption 2")
-    elif (choice == '0'):
-        print('\nThank you for playing Simp City!')
-        break
-    else:
-        print('\nInvalid option, please try again!')
+    return True
+# while True:
+#     mainMenu()
+#     choice = input(str('\nEnter your choice? '))
+#     if choice=='1':
+#         print("\noption 1")
+#     elif choice =='2':
+#         print("\noption 2")
+#     elif (choice == '0'):
+#         print('\nThank you for playing Simp City!')
+#         break
+#     else:
+#         print('\nInvalid option, please try again!')
     
