@@ -50,30 +50,28 @@ Incremental Model is a process of software development where requirements are br
 
  
 #### When to use Incremental model?
-
 The incremental methodology is usually used when:
+* the requirements of the system are clearly understood.
 
-the requirements of the system are clearly understood.
+* demand for an early release of a product arises.
 
-demand for an early release of a product arises.
+* the engineering team are not very skilled or trained.
 
-the engineering team are not very skilled or trained.
+* high-risk features and goals are involved.
 
-high-risk features and goals are involved.
-
-the project comprises of a web application or the company is product-based.
+* the project comprises of a web application or the company is product-based.
 
 **Advantages**
-Throughout the development stages changes can be done.
+* Throughout the development stages changes can be done.
 
-Errors are easy to be identified.
+* Errors are easy to be identified.
 
-It is easier to test and debug during a smaller iteration.
+* It is easier to test and debug during a smaller iteration.
 
 **Disadvantages**
-Incremental models need good planning and design.
+* Incremental models need good planning and design.
 
-Needs a clear definition of the whole system before it can be broken down and built incrementally.
+* Needs a clear definition of the whole system before it can be broken down and built incrementally.
 
 **Fit to our Project**
 As stated above on when to use incremental models, it shows how this SDLC could be an option for our case study. This is because the requirements for the project are well understood and laid out. There are also guides on how the design of our program should work. In addition, making use of this SDLC would help ensure the quality of the Simp City game through the testing phase of each increment. 
