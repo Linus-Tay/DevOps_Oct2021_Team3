@@ -1,6 +1,7 @@
-# **Development Operations - Team 3**
+# Development Operations - Team 3
 This following README file give you more insight into our development and processes carried out for the development of the game 'Simp City'.
 
+---
 ## Our Team
 
 **Team Members:** Linus Tay, James Yu, Keith Ang, Gerald Tan, Zhen An
@@ -11,20 +12,29 @@ Team Roles:
 3. QA - Keith Ang
 4. Developers - Gerald Tan, Zhen An
 
+---
 ## Project Background
 The project is essentially a city-building strategy game is played over 16 turns. In each turn, you will build one of two randomly-selected buildings in your 4x4 city. In the first turn, you can build anywhere in the city. In subsequent turns, you can only build on squares that are connected to existing buildings. The other building that you did not build is discarded.
 
 > Each building scores in a different way and the objective of the game is to build a city that scores you as many points as possible.
 
+---
 ## Chosen Software Development Life Cycle (SDLC)
 
-
+---
 ## User Stories
 
+---
 ## Test Cases
 
+---
 ## SDLC Considerations
 
+We aim to cover some of the different methodologies that could possibly be used for our project on the city-building strategy game called “Simp City”. Within this case study, we were given the background, scope and project requirements for the game. Therefore, with the afore-mentioned information, we have decided to discuss and analyze 5 different Software Development Life Cycles (SDLCs) so that we can decide on which might be the most suitable or viable for the development of Simp City. 
+
+These 5 SDLCs include: Incremental, Iterative, V-Shaped, Waterfall, and Agile.
+
+---
 ### Incremental 
 **General Information**
 Incremental Model is a process of software development where requirements are broken down into multiple, simpler standalone modules of software development cycle. The development of incremental models is done in steps from analysis design, implementation, testing/verification, maintenance. For each increment, it passes through the requirements, design, coding and testing phases. Moreover, each subsequent release of the system adds function to the previous release until all designed functionality has been implemented.
@@ -70,8 +80,8 @@ As stated above on when to use incremental models, it shows how this SDLC could 
 
 However, splitting up the Simp City game releases into different increments might not make sense. This is because the game seems to rely on all features to be developed and accomplished in order to have a complete and functional game. Moreover, it had not been determined by the customer that the game should be developed incrementally. 
 
+---
 ## Extras
 
+---
 ### Connecting Jira to GitHub
-
-**
