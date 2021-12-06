@@ -8,9 +8,9 @@ Each building scores in a different way and the objective of the game is to buil
 
 ## Our Team
 
-** Team Members: Linus Tay, James Yu, Keith Ang, Gerald Tan, Zhen An **
+**Team Members: Linus Tay, James Yu, Keith Ang, Gerald Tan, Zhen An**
 
-** Team Roles **
+**Team Roles**
 1. Scrum Master - Linus Tay
 2. Technical Lead - James Yu
 3. QA - Keith Ang
