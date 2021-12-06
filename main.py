@@ -4,7 +4,7 @@ from Buildings import *
 from buildingPools import *
 from loadSavedGame import loadSavedBuildingPools, loadSavedGame, loadSavedTurns
 from saveGame import saveGame
-
+from calculateScore import calculateScore
 #Variables
 loc_col = []
 loc_row = []
@@ -73,6 +73,8 @@ def gameMenu(bPool,playCity,turn,isLoadGame):
                 viewRemainingBuilds(bPool)
             # GameOption 4 - View Current Score
             elif game_option == '4':
+                print('\n-------------------Current Score--------------------\n')
+                calculateScore(playCity)
                 pass
             # GameOption 5 - Save Game
             elif game_option =='5':
