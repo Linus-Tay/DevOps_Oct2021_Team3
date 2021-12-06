@@ -20,6 +20,7 @@ def calculateScore(playCity):
 
     totalScore = BCHScore + FACScore + HSEScore + SHPScore + HWPScore
     print("\nTotal score : ", totalScore)
+    return totalScore
     
 def mapBuildingsToCords(playCity):
     # Create Dictionary 
