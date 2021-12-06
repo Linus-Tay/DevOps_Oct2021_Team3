@@ -58,7 +58,7 @@ def gameMenu(bPool,playCity,turn):
                 except Exception as e:
                     print(e)
 
-                   
+        
 
   
                 if turn> currentT:

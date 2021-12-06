@@ -7,7 +7,10 @@ def initBuildingPools():
     return buildingPools
 
 def rollBuilding(bPool):
+   
     b = bPool[randrange(5)]['Building']
+    
+                    
     return b
 
 def deductBPoolCopies(bPool,bName):
