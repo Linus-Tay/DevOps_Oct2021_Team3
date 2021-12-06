@@ -181,23 +181,25 @@ def insertBuild(playMap, bPool, userinput, bName, t):
     #print("Turn: {}, Inserting row: {} col:{}".format(t,new_row,new_col))
     if t == 1:
         #print("1st insertion")
-        # playMap[new_row][new_col-1] = bName[0][0]
-        # playMap[new_row][new_col] = bName[0][1]
-        # playMap[new_row][new_col+1] = bName[0][2]
-        playMap[new_row][new_col-1] = bName[0]
-        playMap[new_row][new_col] = bName[1]
-        playMap[new_row][new_col+1] = bName[2]
+        playMap[new_row][new_col-1] = bName[0][0]
+        playMap[new_row][new_col] = bName[0][1]
+        playMap[new_row][new_col+1] = bName[0][2]
+        #For testing use the codes below
+        # playMap[new_row][new_col-1] = bName[0]
+        # playMap[new_row][new_col] = bName[1]
+        # playMap[new_row][new_col+1] = bName[2]
         t+=1
         bPool = deductBPoolCopies(bPool,bName)
     elif t >1:
         #print("Turn {} insertion".format(t))
         if validateXYInput(playMap,new_row,new_col) == True:
-            # playMap[new_row][new_col-1] = bName[0][0]
-            # playMap[new_row][new_col] = bName[0][1]
-            # playMap[new_row][new_col+1] = bName[0][2]            
-            playMap[new_row][new_col-1] = bName[0]
-            playMap[new_row][new_col] = bName[1]
-            playMap[new_row][new_col+1] = bName[2]
+            playMap[new_row][new_col-1] = bName[0][0]
+            playMap[new_row][new_col] = bName[0][1]
+            playMap[new_row][new_col+1] = bName[0][2]
+            #For testing use the codes below            
+            # playMap[new_row][new_col-1] = bName[0]
+            # playMap[new_row][new_col] = bName[1]
+            # playMap[new_row][new_col+1] = bName[2]
 
             t+=1
             bPool = deductBPoolCopies(bPool,bName)
