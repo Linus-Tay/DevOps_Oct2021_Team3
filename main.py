@@ -24,6 +24,14 @@ def mainMenu():
 
 # Game Menu
 def gameMenu(bPool,playCity,turn,isLoadGame):
+    if turn == 17:
+        # Diplay Final layout
+        print('\nFinal layout of Simp City:\n')
+        viewCity(playCity)
+        calculateScore(playCity)
+        print('\nThank you for playing Simp City!')
+        return
+    else:
         if turn == 1 or isLoadGame==True:
             # Get Random Building Options
             b1 = rollBuilding(bPool)
@@ -75,7 +83,6 @@ def gameMenu(bPool,playCity,turn,isLoadGame):
             elif game_option == '4':
                 print('\n-------------------Current Score--------------------\n')
                 calculateScore(playCity)
-                pass
             # GameOption 5 - Save Game
             elif game_option =='5':
                 saveGame(playCity,bPool,turn)
