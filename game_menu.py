@@ -1,6 +1,10 @@
 from Buildings import *
 from buildingPools import *
 
+def viewCity(map):
+    for i in map:
+        print(*i)
+    print()
 
 # Game Menu
 def gameMenu(bPool,playCity,turn):
