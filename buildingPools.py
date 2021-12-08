@@ -1,6 +1,7 @@
 import numpy as np
 from random import randrange
 
+
 def initBuildingPools():
     buildingPools = np.array([('BCH',8),('FAC',8),('HSE',8),('SHP',8),('HWY',8)],
             dtype=[('Building','U5'),('Copies','<i4')])
