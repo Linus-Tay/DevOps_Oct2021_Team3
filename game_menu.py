@@ -45,7 +45,7 @@ def gameMenu(bPool,playCity,turn):
                 try:
                     turn = insertBuild(playCity,bPool,build_loc,b1,turn)
                 except Exception as e:
-                    print(e)
+                    print("Invalid Input, Try again")
       
                 if turn> currentT:
                     b1 = rollBuilding(bPool)

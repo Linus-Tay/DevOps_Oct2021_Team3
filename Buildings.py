@@ -82,7 +82,6 @@ def verifyPosition(playMap,userinput):
             return None
     
     else:
-        print("#1 invalid input")
         return None
 
     # if validation pass then insert user input into row and col list
@@ -106,15 +105,13 @@ return: bool
 false being not able to build)
 '''
 def checkAdjBuild(arrMap,x,y):
-    #print("Checking adj x:{} y:{}".format(x,y))
+
     #using getbuildname function to return if there is any buildings
     topBuild = getBuildName(arrMap,x-2,y)
     btmBuild = getBuildName(arrMap,x+2,y)
     leftBuild = getBuildName(arrMap,x,y-6)
     rightBuild = getBuildName(arrMap,x,y+6)
 
-        
-    #print("Left: {} Right: {} Up: {} Down: {}".format(leftBuild,rightBuild,topBuild,btmBuild))
     # only if any of the buildings returns something then return true
     if topBuild != None or btmBuild != None or leftBuild != None or rightBuild != None:
         return True
@@ -130,12 +127,6 @@ param 2: userinput (coordinates to build new building)
 return: bool (true being able to build and false being not able to build)
 '''
 def validateXYInput(playMap,user_inputs):
-    print(user_inputs)
-    #for testing purposes:
-    # row = user_inputs[0]
-    # col = user_inputs[1]
-    #print("Checking row: {} and col: {} validity".format(x,y))
-    #print("row: {} col: {}".format(row,col))
 
     new_row = user_inputs[0][0]
     new_col = user_inputs[1][0]
@@ -144,11 +135,11 @@ def validateXYInput(playMap,user_inputs):
     
     #if user tries to build on the same location
     if old_row == new_row and old_col == new_col:
-        print("Check #1 - Building on same location")
+
         return False
     #if user tries to build on the same column
     elif old_col == new_col:
-        #print("Check #2 - Building on same Col")
+   
         # validate the row input
         if new_row -2 == old_row or new_row + 2 == old_row:
             #check if its building on existing building
@@ -157,40 +148,31 @@ def validateXYInput(playMap,user_inputs):
         
         #else check for any adjacent buildings
         elif checkAdjBuild(playMap,new_row,new_col) == True:
-            #print("Check #2 - Adjacent building")
+         
             return True
         else:
             return False
     #if user tries to build on the same row
     elif old_row == new_row:
-        #print("Check #3 - Building on same Row")
         #validate the column input
         if new_col - 6 == old_col or new_col + 6 == old_col:
-            #print("Check #3 - checking col validity")
             #check for any existing buildings
             if checkExistingBuilding(playMap,new_row,new_col) == False:
                 return True
            
         elif checkAdjBuild(playMap,new_row,new_col) == True:
-            print("Check #3 - Adjacent building")
             return True
-        # else:
 
-        #     return False
     #if user tries to build a different row and different column
     #check if its adjacent building
     elif new_row - 2 == old_row or new_row + 2 == old_row or new_col - 6 == old_col or old_col + 6 == old_col:
-        print("Check #4 - checking for adjacent building")
         if checkAdjBuild(playMap,new_row,new_col) == True:
-            print("Check #4 adjacent building true")
             return True
         else:
-
             return False
     elif checkAdjBuild(playMap,new_row,new_col) == True:
         return True
     else:
-        print("Check #5 Building diagonally False")
         return False
        
 
@@ -210,10 +192,7 @@ def insertBuild(playMap, bPool, userinput, bName, t):
     new_col = x_y[1][0]
 
     if t == 1:
-        # playMap[new_row][new_col-1] = bName[0][0]
-        # playMap[new_row][new_col] = bName[0][1]
-        # playMap[new_row][new_col+1] = bName[0][2]
-        #For testing use the codes below
+   
         playMap[new_row][new_col-1] = bName[0]
         playMap[new_row][new_col] = bName[1]
         playMap[new_row][new_col+1] = bName[2]
@@ -223,10 +202,6 @@ def insertBuild(playMap, bPool, userinput, bName, t):
         # if validates is true then insert the building
         # else removes the x and y from the row and col
         if validateXYInput(playMap,x_y) == True:
-            # playMap[new_row][new_col-1] = bName[0][0]
-            # playMap[new_row][new_col] = bName[0][1]
-            # playMap[new_row][new_col+1] = bName[0][2]
-            #For testing use the codes below            
             playMap[new_row][new_col-1] = bName[0]
             playMap[new_row][new_col] = bName[1]
             playMap[new_row][new_col+1] = bName[2]
