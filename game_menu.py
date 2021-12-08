@@ -38,12 +38,12 @@ def gameMenu(bPool,playCity,turn):
             # GameOption 1 - Build A Building
             if game_option == '1':
                 currentT = turn
-                x = np.where(bPool['Building'] == b1)
-                currBuild = bPool['Building'][x]
+                # x = np.where(bPool['Building'] == b1)
+                # currBuild = bPool['Building'][x]
                 build_loc = input(str('Build Where? '))
                 
                 try:
-                    turn = insertBuild(playCity,bPool,build_loc,currBuild,turn)
+                    turn = insertBuild(playCity,bPool,build_loc,b1,turn)
                 except Exception as e:
                     print(e)
       
@@ -55,12 +55,12 @@ def gameMenu(bPool,playCity,turn):
             # GameOption 2 - Build A Building
             elif game_option == '2':
                 currentT = turn
-                x = np.where(bPool['Building'] == b1)
-                currBuild = bPool['Building'][x]
+                # x = np.where(bPool['Building'] == b1)
+                # currBuild = bPool['Building'][x]
                 build_loc = input(str('Build Where? '))
                 
                 try:
-                    turn = insertBuild(playCity,bPool,build_loc,currBuild,turn)
+                    turn = insertBuild(playCity,bPool,build_loc,b2,turn)
                 except Exception as e:
                     print(e)
       

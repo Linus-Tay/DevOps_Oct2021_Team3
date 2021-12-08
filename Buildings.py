@@ -174,9 +174,9 @@ def validateXYInput(playMap,user_inputs):
         elif checkAdjBuild(playMap,new_row,new_col) == True:
             print("Check #3 - Adjacent building")
             return True
-        else:
+        # else:
 
-            return False
+        #     return False
     #if user tries to build a different row and different column
     #check if its adjacent building
     elif new_row - 2 == old_row or new_row + 2 == old_row or new_col - 6 == old_col or old_col + 6 == old_col:
@@ -210,26 +210,26 @@ def insertBuild(playMap, bPool, userinput, bName, t):
     new_col = x_y[1][0]
 
     if t == 1:
-        playMap[new_row][new_col-1] = bName[0][0]
-        playMap[new_row][new_col] = bName[0][1]
-        playMap[new_row][new_col+1] = bName[0][2]
+        # playMap[new_row][new_col-1] = bName[0][0]
+        # playMap[new_row][new_col] = bName[0][1]
+        # playMap[new_row][new_col+1] = bName[0][2]
         #For testing use the codes below
-        # playMap[new_row][new_col-1] = bName[0]
-        # playMap[new_row][new_col] = bName[1]
-        # playMap[new_row][new_col+1] = bName[2]
+        playMap[new_row][new_col-1] = bName[0]
+        playMap[new_row][new_col] = bName[1]
+        playMap[new_row][new_col+1] = bName[2]
         t+=1
         bPool = deductBPoolCopies(bPool,bName)
     elif t >1:
         # if validates is true then insert the building
         # else removes the x and y from the row and col
         if validateXYInput(playMap,x_y) == True:
-            playMap[new_row][new_col-1] = bName[0][0]
-            playMap[new_row][new_col] = bName[0][1]
-            playMap[new_row][new_col+1] = bName[0][2]
+            # playMap[new_row][new_col-1] = bName[0][0]
+            # playMap[new_row][new_col] = bName[0][1]
+            # playMap[new_row][new_col+1] = bName[0][2]
             #For testing use the codes below            
-            # playMap[new_row][new_col-1] = bName[0]
-            # playMap[new_row][new_col] = bName[1]
-            # playMap[new_row][new_col+1] = bName[2]
+            playMap[new_row][new_col-1] = bName[0]
+            playMap[new_row][new_col] = bName[1]
+            playMap[new_row][new_col+1] = bName[2]
             t+=1
             bPool = deductBPoolCopies(bPool,bName)
         
