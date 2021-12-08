@@ -68,7 +68,7 @@ def verifyPosition(playMap,userinput):
     # locate col and row index 
     # insert into row and col 
     # return row and col
-    userInput = False
+    userInput_valid = False
     x = userinput[0]
     y = userinput[1]
   
@@ -82,7 +82,7 @@ def verifyPosition(playMap,userinput):
             return None
     
     else:
-        print("#1 invalid input")
+        print("invalid input, Please try again")
         return None
 
     # if validation pass then insert user input into row and col list
@@ -130,7 +130,7 @@ param 2: userinput (coordinates to build new building)
 return: bool (true being able to build and false being not able to build)
 '''
 def validateXYInput(playMap,user_inputs):
-    print(user_inputs)
+    #print(user_inputs)
     #for testing purposes:
     # row = user_inputs[0]
     # col = user_inputs[1]
