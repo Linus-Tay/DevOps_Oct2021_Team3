@@ -4,8 +4,8 @@ from Buildings import *
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+
 sample_map = loadCity('start.csv')
-#sample_map = loadCity('start.csv')
 bPool = initBuildingPools()
 x = np.where(bPool['Building']=="BCH")
 index = x[0][0]
@@ -13,8 +13,7 @@ testBuild = bPool[index]
 
 #this class contains the tests cases mainly regarding to inputs validation
 class testbuildings_Inputs(unittest.TestCase):
-    
-     # test case for when user tries to give an invalid input
+    # test case for when user tries to give an invalid input
     # such as wrong format, more than 2 letter or number-letter
     def testUserInput_Invalid(self):
         self.assertEqual(verifyPosition(sample_map,"1A"),(None))
@@ -42,9 +41,9 @@ class testbuildings_Inputs(unittest.TestCase):
        
     
 
-# #this class contains the tests cases mainly regarding to buildings validation
+#this class contains the tests cases mainly regarding to buildings validation
 
-# class testbuildings_placeBuilds():
+class testbuildings_placeBuilds(unittest.TestCase):
 
     # test case for when user tries to insert building on the same row but different column
     # such as A1 -> B1 -> C1
@@ -82,8 +81,8 @@ class testbuildings_Inputs(unittest.TestCase):
         self.assertEqual(getBuildName(sample_map,6,10),None)
 
        
-# # class for test cases when user tries to build adjacent
-# class test_Buildings_AdjBuilds(unittest.TestCase):
+# class for test cases when user tries to build adjacent
+class test_Buildings_AdjBuilds(unittest.TestCase):
 
 #     #test cases for when user tries to build adjacently
 #     # on the same row
