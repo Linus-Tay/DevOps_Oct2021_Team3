@@ -1,8 +1,7 @@
-import numpy as np
-from random import randrange
-from numpy.core.numeric import roll
-
-#Functions
+# Imports
+from copy import error
+from game_menu import *
+#Variables
 def mainMenu():
     print('\nWelcome, mayor of Simp City!')
     print('----------------------------')
@@ -10,18 +9,21 @@ def mainMenu():
     for i in range(len(option_list)):
         print('[{}] {}'.format(i+1,option_list[i]))
     print('\n[0] Exit')
-    choice = input(str('\nEnter your choice? '))
-    if choice =='1':
-        print("\noption 1")
-    elif choice =='2':
-        print("\noption 2")
-    elif (choice == '0'):
-        print('\nThank you for playing Simp City!')
-        return False
-    else:
-        print('\nInvalid option, please try again!')
 
-#MainMenu
+# Menu Menu
 while True:
-    if mainMenu() == False:
+    turn = 1
+    mainMenu()
+    choice = input(str('\nEnter your choice? '))
+    # Start New Game
+    if (choice == '1'):    
+        playCity = loadCity('start.csv')
+        buildingPools = initBuildingPools()
+        gameMenu(buildingPools,playCity,turn)
+    # Load Saved game
+    elif (choice == '2'): 
+        pass
+    # Exit Menu
+    elif (choice == '0'):
+        print('\nThank you for playing Simp City!\n')
         break
