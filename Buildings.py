@@ -35,8 +35,6 @@ def loadCity(file):
 
 
 def getBuildName(arrMap,x,y):
-    #print("len: {}".format(len(arrMap[0])))
-    #print("getting build name for x: {} y: {}".format(x,y))
     if x == 0 or x == len(arrMap) or y > len(arrMap[0]) or y <0:
         return None
     else:
@@ -69,20 +67,25 @@ def verifyPosition(playMap,userinput):
     # insert into row and col 
     # return row and col
     userInput_valid = False
+    if len(userinput) != 2:
+        raise(ValueError())
+
     x = userinput[0]
     y = userinput[1]
-  
+    
     # validation check
-    row_check = ["A","B","C","D"]
-    if x.isalpha() and y.isnumeric() and int(y) >= 1 and int(y) < len(playMap[0]) and len(userinput) <=2:
-        if x.upper() in row_check:
+    col_check = ["A","B","C","D"]
+    if x.isalpha() and y.isnumeric() and int(y) >= 1 and int(y) < len(playMap[0]):
+        if x.upper() in col_check:
             userInput_valid = True
         else:
-            print("input column is invalid")
-            return None
+            # invalid input such as "Z1", "P4"
+            raise ValueError()    
     
     else:
-        return None
+        # any invalid input
+        raise ValueError()
+        
 
     # if validation pass then insert user input into row and col list
     if userInput_valid == True:
@@ -134,11 +137,12 @@ def validateXYInput(playMap,user_inputs):
     old_col = user_inputs[1][1]
     
     #if user tries to build on the same location
-    if old_row == new_row and old_col == new_col:
-
-        return False
+    # if checkExistingBuilding(playMap,new_row,new_col) == True:
+    #     print("123")
+    #     #print("Trying to build on existing building, please try again!")
+    #     return False    
     #if user tries to build on the same column
-    elif old_col == new_col:
+    if old_col == new_col:
    
         # validate the row input
         if new_row -2 == old_row or new_row + 2 == old_row:
@@ -201,6 +205,11 @@ def insertBuild(playMap, bPool, userinput, bName, t):
     elif t >1:
         # if validates is true then insert the building
         # else removes the x and y from the row and col
+        if checkExistingBuilding(playMap,new_row,new_col) == True:
+            #print("Building already exists, please try again")
+            row.pop(0)
+            col.pop(0)
+            raise NameError()
         if validateXYInput(playMap,x_y) == True:
             playMap[new_row][new_col-1] = bName[0]
             playMap[new_row][new_col] = bName[1]
@@ -209,6 +218,7 @@ def insertBuild(playMap, bPool, userinput, bName, t):
             bPool = deductBPoolCopies(bPool,bName)
         
         elif validateXYInput(playMap,x_y) == False:
+            print("Your build is invalid,, please try to build adjacent to existing building!")
             row.pop(0)
             col.pop(0)
 

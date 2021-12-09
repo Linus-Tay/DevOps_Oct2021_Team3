@@ -15,10 +15,15 @@ testBuild = bPool[index]
 class testbuildings_Inputs(unittest.TestCase):
     # test case for when user tries to give an invalid input
     # such as wrong format, more than 2 letter or number-letter
+    # using assertraise to check for value error
     def testUserInput_Invalid(self):
-        self.assertEqual(verifyPosition(sample_map,"1A"),(None))
-        self.assertEqual(verifyPosition(sample_map,"1A12"),(None)) 
-        self.assertEqual(verifyPosition(sample_map,"Z1"),(None))
+        with self.assertRaises(ValueError):
+            verifyPosition(sample_map,"1A")
+        with self.assertRaises(ValueError):
+            verifyPosition(sample_map,"Z1")
+        with self.assertRaises(ValueError):
+            verifyPosition(sample_map,"1")
+
         
     #test case to validate user's x y input to check if the next input x and y is valid
     def testValidate_ValidInput(self):
@@ -67,6 +72,10 @@ class testbuildings_placeBuilds(unittest.TestCase):
         self.assertEqual(insertBuild(sample_map,bPool,"B4","BCH",1),2)
         self.assertEqual(insertBuild(sample_map,bPool,"A1","BCH",2),2)
         self.assertEqual(insertBuild(sample_map,bPool,"D1","BCH",2),2)
+
+        with self.assertRaises(NameError):
+            self.assertEqual(insertBuild(sample_map,bPool,"B4","BCH",2),2)
+        
     
 
     #test case for when user tries to insert on an existing building
@@ -74,6 +83,8 @@ class testbuildings_placeBuilds(unittest.TestCase):
     def testExistingBuilding(self):
         self.assertFalse(checkExistingBuilding(sample_map,6,10))
         self.assertTrue(checkExistingBuilding(sample_map,2,10))
+        self.assertTrue(checkExistingBuilding(sample_map,2,4))
+        
     
     # #test case internally for when retrieving building names from the play map
     def test_getBuildName(self):
@@ -106,6 +117,6 @@ class test_Buildings_AdjBuilds(unittest.TestCase):
 
 
        
-if __name__ == '__main__':
-    print(testBuild)
-    unittest.main()
+# if __name__ == '__main__':
+#     print(testBuild)
+#     unittest.main()
