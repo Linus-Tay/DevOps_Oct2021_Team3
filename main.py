@@ -2,9 +2,6 @@
 from copy import error
 from game_menu import *
 #Variables
-
-
-
 def mainMenu():
     print('\nWelcome, mayor of Simp City!')
     print('----------------------------')
@@ -12,7 +9,6 @@ def mainMenu():
     for i in range(len(option_list)):
         print('[{}] {}'.format(i+1,option_list[i]))
     print('\n[0] Exit')
-
 
 # Menu Menu
 while True:
@@ -31,7 +27,3 @@ while True:
     elif (choice == '0'):
         print('\nThank you for playing Simp City!\n')
         break
-    # Validate for Invalid Input
-    else:
-        print('\nInvalid option, please try again!')
-    
