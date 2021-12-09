@@ -21,8 +21,10 @@ class testbuildings_Inputs(unittest.TestCase):
             verifyPosition(sample_map,"1A")
         with self.assertRaises(ValueError):
             verifyPosition(sample_map,"Z1")
-        with self.assertRaises(ValueError):
+        with self.assertRaises(IndexError):
             verifyPosition(sample_map,"1")
+        with self.assertRaises(IndexError):
+            verifyPosition(sample_map,"")
 
         
     #test case to validate user's x y input to check if the next input x and y is valid

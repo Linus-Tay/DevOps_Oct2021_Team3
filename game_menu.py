@@ -9,9 +9,10 @@ def viewCity(map):
 # Game Menu
 def gameMenu(bPool,playCity,turn):
         if turn == 1:
+                #rand = gen_pool()
                 # Get Random Building Options
-                b1 = rollBuilding(bPool)
-                b2 = rollBuilding(bPool)
+                b1 = bPool[gen_pool()][0]
+                b2 = bPool[gen_pool()][0]
 
         while True:
 
@@ -44,14 +45,15 @@ def gameMenu(bPool,playCity,turn):
                     turn = insertBuild(playCity,bPool,build_loc,b1,turn)
 
                 except ValueError:
-                    print("Invalid input given, please try a letter number position within the city map!")
+                    print("Invalid Position! Please try again")
                 except NameError:
-                    print("Building already exists, please try a different input")
+                    print("Position Taken! Please try again")
+                except IndexError:
+                    print("Invalid Input! Please try again")
       
                 if turn> currentT:
-                    b1 = rollBuilding(bPool)
-                    b2 = rollBuilding(bPool)
-             
+                    b1 = bPool[gen_pool()][0]
+                    b2 = bPool[gen_pool()][0]
             
             # GameOption 2 - Build A Building
             elif game_option == '2':
@@ -65,8 +67,8 @@ def gameMenu(bPool,playCity,turn):
                     print("Invalid input given, please try a letter number input again")
       
                 if turn> currentT:
-                    b1 = rollBuilding(bPool)
-                    b2 = rollBuilding(bPool)
+                    b1 = bPool[gen_pool()][0]
+                    b2 = bPool[gen_pool()][0]
             # GameOption 3 - View Remaining Building Available
             elif game_option == '3':
                 viewRemainingBuilds(bPool)

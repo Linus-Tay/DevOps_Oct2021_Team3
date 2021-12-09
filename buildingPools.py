@@ -1,3 +1,4 @@
+import random
 import numpy as np
 from random import randrange
 
@@ -7,9 +8,12 @@ def initBuildingPools():
             dtype=[('Building','U5'),('Copies','<i4')])
     return buildingPools
 
-def rollBuilding(bPool):
-    b = bPool[randrange(5)]['Building']
-    return b
+# def rollBuilding(bPool):
+#     b = bPool[randrange(5)]['Building']
+#     return b
+
+def gen_pool():
+    return random.randint(0,4)
 
 def deductBPoolCopies(bPool,bName):
     x = np.where(bPool['Building']==bName)
