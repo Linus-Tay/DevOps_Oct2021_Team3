@@ -16,7 +16,7 @@ def gameMenu(bPool,playCity,turn,b1,b2):
         print('\n-----------------------Turn {}-----------------------\n'.format(turn))
 
         # Display City
-        # viewCity(playCity)
+        viewCity(playCity)
 
         # Display Game Menu Options
         for i in range(len(game_menu)):

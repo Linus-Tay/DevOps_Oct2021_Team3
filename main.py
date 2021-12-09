@@ -15,6 +15,7 @@ def mainMenu():
     choice = input(str('\nEnter your choice? '))
     # Start New Game
     if (choice == '1'):    
+        print("Option 1 - Start New Save Game")
         playCity = loadCity('start.csv')
         buildingPools = initBuildingPools()
         # Get Random Building Options
@@ -24,7 +25,7 @@ def mainMenu():
             
     # Load Saved game
     elif (choice == '2'): 
-        pass
+        print("Option 2 - Load Save Game")
     # Exit Menu
     elif (choice == '0'):
         print('\nThank you for playing Simp City!\n')

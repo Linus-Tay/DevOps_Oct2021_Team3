@@ -16,6 +16,13 @@ def loadCity(file):
     return playCity
 
 def viewCity(map):
+    # print(map)
+    city=[]
     for i in map:
-        print(*i)
-    print()
+        string = ''
+        for char in i:
+            string += char
+        city.append(string)
+    for i in city:
+        print(i)
+    print('')

@@ -17,12 +17,7 @@ def mock_input_output_start():
     print_values = []
 
     builtins.input = mock_input
-    # builtins.print = lambda s: print_values if (s.length()>2):print("e") else (print_values.append(s))
-    try:
-        builtins.print = lambda s: print_values.append(s)
-    except:
-        
-        builtins.print = lambda s: print_values.append(s)
+    builtins.print = lambda s: print_values.append(s)
 
 def get_display_output():
     global print_values
