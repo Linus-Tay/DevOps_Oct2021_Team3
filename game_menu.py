@@ -3,7 +3,7 @@ from buildingPools import *
 
 def viewCity(map):
     for i in map:
-        print(*i)
+        print("".join(i))
     print()
 
 # Game Menu
@@ -45,11 +45,11 @@ def gameMenu(bPool,playCity,turn):
                     turn = insertBuild(playCity,bPool,build_loc,b1,turn)
 
                 except ValueError:
-                    print("Invalid Position! Please try again")
+                    print("Invalid Position! Please try again.")
                 except NameError:
-                    print("Position Taken! Please try again")
+                    print("Position Taken! Please try again.")
                 except IndexError:
-                    print("Invalid Input! Please try again")
+                    print("Invalid Input! Please try again.")
       
                 if turn> currentT:
                     b1 = bPool[gen_pool()][0]
@@ -63,8 +63,13 @@ def gameMenu(bPool,playCity,turn):
                 
                 try:
                     turn = insertBuild(playCity,bPool,build_loc,b2,turn)
-                except Exception as e:
-                    print("Invalid input given, please try a letter number input again")
+
+                except ValueError:
+                    print("Invalid Position! Please try again.")
+                except NameError:
+                    print("Position Taken! Please try again.")
+                except IndexError:
+                    print("Invalid Input! Please try again.")
       
                 if turn> currentT:
                     b1 = bPool[gen_pool()][0]
@@ -82,6 +87,6 @@ def gameMenu(bPool,playCity,turn):
             elif game_option =='0':
                 return
             else:
-                print("\nInvalid option, please try again")
+                print("\nInvalid option, please try again.")
 
         

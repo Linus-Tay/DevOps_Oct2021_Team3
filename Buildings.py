@@ -68,14 +68,14 @@ def verifyPosition(playMap,userinput):
     # return row and col
     userInput_valid = False
     if len(userinput) != 2:
-        raise(IndexError())
+        raise(ValueError())
 
     x = userinput[0]
     y = userinput[1]
     
     # validation check
     col_check = ["A","B","C","D"]
-    if x.isalpha() and y.isnumeric() and int(y) >= 1 and int(y) <=4 :
+    if x.isalpha() and y.isnumeric() and int(y) >= 1 and int(y) < len(playMap[0]):
         if x.upper() in col_check:
             userInput_valid = True
         else:
@@ -136,6 +136,11 @@ def validateXYInput(playMap,user_inputs):
     old_row = user_inputs[0][1]
     old_col = user_inputs[1][1]
     
+    #if user tries to build on the same location
+    # if checkExistingBuilding(playMap,new_row,new_col) == True:
+    #     print("123")
+    #     #print("Trying to build on existing building, please try again!")
+    #     return False    
     #if user tries to build on the same column
     if old_col == new_col:
    
@@ -147,6 +152,7 @@ def validateXYInput(playMap,user_inputs):
         
         #else check for any adjacent buildings
         elif checkAdjBuild(playMap,new_row,new_col) == True:
+         
             return True
         else:
             return False
@@ -196,11 +202,11 @@ def insertBuild(playMap, bPool, userinput, bName, t):
         playMap[new_row][new_col+1] = bName[2]
         t+=1
         bPool = deductBPoolCopies(bPool,bName)
-        print(row,col)
     elif t >1:
         # if validates is true then insert the building
         # else removes the x and y from the row and col
         if checkExistingBuilding(playMap,new_row,new_col) == True:
+            #print("Building already exists, please try again")
             row.pop(0)
             col.pop(0)
             raise NameError()
@@ -212,7 +218,7 @@ def insertBuild(playMap, bPool, userinput, bName, t):
             bPool = deductBPoolCopies(bPool,bName)
         
         elif validateXYInput(playMap,x_y) == False:
-            print("You must build next to an existing building!")
+            print("Your build is invalid,, please try to build adjacent to existing building!")
             row.pop(0)
             col.pop(0)
 
