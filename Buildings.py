@@ -68,7 +68,7 @@ def verifyPosition(playMap,userinput):
     # return row and col
     userInput_valid = False
     if len(userinput) != 2:
-        raise(ValueError())
+        raise(IndexError())
 
     x = userinput[0]
     y = userinput[1]
