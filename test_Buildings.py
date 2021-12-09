@@ -1,10 +1,14 @@
 from random import sample
 import unittest
-from Buildings import *
+from unittest import mock
+from buildings import *
 import warnings
+from city import loadCity
 warnings.simplefilter(action='ignore', category=FutureWarning)
-
-
+import buildingPools
+import numpy as np
+import builtins
+import unittest.mock
 sample_map = loadCity('start.csv')
 bPool = initBuildingPools()
 x = np.where(bPool['Building']=="BCH")
@@ -103,9 +107,29 @@ class test_Buildings_AdjBuilds(unittest.TestCase):
         self.assertTrue(validateXYInput(sample_map,([6,8,8],[16,22,16])))
         # #different col different row adjacent build
         self.assertTrue(validateXYInput(sample_map,([8,6,8,8],[10,16,22,16])))
+    
+    def test(self):
+        with mock.patch('buildingPools.rollBuilding',side_effect=['Data1']):
+            self.assertEqual(buildingPools.rollBuilding(),"Data1")
+
+
+@mock.patch('builtins.print')
+def test_viewRemainingBuilds(self):
+    # The actual test
+    bPool = np.array([('BCH',8),('FAC',8),('HSE',8),('SHP',8),('HWY',8)],
+        dtype=[('Building','U5'),('Copies','<i4')])
+    print_values = []
+    builtins.print = lambda s: print_values.append(s)
+    buildingPools.viewRemainingBuilds(bPool)
+    assert print_values == ['Buildings\tRemaining\n----------\t----------',
+                            'BCH\t\t8', 
+                            'FAC\t\t8', 
+                            'HSE\t\t8', 
+                            'SHP\t\t8', 
+                            'HWY\t\t8']
 
 
        
-if __name__ == '__main__':
-    print(testBuild)
-    unittest.main()
+# # if __name__ == '__main__':
+# #     print(testBuild)
+# #     unittest.main()
