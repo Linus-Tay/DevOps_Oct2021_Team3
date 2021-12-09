@@ -16,6 +16,10 @@ def gameMenu(bPool,playCity,turn):
 
         while True:
 
+            if turn == 17:
+                print("You have completed the game, but we have yet to develop the scoring system.")
+                return
+
             # Game Menu Options
             game_menu = [[1,'Build a ' + b1],[2,'Build a '+b2],
             [3,'See remaining buildings'],[4,'See Current Score'],
