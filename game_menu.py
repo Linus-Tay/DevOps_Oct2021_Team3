@@ -22,7 +22,7 @@ def gameMenu(bPool,playCity,turn):
             [5,'Save Game'],[0,'Exit to main menu']]
             
             # Diplay Turn
-            print('\n-----------------------Turn {}-----------------------\n'.format(turn))
+            print('\nTurn {}'.format(turn))
 
             # Display City
             viewCity(playCity)
