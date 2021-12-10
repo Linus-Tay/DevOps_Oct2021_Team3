@@ -19,3 +19,5 @@ class test_City(unittest.TestCase):
                                 "4|     |     |     |     |",
                                 " +-----+-----+-----+-----+",
                                 '']
+    def test_View_City_With_Invalid_FIle(self):
+        self.assertFalse(city.loadCity('fake.txt'))
