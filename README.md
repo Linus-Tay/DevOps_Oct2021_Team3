@@ -19,13 +19,15 @@ Team Roles:
 > Each building scores in a different way and the objective of the game is to build a city that scores you as many points as possible.
 
 ---
-## Chosen Software Development Life Cycle (SDLC)
+## Our Approach
 
----
-## User Stories
+The Simp City project will be split into 3 sprints over a period of 2-3 weeks each. You can access all the tasks ever created by clicking here or check our our backlogs over here. 
 
----
-## Test Cases
+Sprint 1 (1 Nov – 14 Nov) - The goal of this sprint is to set up the test cases for all the features and carry out development of the fundamental features of Simp City. The fundamental features include: ‘Start new game’, ‘buildings’, ‘menu’, ‘ability to see remaining available buildings for game'.
+
+Sprint 2 (15 Nov – 5 Dec) - To document brief use cases for the benefit of QA, write comments for development code and carry out unit testing and system testing on the development code (especially the features developed in the previous sprint).
+
+Sprint 3 (6 Dec – 19 Dec) - To set up a CI/CD workflow and complete development while carrying out unit testing and system testing for the remaining features
 
 ---
 ## SDLC Considerations
@@ -33,6 +35,16 @@ Team Roles:
 We aim to cover some of the different methodologies that could possibly be used for our project on the city-building strategy game called “Simp City”. Within this case study, we were given the background, scope and project requirements for the game. Therefore, with the afore-mentioned information, we have decided to discuss and analyze 5 different Software Development Life Cycles (SDLCs) so that we can decide on which might be the most suitable or viable for the development of Simp City. 
 
 These 5 SDLCs include: Incremental, Iterative, V-Shaped, Waterfall, and Agile.
+
+### Overall Comparison
+
+Through inspection and analysis, we have determined that the Incremental and Iterative SDLCs are not ideal for our project. For Incremental model, splitting up the Simp City game releases into different increments does not make sense. This is because the game seems to rely on all features to be developed and accomplished in order to have a complete and functional game. Moreover, it had not been determined by the customer that the game should be developed and released incrementally. As for the Iterative model, we already have a set of requirements defined and given. This is not in line with the customer evaluation and feedback based model. Additionally, the Iterative model is best suited for bigger projects with a big set of requirements so that it can be broken down into portions.
+
+Furthermore, we also have determined that the V-shaped and Waterfall model would not be that suitable because they are highly specific and disciplined SDLCs. They are not backtrack friendly and as a new team that has no experienced members, it is not a wise idea to follow these SDLCs. Moreover, because they are highly disciplined, it will not be easy to implement any changes or features should they come along.
+
+Therefore, we decided on Agile. By making use of agile, we would be able to make use of Scrum to provide deliverables through sprints. By following this methodology, we would also be able to ensure that the deliverables are thoroughly validated and tested, assuring quality. Making use Scrum would also help facilitate constant communication and transparency between team members. And in essence, we are developing a game, this means there are more than likely going to be additional features added to it. Agile welcomes changes, uses working software as a primary measure of progress and, adopts reflective processes. Hence, being flexible, able to provide deliverable products frequently and having constant communication and reflection is an excellent for both this project and a new project team.
+
+In the following sections, you can see how we reached this overall comparison. Below is the record of the research and analysis that we did on each and every model as well as their fit to our project.
 
 ### Incremental 
 #### General Information 
