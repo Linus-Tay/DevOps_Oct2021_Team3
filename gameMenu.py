@@ -28,15 +28,15 @@ def gameMenu(bPool,playCity,turn,b1,b2):
         # GameOption 1 - Build A Building
         if game_option == '1':
             currentT = turn
-            # x = np.where(bPool['Building'] == b1)
-            # currBuild = bPool['Building'][x]
             build_loc = input(str('Build Where? '))
             
             try:
                 turn = insertBuild(playCity,bPool,build_loc,b1,turn)
-            except Exception as e:
-                print("Invalid Input, Try again")
-    
+            except ValueError:
+                print("Invalid Position! Please try again.")
+            except IndexError:
+                print("Invalid Input! Please try again.")
+                
             if turn> currentT:
                 b1 = rollBuilding(bPool)
                 b2 = rollBuilding(bPool)
@@ -45,19 +45,21 @@ def gameMenu(bPool,playCity,turn,b1,b2):
         # GameOption 2 - Build A Building
         elif game_option == '2':
             currentT = turn
-            # x = np.where(bPool['Building'] == b1)
-            # currBuild = bPool['Building'][x]
             build_loc = input(str('Build Where? '))
             
             try:
-                turn = insertBuild(playCity,bPool,build_loc,turn)
-            except:
-                print("Invalid Input, Please try again")
+                turn = insertBuild(playCity,bPool,build_loc,b2,turn)
+            except ValueError:
+                print("Invalid Position! Please try again.")
+            except IndexError:
+                print("Invalid Input! Please try again.")
                 
     
             if turn> currentT:
                 b1 = rollBuilding(bPool)
                 b2 = rollBuilding(bPool)
+
+
         # GameOption 3 - View Remaining Building Available
         elif game_option == '3':
             # viewRemainingBuilds(bPool)

@@ -21,8 +21,6 @@ col = []
 
 
 def getBuildName(arrMap,x,y):
-    #print("len: {}".format(len(arrMap[0])))
-    #print("getting build name for x: {} y: {}".format(x,y))
     if x == 0 or x == len(arrMap) or y > len(arrMap[0]) or y <0:
         return None
     else:
@@ -54,24 +52,35 @@ def verifyPosition(playMap,userinput):
     # locate col and row index 
     # insert into row and col 
     # return row and col
-    userInput_valid = False
+    # userInput_valid = False
+
+    if len(userinput) != 2:
+        print("Cec")
+        raise(IndexError())
+        
+
     x = userinput[0]
     y = userinput[1]
   
     # validation check
-    row_check = ["A","B","C","D"]
+    col_check = ["A","B","C","D"]
     if x.isalpha() and y.isnumeric() and int(y) >= 1 and int(y) < len(playMap[0]) and len(userinput) <=2:
-        if x.upper() in row_check:
-            userInput_valid = True
+        if x.upper() in col_check:
+            return True
         else:
-            print("input column is invalid")
-            return None
+            raise ValueError() 
+            # print("input column is invalid")
+            # return None
     
     else:
-        return None
+        raise ValueError()
 
     # if validation pass then insert user input into row and col list
-    if userInput_valid == True:
+def retrievePos(playMap,userinput):   
+    x = userinput[0]
+    y = userinput[1]
+
+    if verifyPosition(playMap,userinput) == True:
         if str.upper(x) in playMap[0]:
             col.insert(0,playMap[0].index(str.upper(x)))
     
@@ -113,54 +122,21 @@ param 2: userinput (coordinates to build new building)
 return: bool (true being able to build and false being not able to build)
 '''
 def validateXYInput(playMap,user_inputs):
-
     new_row = user_inputs[0][0]
     new_col = user_inputs[1][0]
     old_row = user_inputs[0][1]
     old_col = user_inputs[1][1]
     
-    #if user tries to build on the same location
-    if old_row == new_row and old_col == new_col:
-
-        return False
-    #if user tries to build on the same column
-    elif old_col == new_col:
-   
-        # validate the row input
-        if new_row -2 == old_row or new_row + 2 == old_row:
-            #check if its building on existing building
-            if checkExistingBuilding(playMap,new_row,new_col) == False:
-                return True
-        
-        #else check for any adjacent buildings
-        elif checkAdjBuild(playMap,new_row,new_col) == True:
-         
-            return True
-        else:
-            return False
-    #if user tries to build on the same row
-    elif old_row == new_row:
-        #validate the column input
-        if new_col - 6 == old_col or new_col + 6 == old_col:
-            #check for any existing buildings
-            if checkExistingBuilding(playMap,new_row,new_col) == False:
-                return True
-           
-        elif checkAdjBuild(playMap,new_row,new_col) == True:
-            return True
-
-    #if user tries to build a different row and different column
-    #check if its adjacent building
-    elif new_row - 2 == old_row or new_row + 2 == old_row or new_col - 6 == old_col or old_col + 6 == old_col:
+    if checkExistingBuilding(playMap,new_row,new_col) == False:
         if checkAdjBuild(playMap,new_row,new_col) == True:
             return True
         else:
             return False
-    elif checkAdjBuild(playMap,new_row,new_col) == True:
-        return True
-    else:
+
+    elif checkExistingBuilding(playMap,new_row,new_col) == True:
+        print("Position Taken! Please try again.")
         return False
-       
+        
 
 '''
 function takes in 5 param
@@ -172,13 +148,13 @@ param 5: t (user's turn)
 return: t (+1 if success if not remain the same)
 '''
 def insertBuild(playMap, bPool, userinput, bName, t):
-    x_y = verifyPosition(playMap,userinput)
+
+    x_y = retrievePos(playMap,userinput)
    
     new_row = x_y[0][0]
     new_col = x_y[1][0]
 
     if t == 1:
-   
         playMap[new_row][new_col-1] = bName[0]
         playMap[new_row][new_col] = bName[1]
         playMap[new_row][new_col+1] = bName[2]
@@ -197,6 +173,7 @@ def insertBuild(playMap, bPool, userinput, bName, t):
         elif validateXYInput(playMap,x_y) == False:
             row.pop(0)
             col.pop(0)
+            print("Invalid Position! Please try again.")
 
     return t
         
