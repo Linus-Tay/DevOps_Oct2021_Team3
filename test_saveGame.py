@@ -21,6 +21,3 @@ class test_saveGame_function(unittest.TestCase):
         self.assertEqual(results["Building"][4],"HWY")
         self.assertEqual(results["Copies"][4],8)
         self.assertTrue(loadSavedGame.loadSavedTurns('savedTurns'))
-
-if __name__ == "__main__":
-    unittest.main()
