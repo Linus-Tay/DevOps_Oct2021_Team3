@@ -9,6 +9,7 @@ from copy import error
 from gameMenu import gameMenu
 from city import loadCity
 from buildings import initBuildingPools, rollBuilding
+
 #Variables
 loc_col = []
 loc_row = []

@@ -3,7 +3,6 @@ from buildings import *
 from city import viewCity
 from saveGame import saveGame
 
-
 # Game Menu
 def gameMenu(bPool,playCity,turn,b1,b2):
     while True:
