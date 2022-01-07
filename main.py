@@ -2,7 +2,7 @@
 import numpy as np
 from buildings import *
 from buildingPools import *
-from loadSavedGame import loadSavedBuildingPools, loadSavedGame, loadSavedTurns
+from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
 from saveGame import saveGame
 
 from copy import error
@@ -37,12 +37,9 @@ def mainMenu():
         playCity = loadSavedGame('savedGame')
         if (playCity != ''):
             buildingPools = loadSavedBuildingPools('savedBuildingPools')
-            # Get Random Building Options
-            b1 = rollBuilding(buildingPools)
-            b2 = rollBuilding(buildingPools)
-            gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),b1,b2)
-        else:
-            pass 
+            # Load Building Options
+            bList = loadSavedBuildings("savedBuildings")
+            gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
     # Exit Menu
     elif (choice == '0'):
         print('\nThank you for playing Simp City!\n')

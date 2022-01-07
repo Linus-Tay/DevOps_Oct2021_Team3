@@ -67,7 +67,7 @@ def gameMenu(bPool,playCity,turn,b1,b2):
         # GameOption 5 - Save Game
         elif game_option =='5':
             print("Option 5, save game!")
-            saveGame(playCity,bPool,turn)
+            saveGame(playCity,bPool,turn,b1,b2)
             break
         # GameOption 0 - Exit To Main Menu
         elif game_option =='0':

@@ -42,3 +42,17 @@ def loadSavedTurns(filename):
     except Exception as e:
         print('\nThere is no saved turns.')
         return ''
+
+def loadSavedBuildings(filename):
+    try:
+        file=open('{}.csv'.format(filename),'r')
+        varList=[]
+        for line in file:
+            b1 = str(line[0:3])
+            b2 = str(line[-3:])
+            varList.append(b1)
+            varList.append(b2)
+        return varList
+    except Exception as e:
+        print('\nThere is no saved buildings.')
+        return ''
