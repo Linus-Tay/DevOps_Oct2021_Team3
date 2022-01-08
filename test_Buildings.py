@@ -16,80 +16,68 @@ index = x[0][0]
 testBuild = bPool[index]
 
 #this class contains the tests cases mainly regarding to inputs validation
-class testbuildings_Inputs(unittest.TestCase):
+class test_UserInputs(unittest.TestCase):
     # test case for when user tries to give an invalid input
     # such as wrong format, more than 2 letter or number-letter
-    def testUserInput_Invalid(self):
-        with self.assertRaises(ValueError):
-            verifyPosition(sample_map,"1A")
-        with self.assertRaises(ValueError):
-            verifyPosition(sample_map,"Z1")
-        with self.assertRaises(IndexError):
-            verifyPosition(sample_map,"1")
-        with self.assertRaises(IndexError):
-            verifyPosition(sample_map,"")
-        
-    #test case to validate user's x y input to check if the next input x and y is valid
-    def testValidate_ValidInput(self):
+    def test_InvalidUserInput(self):
+        self.assertFalse(verifyPosition(sample_map,"11"))
+        self.assertFalse(verifyPosition(sample_map,""))
+        self.assertFalse(verifyPosition(sample_map,"aaaa"))
+        self.assertFalse(verifyPosition(sample_map,"1a"))
+        self.assertFalse(verifyPosition(sample_map,"B7"))
+
+    #when user gives an valid letter-number input
+    def test_ValidUserInput(self):
         self.assertTrue(verifyPosition(sample_map,"A1"))
-    
+        self.assertTrue(verifyPosition(sample_map,"b4"))
+
 
 #this class contains the tests cases mainly regarding to buildings validation
-class testbuildings_placeBuilds(unittest.TestCase):
-    # test case for when user tries to insert building on the same row but different column
-    # such as A1 -> B1 -> C1
-    # def testBuild_insertBuildingPass(self):
-    #     self.assertEqual(insertBuild(sample_map,bPool,"D1","BCH",1),2)
-    #     self.assertEqual(insertBuild(sample_map,bPool,"D2","BCH",2),3)
-        #self.assertTrue(validateXYInput(sample_map,([4,2],[22,22])))
-        #self.assertTrue(validateXYInput(sample_map,([4,4,2],[16,22,22])))
-       # self.assertEqual(insertBuild(sample_map,bPool,"C2","BCH",3),4) 
-        #self.assertTrue(validateXYInput(sample_map,([2,4,4,2],[16,16,22,22])))
-  
-    def testBuild_insertBuildingFail(self):
+class test_BuildingPositions(unittest.TestCase):
+    
+    #when user insert a valid position (first turn)
+    def test_ValidPosition(self):
+        sample_map[4][10-1] = "B"
+        sample_map[4][10] = "C"
+        sample_map[4][10+1] = "H"
+        self.assertTrue(validatePosition(sample_map,6,10))
+    
+    #when user insert after first turn 
+    def test_InsertAfter1stTurn(self):
         self.assertEqual(insertBuild(sample_map,bPool,"A1","BCH",1),2)
         self.assertEqual(insertBuild(sample_map,bPool,"B1","BCH",2),3)
-        self.assertEqual(insertBuild(sample_map,bPool,"D1","BCH",3),3)
-        self.assertFalse(validateXYInput(sample_map,([6,2],[22,4])))
-        self.assertFalse(validateXYInput(sample_map,([2,2],[4,22])))
-        self.assertFalse(validateXYInput(sample_map,([2,2],[4,4])))
-
-    def testBuild_insertBuildingPass(self):
-        self.assertEqual(insertBuild(sample_map,bPool,"D1","BCH",1),2)
-        self.assertEqual(insertBuild(sample_map,bPool,"C1","BCH",2),3)
-        self.assertTrue(validateXYInput(sample_map,([4,2],[22,22])))
-        self.assertTrue(validateXYInput(sample_map,([4,2],[16,22])))
-        self.assertTrue(validateXYInput(sample_map,([4,4,2],[10,16,22])))
-
-
-    # # such as A1 -> A1
-    def testExistingBuilding(self):
-        self.assertEqual(insertBuild(sample_map,bPool,"D1","BCH",1),2)
-        self.assertFalse(validateXYInput(sample_map,([2,2],[22,22])))
-        self.assertTrue(checkExistingBuilding(sample_map,2,22))
-        self.assertFalse(checkExistingBuilding(sample_map,4,4))
+        self.assertTrue(validatePosition(sample_map,2,16))
     
-    # # # #test case internally for when retrieving building names from the play map
-    def test_getBuildName(self):
-        self.assertEqual(getBuildName(sample_map,2,22),"BCH")
-        self.assertEqual(getBuildName(sample_map,4,4),None)
+    #when user tries to insert on an exisiting building
+    def test_ExistingPosition(self):
+        sample_map[4][10-1] = "B"
+        sample_map[4][10] = "C"
+        sample_map[4][10+1] = "H"
+        self.assertFalse(validatePosition(sample_map,4,10))
+    
+    #when user gave an invalid input (not adjacent to any existing building)
+    def test_InvalidPosition(self):
+        sample_map[4][10-1] = "B"
+        sample_map[4][10] = "C"
+        sample_map[4][10+1] = "H"
+        self.assertFalse(validatePosition(sample_map,8,10))
 
-       
-# class for test cases when user tries to build adjacent
-class test_Buildings_AdjBuilds(unittest.TestCase):
 
-    # test cases for when user tries to build adjacently
-    # on the same row
-    # on the same column
-    # or on different column and different row
-    def test_checkAdjBuild(self):
-        self.assertEqual(insertBuild(sample_map,bPool,"C3","BCH",1),2)
-        self.assertEqual(insertBuild(sample_map,bPool,"B3","BCH",2),3)
-        self.assertTrue(checkAdjBuild(sample_map,6,22))
-        self.assertEqual(insertBuild(sample_map,bPool,"D3","BCH",3),4)
-        self.assertTrue(checkAdjBuild(sample_map,8,10))
-        self.assertEqual(insertBuild(sample_map,bPool,"B4","BCH",4),5)
-        self.assertTrue(checkAdjBuild(sample_map,4,10))
+#class contains the test cases of inserting buildings
+class test_InsertBuildings(unittest.TestCase):
+
+    #when user sucessfully insert a building, turn should increase by 1
+    def test_ValidInsert(self):
+        self.assertEqual(insertBuild(sample_map,bPool,"A1","BCH",1),2)
+        self.assertEqual(insertBuild(sample_map,bPool,"A2","BCH",2),3)
+        self.assertEqual(insertBuild(sample_map,bPool,"A3","BCH",3),4)
+        self.assertEqual(insertBuild(sample_map,bPool,"B3","BCH",4),5)
+
+     #when inserting building failed due to whatever reasons, turn should remain the same
+    def test_InvalidInsert(self):
+        self.assertEqual(insertBuild(sample_map,bPool,"D1","BCH",1),2)
+        self.assertEqual(insertBuild(sample_map,bPool,"D4","BCH",2),2)
+        self.assertEqual(insertBuild(sample_map,bPool,"A4","BCH",2),2)
     
     def test(self):
         with mock.patch('buildingPools.rollBuilding',side_effect=['Data1']):

@@ -35,6 +35,6 @@ def mainMenu():
         print('\nInvalid option, please try again!')
 
 # Menu Menu
-# while True:
-#     if mainMenu() == False:
-#         break
+while True:
+    if mainMenu() == False:
+        break

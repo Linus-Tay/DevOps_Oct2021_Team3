@@ -32,10 +32,8 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             
             try:
                 turn = insertBuild(playCity,bPool,build_loc,b1,turn)
-            except ValueError:
-                print("Invalid Position! Please try again.")
-            except IndexError:
-                print("Invalid Input! Please try again.")
+            except Exception as e:
+                print(e)
                 
             if turn> currentT:
                 b1 = rollBuilding(bPool)
@@ -49,10 +47,8 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             
             try:
                 turn = insertBuild(playCity,bPool,build_loc,b2,turn)
-            except ValueError:
-                print("Invalid Position! Please try again.")
-            except IndexError:
-                print("Invalid Input! Please try again.")
+            except Exception as e:
+                print(e)
                 
     
             if turn> currentT:

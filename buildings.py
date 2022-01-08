@@ -1,25 +1,30 @@
+from numpy import number
 from buildingPools import *
 
-
-row = []
-col = []
-
+#====================================================================================================#
 
 '''
-1. user input x and y ("C2")
-2. check user input if is valid
-3. get the index of x and y based on play map
-4. insert x and y into row and col list 
-5. validate row and col input for new building placement
-6. check if new input is trying to build on existing building
-7. removes from the row and col list if #7 is true
-8. insert building given x and y into city map
-9. checks building and given x and y validity to insert
+1. user gives an input 
+    - checks if input is valid (letter-number)
+    - display error message accordingly to wrong input given
+2. if input is valid, retrieve the index of letter-number based on play map
+3. if its first turn, user can insert anywhere
+4. check validity of letter-number given on 2nd turn onwards
+    - check exisiting building
+    - check adjacent building
+5. insert building if valid
 '''
 
 
 
+#====================================================================================================#
 
+'''
+retrieve building name from the play map given x(row) ,y(Column)
+param 1: playMap (the array list containing the city map)
+param 2,3: x,y (index of letter-number based on playmap)
+return: returns if theres a building else return none
+'''
 def getBuildName(arrMap,x,y):
     if x == 0 or x == len(arrMap) or y > len(arrMap[0]) or y <0:
         return None
@@ -31,70 +36,90 @@ def getBuildName(arrMap,x,y):
             return None
         return a + b + c
 
+#====================================================================================================#
+
+'''
+check if x,y on play map has building using getbuildname
+param 1: playMap (the array list containing the city map)
+param 2,3: x,y (index of letter-number based on playmap)
+return: boolean accordingly
+'''
 def checkExistingBuilding(arrMap,x,y):
     if getBuildName(arrMap,x,y) == None:
         return False
     return True
 
+#====================================================================================================#
 
 '''
-function takes in 2 param
+verify if input given by user is a valid letter-number
 param 1: playMap (the array list containing the city map)
 param 2: userinput (what user entered __)
-return: rol and col list 
-(if all pass, to be inserted row and col index will be inserted into
-a rol and col list)
+return: boolean accordingly
 '''
 def verifyPosition(playMap,userinput):
-    # x = column, y = row
-    # getting user input x and y
-    # validating user input
-    # locate col and row index 
-    # insert into row and col 
-    # return row and col
-    # userInput_valid = False
 
-    if len(userinput) != 2:
-        print("Cec")
-        raise(IndexError())
-        
-
-    x = userinput[0]
-    y = userinput[1]
-  
-    # validation check
-    col_check = ["A","B","C","D"]
-    if x.isalpha() and y.isnumeric() and int(y) >= 1 and int(y) < len(playMap[0]) and len(userinput) <=2:
-        if x.upper() in col_check:
-            return True
+    # have a check for letter and number
+    letter_check = False
+    number_check = False
+    
+    # if user gives a valid 2 character input
+    if len(userinput) == 2:
+        x = userinput[0]
+        y = userinput[1]
+        #check if letter given is as according to one of the available column
+        if x.upper() in playMap[0]:
+            letter_check = True
         else:
-            raise ValueError() 
-            # print("input column is invalid")
-            # return None
-    
+            print("Invalid Letter given, Please try again with a letter-number input based on the map !")
+        #check if number given is within the range of the row
+        if y.isnumeric() and int(y) > 0 and int(y) <=4 :
+            number_check = True
+        else:
+            print("Invalid Number given, Please try again with a letter-number input based on the map !")
+    #if user tries an empty input
+    elif userinput == "":
+        print("No input given! Please try again with a letter-number input!")
+    #
     else:
-        raise ValueError()
+        print("Invalid Input! Please try again with a letter-number input!")
 
-    # if validation pass then insert user input into row and col list
-def retrievePos(playMap,userinput):   
-    x = userinput[0]
-    y = userinput[1]
 
-    if verifyPosition(playMap,userinput) == True:
-        if str.upper(x) in playMap[0]:
-            col.insert(0,playMap[0].index(str.upper(x)))
+    #if letter and number check is true, return true as valid input else false
+    if letter_check == True and number_check == True:
+        return True
+    else:
+        return False
     
-        for i in playMap:
-            for k in i:
-                if k == y:
-                    row.insert(0,playMap.index(i))
-        return row,col
+#====================================================================================================#
 
 '''
-function takes in 2 param
+retrieve the index of letter-number given based on the playmap and return the row and col index
+this is assuming letter-number given has gone through validity checks
 param 1: playMap (the array list containing the city map)
-param 2: x (row to be inserted)
-param 3: y (col to be inserted)
+param 2,3: x,y (index of letter-number based on playmap)
+return: row and col index 
+'''
+def retrievePos(playMap,new_row,new_col):   
+
+    x = new_row
+    y = new_col
+    
+    row = 0
+    col = playMap[0].index(str.upper(x))     
+    for i in playMap:
+        for k in i:
+            if k == y:
+                row = playMap.index(i)
+
+    return row,col
+
+#====================================================================================================#
+
+'''
+Checks for adjacent building to any exisiting building
+param 1: playMap (the array list containing the city map)
+param 2,3: x,y (index of letter-number based on playmap)
 return: bool 
 (true being theres a build adjacent to the coordinates to be buit
 false being not able to build)
@@ -112,31 +137,27 @@ def checkAdjBuild(arrMap,x,y):
         return True
     return False
 
+#====================================================================================================#
 
-# takes in row and col to check 
-# check if valid and return bool accordingly
 '''
-function takes in 2 param
+Validate if position given is true
+checks for exisiting building and adjacent building
 param 1: playMap (the array list containing the city map)
-param 2: userinput (coordinates to build new building)
+param 2,3: x,y (index of letter-number based on playmap)
 return: bool (true being able to build and false being not able to build)
 '''
-def validateXYInput(playMap,user_inputs):
-    new_row = user_inputs[0][0]
-    new_col = user_inputs[1][0]
-    old_row = user_inputs[0][1]
-    old_col = user_inputs[1][1]
-    
-    if checkExistingBuilding(playMap,new_row,new_col) == False:
-        if checkAdjBuild(playMap,new_row,new_col) == True:
+def validatePosition(playmap,new_row,new_col):
+
+    if checkExistingBuilding(playmap,new_row,new_col) == False:
+        if checkAdjBuild(playmap,new_row,new_col) == True:
             return True
         else:
+            print("Invalid Position, Please try again!")
             return False
+    else:
+        print("Building already exists! Please try another location!")   
 
-    elif checkExistingBuilding(playMap,new_row,new_col) == True:
-        print("Position Taken! Please try again.")
-        return False
-        
+#====================================================================================================#
 
 '''
 function takes in 5 param
@@ -149,31 +170,31 @@ return: t (+1 if success if not remain the same)
 '''
 def insertBuild(playMap, bPool, userinput, bName, t):
 
-    x_y = retrievePos(playMap,userinput)
-   
-    new_row = x_y[0][0]
-    new_col = x_y[1][0]
+    new_row = 0
+    new_col = 0
 
-    if t == 1:
-        playMap[new_row][new_col-1] = bName[0]
-        playMap[new_row][new_col] = bName[1]
-        playMap[new_row][new_col+1] = bName[2]
-        t+=1
-        bPool = deductBPoolCopies(bPool,bName)
-    elif t >1:
-        # if validates is true then insert the building
-        # else removes the x and y from the row and col
-        if validateXYInput(playMap,x_y) == True:
+    #if given input is valid, retrieve row and column index from play map
+    if verifyPosition(playMap,userinput) == True:
+        x_y = retrievePos(playMap,userinput[0],userinput[1])
+        new_row = x_y[0]
+        new_col = x_y[1]
+
+    # only if theres a retrieved position == valid
+    if new_row != 0 and new_col != 0:
+        # user can insert anywhere on turn 1
+        if t == 1:
             playMap[new_row][new_col-1] = bName[0]
             playMap[new_row][new_col] = bName[1]
             playMap[new_row][new_col+1] = bName[2]
             t+=1
             bPool = deductBPoolCopies(bPool,bName)
-        
-        elif validateXYInput(playMap,x_y) == False:
-            row.pop(0)
-            col.pop(0)
-            print("Invalid Position! Please try again.")
-
+        # validate position on turn 2 onwards
+        else:
+            if validatePosition(playMap,new_row,new_col) == True:
+                playMap[new_row][new_col-1] = bName[0]
+                playMap[new_row][new_col] = bName[1]
+                playMap[new_row][new_col+1] = bName[2]
+                t+=1
+                bPool = deductBPoolCopies(bPool,bName)
     return t
         
