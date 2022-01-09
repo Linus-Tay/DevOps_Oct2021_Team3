@@ -1,9 +1,18 @@
 # Imports
+import numpy as np
+from buildings import *
+from buildingPools import *
+from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
+from saveGame import saveGame
+
 from copy import error
 from gameMenu import gameMenu
 from city import loadCity
 from buildings import initBuildingPools, rollBuilding
+
 #Variables
+loc_col = []
+loc_row = []
 
 def mainMenu():
     print('\nWelcome, mayor of Simp City!')
@@ -18,14 +27,19 @@ def mainMenu():
         print("Option 1 - Start New Save Game")
         playCity = loadCity('start.csv')
         buildingPools = initBuildingPools()
-        # Get Random Building Options
+         # Get Random Building Options
         b1 = rollBuilding(buildingPools)
         b2 = rollBuilding(buildingPools)
         gameMenu(buildingPools,playCity,1,b1,b2)
-            
     # Load Saved game
     elif (choice == '2'): 
         print("Option 2 - Load Save Game")
+        playCity = loadSavedGame('savedGame')
+        if (playCity != ''):
+            buildingPools = loadSavedBuildingPools('savedBuildingPools')
+            # Load Building Options
+            bList = loadSavedBuildings("savedBuildings")
+            gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
     # Exit Menu
     elif (choice == '0'):
         print('\nThank you for playing Simp City!\n')

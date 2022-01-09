@@ -1,4 +1,3 @@
-from random import sample
 import unittest
 from unittest import mock
 from buildings import *
@@ -8,7 +7,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 import buildingPools
 import numpy as np
 import builtins
-import unittest.mock
+
 sample_map = loadCity('start.csv')
 bPool = initBuildingPools()
 x = np.where(bPool['Building']=="BCH")

@@ -1,8 +1,7 @@
 from buildingPools import *
 from buildings import *
 from city import viewCity
-
-
+from saveGame import saveGame
 
 # Game Menu
 def gameMenu(bPool,playCity,turn,b1,b2):
@@ -60,14 +59,16 @@ def gameMenu(bPool,playCity,turn,b1,b2):
                 b2 = rollBuilding(bPool)
         # GameOption 3 - View Remaining Building Available
         elif game_option == '3':
-            # viewRemainingBuilds(bPool)
-            print("Option 3, Development in progress!")
+            print("Option 3, View Remaining Building Available!")
+            viewRemainingBuilds(bPool)
         # GameOption 4 - View Current Score
         elif game_option == '4':
             print("Option 4, Development in progress!")
         # GameOption 5 - Save Game
         elif game_option =='5':
-            print("Option 5, Development in progress!")
+            print("Option 5, save game!")
+            saveGame(playCity,bPool,turn,b1,b2)
+            break
         # GameOption 0 - Exit To Main Menu
         elif game_option =='0':
             break
