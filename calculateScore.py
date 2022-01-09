@@ -19,7 +19,8 @@ def calculateScore(playCity):
     BCHScore = calculateBCH(dict)
 
     totalScore = BCHScore + FACScore + HSEScore + SHPScore + HWPScore
-    print("\nTotal score : ", totalScore)
+    print("\nTotal Score = "+ str(totalScore))
+
     return totalScore
     
 def mapBuildingsToCords(playCity):
@@ -202,9 +203,9 @@ def calculateSHP(dict):
         return totalScore
 
 def getLeftBuilding(dict,cord):
-    if cord[-1] == "0" or cord[-1] == "5":
-        return None
-    elif cord[0] == "D":
+    # if cord[-1] == "0" or cord[-1] == "5":
+    #     return None
+    if cord[0] == "D":
         left = "C" + cord[1]
     elif cord[0] == "C":
         left = "B" + cord[1]
@@ -217,9 +218,9 @@ def getLeftBuilding(dict,cord):
     return leftList
 
 def getRightBuilding(dict,cord):
-    if cord[-1] == "0" or cord[-1] == "5":
-        return None
-    elif cord[0] == "A":
+    # if cord[-1] == "0" or cord[-1] == "5":
+    #     return None
+    if cord[0] == "A":
         right = "B" + cord[1]
     elif cord[0] == "B":
         right = "C" + cord[1]
@@ -243,12 +244,11 @@ def calculateHWY(dict):
             while True :
                 left = getLeftBuilding(dict,cords)
                 # print(left,"LEFT")
-                if left  == None:
-                    break
-                elif left[-1] == "HWY":
+                if left != None and left[-1] == "HWY":
                     cords = left[0]
                     subScore += 1
                 else:
+                    print("TESTING")
                     break
             cords = item[0]
             while True :
@@ -260,6 +260,7 @@ def calculateHWY(dict):
                     subScore += 1
                     cords = right[0]
                 else:
+                    print("TESTING123")
                     break
             # print(subScore, "SUB")
             if subScore>1: 

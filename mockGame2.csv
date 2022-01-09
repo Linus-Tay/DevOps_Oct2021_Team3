@@ -1,10 +1,10 @@
     A     B     C     D   
  +-----+-----+-----+-----+
-1| SHP | SHP | HSE | FAC |
+1| HSE | SHP | HSE | FAC |
  +-----+-----+-----+-----+
 2| BCH | HSE | HSE | BCH |
  +-----+-----+-----+-----+
-3| BCH | SHP | HSE | HSE |
+3| BCH | SHP | HWY | SHP |
  +-----+-----+-----+-----+
-4| HWY | HWY | HWY | HWY |
+4| FAC | FAC | FAC | FAC |
  +-----+-----+-----+-----+
