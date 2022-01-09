@@ -81,26 +81,30 @@ def calculateFAC(dict):
             FACCount +=1
     # print(FACCount)
     stmt = ""
-    if FACCount >= 4:
-        stmt += "4 + 4 + 4 + 4"
-        FACCount -= 4
-        num=1
-        while num <= FACCount:
-            stmt+=" + 1"
-            num +=1
-        subScore = (4*4)+(num-1)
-        print("FAC = " + stmt + " = " + str(subScore))
+    if FACCount == 0:
+        print("FAC = 0")
+        return 0
     else:
-        num=1
-        while num <= FACCount:
-            if num == FACCount:
-                stmt+= "{}".format(FACCount)
-            else:
-                stmt+= "{} + ".format(FACCount)
-            num +=1
-        subScore = FACCount*FACCount
-        print("FAC = " + stmt + " = " + str(subScore))
-    return subScore
+        if FACCount >= 4:
+            stmt += "4 + 4 + 4 + 4"
+            FACCount -= 4
+            num=1
+            while num <= FACCount:
+                stmt+=" + 1"
+                num +=1
+            subScore = (4*4)+(num-1)
+            print("FAC = " + stmt + " = " + str(subScore))
+        else:
+            num=1
+            while num <= FACCount:
+                if num == FACCount:
+                    stmt+= "{}".format(FACCount)
+                else:
+                    stmt+= "{} + ".format(FACCount)
+                num +=1
+            subScore = FACCount*FACCount
+            print("FAC = " + stmt + " = " + str(subScore))
+        return subScore
 
 def calculateHSE(dict):
     stmt = ""
