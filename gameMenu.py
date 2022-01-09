@@ -58,8 +58,7 @@ def gameMenu(bPool,playCity,turn,b1,b2):
 
         # GameOption 3 - View Remaining Building Available
         elif game_option == '3':
-            # viewRemainingBuilds(bPool)
-            print("Option 3, Development in progress!")
+            viewRemainingBuilds(bPool)
         # GameOption 4 - View Current Score
         elif game_option == '4':
             print("Option 4, Development in progress!")

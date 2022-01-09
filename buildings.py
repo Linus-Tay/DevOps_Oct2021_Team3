@@ -152,7 +152,7 @@ def validatePosition(playmap,new_row,new_col):
         if checkAdjBuild(playmap,new_row,new_col) == True:
             return True
         else:
-            print("Invalid Position, Please try again!")
+            print("Invalid Position, Please build on adjacent to existing building!")
             return False
     else:
         print("Building already exists! Please try another location!")   
