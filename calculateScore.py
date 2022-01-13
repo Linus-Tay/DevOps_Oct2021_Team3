@@ -244,24 +244,28 @@ def calculateHWY(dict):
             while True :
                 left = getLeftBuilding(dict,cords)
                 # print(left,"LEFT")
-                if left != None and left[-1] == "HWY":
+                if left == None or left[-1] != "HWY":
+                    break
+                else: 
                     cords = left[0]
                     subScore += 1
-                else:
-                    print("TESTING")
-                    break
             cords = item[0]
             while True :
                 right = getRightBuilding(dict,cords)
                 # print(right,"right")
-                if right == None:
+                if right == None or right[-1] != "HWY":
                     break
-                elif right[-1] == "HWY":
-                    subScore += 1
+                else: 
                     cords = right[0]
-                else:
-                    print("TESTING123")
-                    break
+                    subScore += 1
+                # if right == None:
+                #     break
+                # elif right[-1] == "HWY":
+                #     subScore += 1
+                #     cords = right[0]
+                # else:
+                #     print("TESTING123")
+                #     break
             # print(subScore, "SUB")
             if subScore>1: 
                 totalScore += subScore
