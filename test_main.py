@@ -9,7 +9,7 @@ class test_MainMenu_function(unittest.TestCase):
             main.mainMenu()
         except:
             output = get_display_output()
-            assert output[6] == "Option 1 - Start New Save Game"
+            assert output[6] == "Option 1 - Start New Game"
 
     def test_MainMenu_Opt2(self):
         set_keyboard_input(['2'])

@@ -19,7 +19,7 @@ def calculateScore(playCity):
     BCHScore = calculateBCH(dict)
 
     totalScore = BCHScore + FACScore + HSEScore + SHPScore + HWPScore
-    print("\nTotal Score = "+ str(totalScore))
+    print("\nTotal Score: "+ str(totalScore))
 
     return totalScore
     
@@ -60,7 +60,7 @@ def calculateBCH(dict):
         i += 2
         rowNumCount += 1
     if BCHCount == 0:
-        print("BCH = 0 ")
+        print("BCH: 0 ")
         return 0
     else:
         stmt = ""
@@ -72,7 +72,7 @@ def calculateBCH(dict):
                 stmt+= "3 + "
             num +=1
         subScore = 3*BCHCount
-        print("BCH = " + stmt + " = " + str(subScore))
+        print("BCH: " + stmt + " = " + str(subScore))
         return subScore
 
 def calculateFAC(dict):
@@ -83,7 +83,7 @@ def calculateFAC(dict):
     # print(FACCount)
     stmt = ""
     if FACCount == 0:
-        print("FAC = 0")
+        print("FAC: 0")
         return 0
     else:
         if FACCount >= 4:
@@ -94,7 +94,7 @@ def calculateFAC(dict):
                 stmt+=" + 1"
                 num +=1
             subScore = (4*4)+(num-1)
-            print("FAC = " + stmt + " = " + str(subScore))
+            print("FAC: " + stmt + " = " + str(subScore))
         else:
             num=1
             while num <= FACCount:
@@ -104,7 +104,7 @@ def calculateFAC(dict):
                     stmt+= "{} + ".format(FACCount)
                 num +=1
             subScore = FACCount*FACCount
-            print("FAC = " + stmt + " = " + str(subScore))
+            print("FAC: " + stmt + " = " + str(subScore))
         return subScore
 
 def calculateHSE(dict):
@@ -155,9 +155,9 @@ def calculateHSE(dict):
                 stmt += " + {}".format(subScore)
             HSECount += 1
     if HSECount == 0:
-        print("HSE = {}".format(totalScore))
+        print("HSE: {}".format(totalScore))
     else:
-        print("HSE = {} = {}".format(stmt,totalScore))
+        print("HSE: {} = {}".format(stmt,totalScore))
     return totalScore
 
 def calculateSHP(dict):
@@ -196,10 +196,10 @@ def calculateSHP(dict):
             totalScore += subScore
             SHPCount += 1
     if SHPCount == 0:
-        print("SHP = 0")
+        print("SHP: 0")
         return 0
     else:
-        print("SHP = {} = {}".format(stmt, totalScore))
+        print("SHP: {} = {}".format(stmt, totalScore))
         return totalScore
 
 def getLeftBuilding(dict,cord):
@@ -280,8 +280,8 @@ def calculateHWY(dict):
                 num += 1
             HWYCount += 1
     if HWYCount == 0:
-        print("HWY = 0")
+        print("HWY: 0")
         return 0
     else:
-        print("HWY = {} = {}".format(stmt,totalScore))    
+        print("HWY: {} = {}".format(stmt,totalScore))    
         return totalScore

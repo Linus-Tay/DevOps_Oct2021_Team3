@@ -23,7 +23,7 @@ def mainMenu():
     choice = input(str('\nEnter your choice? '))
     # Start New Game
     if (choice == '1'):    
-        print("Option 1 - Start New Save Game")
+        print("Option 1 - Start New Game")
         playCity = loadCity('start.csv')
         buildingPools = initBuildingPools()
          # Get Random Building Options
