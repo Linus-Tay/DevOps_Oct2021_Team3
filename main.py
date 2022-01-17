@@ -4,7 +4,6 @@ from buildings import *
 from buildingPools import *
 from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
 from saveGame import saveGame
-
 from copy import error
 from gameMenu import gameMenu
 from city import loadCity
@@ -24,7 +23,7 @@ def mainMenu():
     choice = input(str('\nEnter your choice? '))
     # Start New Game
     if (choice == '1'):    
-        print("Option 1 - Start New Save Game")
+        print("Option 1 - Start New Game")
         playCity = loadCity('start.csv')
         buildingPools = initBuildingPools()
          # Get Random Building Options
@@ -39,10 +38,11 @@ def mainMenu():
             buildingPools = loadSavedBuildingPools('savedBuildingPools')
             # Load Building Options
             bList = loadSavedBuildings("savedBuildings")
-            gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
+            status = gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
+        if status == "End":
+            return False
     # Exit Menu
     elif (choice == '0'):
-        print('\nThank you for playing Simp City!\n')
         return False
     # Validate for Invalid Input
     else:
@@ -51,4 +51,5 @@ def mainMenu():
 # Menu Menu
 # while True:
 #     if mainMenu() == False:
+#         print('\nThank you for playing Simp City!\n')
 #         break

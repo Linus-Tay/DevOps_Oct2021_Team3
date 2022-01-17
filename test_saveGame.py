@@ -7,7 +7,7 @@ class test_saveGame_function(unittest.TestCase):
     def test_saveGame(self):
         mockCity = loadSavedGame.loadSavedGame('mockGame')
         mockbPool = buildingPools.initBuildingPools()
-        saveGame.saveGame(mockCity,mockbPool,1,"BCH","FAC")
+        saveGame.saveGame(mockCity,mockbPool,17,"BCH","FAC")
 class test_loadSavedGame_functions(unittest.TestCase):
     # Test for Load Saved Game
     def test_if_Saved_Game_is_present(self):

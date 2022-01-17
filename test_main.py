@@ -9,15 +9,13 @@ class test_MainMenu_function(unittest.TestCase):
             main.mainMenu()
         except:
             output = get_display_output()
-            assert output[6] == "Option 1 - Start New Save Game"
+            assert output[6] == "Option 1 - Start New Game"
 
     def test_MainMenu_Opt2(self):
         set_keyboard_input(['2'])
-        try:
-            main.mainMenu()
-        except:
-            output = get_display_output()
-            assert output[6] == "Option 2 - Load Save Game"
+        main.mainMenu()
+        output = get_display_output()
+        assert output[6] == "Option 2 - Load Save Game"
 
     def test_MainMenu_Opt0(self):
         set_keyboard_input(['0'])
@@ -28,8 +26,7 @@ class test_MainMenu_function(unittest.TestCase):
                             "[1] Start new game",
                             "[2] Load saved game",
                             "\n[0] Exit",
-                            "\nEnter your choice? ",
-                            "\nThank you for playing Simp City!\n"]
+                            "\nEnter your choice? "]
                             
     def test_MainMenu_InvalidOpt(self):
         set_keyboard_input(['123'])
