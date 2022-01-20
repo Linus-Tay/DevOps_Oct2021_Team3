@@ -35,8 +35,6 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             # GameOption 1 - Build A Building
             if game_option == '1':
                 currentT = turn
-                # x = np.where(bPool['Building'] == b1)
-                # currBuild = bPool['Building'][x]
                 build_loc = input(str('Build Where? '))
                 
                 try:
@@ -52,12 +50,10 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             # GameOption 2 - Build A Building
             elif game_option == '2':
                 currentT = turn
-                # x = np.where(bPool['Building'] == b1)
-                # currBuild = bPool['Building'][x]
                 build_loc = input(str('Build Where? '))
                 
                 try:
-                    turn = insertBuild(playCity,bPool,build_loc,turn)
+                    turn = insertBuild(playCity,bPool,build_loc,b1,turn)
                 except:
                     print("Invalid Input, Please try again")
                     
