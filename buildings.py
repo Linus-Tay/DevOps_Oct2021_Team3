@@ -1,5 +1,4 @@
-from numpy import number
-from buildingPools import *
+
 
 #====================================================================================================#
 
@@ -25,6 +24,9 @@ param 1: playMap (the array list containing the city map)
 param 2,3: x,y (index of letter-number based on playmap)
 return: returns if theres a building else return none
 '''
+import buildingPools
+
+
 def getBuildName(arrMap,x,y):
     if x == 0 or x == len(arrMap) or y > len(arrMap[0]) or y <0:
         return None
@@ -114,6 +116,7 @@ def retrievePos(playMap,new_row,new_col):
 
     return row,col
 
+
 #====================================================================================================#
 
 '''
@@ -187,7 +190,7 @@ def insertBuild(playMap, bPool, userinput, bName, t):
             playMap[new_row][new_col] = bName[1]
             playMap[new_row][new_col+1] = bName[2]
             t+=1
-            bPool = deductBPoolCopies(bPool,bName)
+            bPool = buildingPools.deductBPoolCopies(bPool,bName)
         # validate position on turn 2 onwards
         else:
             if validatePosition(playMap,new_row,new_col) == True:
@@ -195,6 +198,6 @@ def insertBuild(playMap, bPool, userinput, bName, t):
                 playMap[new_row][new_col] = bName[1]
                 playMap[new_row][new_col+1] = bName[2]
                 t+=1
-                bPool = deductBPoolCopies(bPool,bName)
+                bPool = buildingPools.deductBPoolCopies(bPool,bName)
     return t
         
