@@ -1,5 +1,5 @@
 # Imports
-import numpy as np
+from highScore import displayHighScore
 from buildings import *
 from buildingPools import *
 from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
@@ -16,12 +16,12 @@ loc_row = []
 def mainMenu():
     print('\nWelcome, mayor of Simp City!')
     print('----------------------------')
-    option_list=('Start new game','Load saved game')
+    option_list=('Start New Game','Load Saved Game','Show High Scores')
     for i in range(len(option_list)):
         print('[{}] {}'.format(i+1,option_list[i]))
     print('\n[0] Exit')
     choice = input(str('\nEnter your choice? '))
-    # Start New Game
+    # Option 1 - Start New Game
     if (choice == '1'):    
         print("Option 1 - Start New Game")
         playCity = loadCity('start.csv')
@@ -30,7 +30,7 @@ def mainMenu():
         b1 = rollBuilding(buildingPools)
         b2 = rollBuilding(buildingPools)
         gameMenu(buildingPools,playCity,1,b1,b2)
-    # Load Saved game
+    # Option 2 - Load Saved game
     elif (choice == '2'): 
         print("Option 2 - Load Save Game")
         playCity = loadSavedGame('savedGame')
@@ -41,6 +41,18 @@ def mainMenu():
             status = gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
         if status == "End":
             return False
+    # Option 3 - Show High Scores
+    elif (choice == '3'):
+        print("\nOption 3 - Show High Scores\n")
+        x_axis = int(input("Please enter the number of rows desired: "))
+        y_axis = int(input("Please enter the number of columns desired: "))
+        if x_axis*y_axis <= 40 and x_axis*y_axis >0:
+            dimension = []
+            dimension.append(str(x_axis))
+            dimension.append(str(y_axis))
+            displayHighScore(dimension)
+        else:
+            print("\nDimension entered is invalid!")
     # Exit Menu
     elif (choice == '0'):
         return False
