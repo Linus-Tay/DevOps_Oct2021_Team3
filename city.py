@@ -39,12 +39,18 @@ def viewCity(map):
 
 
 def validCitySize(x_axis,y_axis):
-    if x_axis*y_axis > 0 and x_axis*y_axis <=40:
-        return True
-    return False
+    
+    if isinstance(x_axis, int)  and isinstance(y_axis, int) :
+    #if x_axis == int and y_axis == int:
+        if x_axis*y_axis > 0 and x_axis*y_axis <=40:
+            return True
+    else:
+        print("Invalid Input! Please enter a number input!")
+        return False
 
 def newGrid(x_axis,y_axis):
-    # final list
+    
+    #final list
     main = []
 
     # using ASCII table to populate alphabet header list
@@ -71,6 +77,7 @@ def newGrid(x_axis,y_axis):
 
         # iterate through the number of columns
         for c in range(0,y_axis):
+
             # first row will be the alphabet header
             # 5 spaces in a square + 6th space to account for gridline
             if r == 0:
@@ -126,19 +133,11 @@ def newGrid(x_axis,y_axis):
     return playCity
 
 
-def startNewGame():
-    print("Option 1 - Start New Game")
-    print("Please select city map size in the dimension of row * column\n")
-    x_axis = int(input("Please enter the number of rows desired: "))
-    y_axis = int(input("Please enter the number of columns desired: "))
 
-    if validCitySize(x_axis,y_axis) == True:
-        new_map = newGrid(x_axis,y_axis)
-        
-        buildingPools = initBuildingPools()   
-        b1 = rollBuilding(buildingPools)
-        b2 = rollBuilding(buildingPools)
-        gameMenu(buildingPools,new_map,1,b1,b2)
+def startNewGame(citymap,pool):
     
-    else:
-        print("Size is too big! Please keep within 40 squares!")
+    print("Option 1 - Start New Game")
+    b1 = rollBuilding(pool)
+    b2 = rollBuilding(pool)
+    gameMenu(pool,citymap,1,b1,b2)
+    

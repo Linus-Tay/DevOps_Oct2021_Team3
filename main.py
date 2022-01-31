@@ -26,21 +26,6 @@ def mainMenu():
     # Start New Game
     if (choice == '1'):    
         city.startNewGame()
-        # print("Option 1 - Start New Game")
-        # print("Please select city map size in the dimension of row * column\n")
-        # x_axis = int(input("Please enter the number of rows desired: "))
-        # y_axis = int(input("Please enter the number of columns desired: "))
-
-        # if city.validCitySize(x_axis,y_axis) == True:
-        #     new_map = city.newGrid(x_axis,y_axis)
-            
-        #     buildingPools = initBuildingPools()   
-        #     b1 = rollBuilding(buildingPools)
-        #     b2 = rollBuilding(buildingPools)
-        #     gameMenu(buildingPools,new_map,1,b1,b2)
-        
-        # else:
-        #     print("Size is too big! Please keep within 40 squares!")
 
     # Load Saved game
     elif (choice == '2'): 
