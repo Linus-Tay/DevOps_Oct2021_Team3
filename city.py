@@ -41,9 +41,16 @@ def viewCity(map):
 def validCitySize(x_axis,y_axis):
     
     if isinstance(x_axis, int)  and isinstance(y_axis, int) :
-    #if x_axis == int and y_axis == int:
-        if x_axis*y_axis > 0 and x_axis*y_axis <=40:
-            return True
+        if y_axis <= 26:
+            if x_axis*y_axis > 0 and x_axis*y_axis <=40:
+                return True
+            else:
+                print("Invalid size! Please retry with a size of minimum of 1 squares and maximum of 40 squares")
+                return False
+           
+        else:
+            print("Column size can only be up to 26, please retry!")
+            return False
     else:
         print("Invalid Input! Please enter a number input!")
         return False

@@ -36,11 +36,13 @@ class test_City(unittest.TestCase):
         self.assertTrue(city.validCitySize(8,5))
         self.assertTrue(city.validCitySize(1,1))
         self.assertTrue(city.validCitySize(2,20))
+        self.assertTrue(city.validCitySize(1,26))
 
     def test_inValidCitySize(self):
         self.assertFalse(city.validCitySize(9,5))
         self.assertFalse(city.validCitySize(10,10))
         self.assertFalse(city.validCitySize('a',10))
+        self.assertFalse(city.validCitySize(1,27))
 
 
 
@@ -190,26 +192,4 @@ class test_City(unittest.TestCase):
                     "[0] Exit to main menu",
                     "\nYour Choice? "
                     ]
-                    
-    def test_startNewGameFail(self):
-        # when user enters invalid dimension
-        out = StringIO()
-        sys.stdout = out 
-        testBase.set_keyboard_input(['1','10','5'])
-        main.mainMenu()
-        output = testBase.get_display_output()
-        assert output == [
-                    "\nWelcome, mayor of Simp City!",
-                    "----------------------------",
-                    "[1] Start new game",
-                    "[2] Load saved game",
-                    "\n[0] Exit",
-                    "\nEnter your choice? ",
-                    "Option 1 - Start New Game",
-                    "Please select city map size in the dimension of row * column\n",
-                    "Please enter the number of rows desired: ",
-                    "Please enter the number of columns desired: ",
-                    "Invalid size! Please retry with a size of minimum of 1 squares and maximum of 40 squares"
                 
-                    ]
-
