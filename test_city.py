@@ -7,6 +7,7 @@ from buildingPools import initBuildingPools
 import city
 import main
 import testBase
+poolList = initBuildingPools()
 
 
 class test_City(unittest.TestCase):
@@ -14,13 +15,13 @@ class test_City(unittest.TestCase):
         playMap = city.loadCity('start.csv')
         print_values = []
         builtins.print = lambda s: print_values.append(s)
-        city.viewCity(playMap)
-        assert print_values == ["    A     B     C     D   ",
-                                " +-----+-----+-----+-----+",
-                                "1|     |     |     |     |",
-                                " +-----+-----+-----+-----+",
-                                "2|     |     |     |     |",
-                                " +-----+-----+-----+-----+",
+        city.viewCity(playMap,poolList)
+        assert print_values == ["    A     B     C     D   \t\tBuildings\tRemaining",
+                                " +-----+-----+-----+-----+\t\tBCH\t\t8",
+                                "1|     |     |     |     |\t\tFAC\t\t8",
+                                " +-----+-----+-----+-----+\t\tHSE\t\t8",
+                                "2|     |     |     |     |\t\tSHP\t\t8",
+                                " +-----+-----+-----+-----+\t\tHWY\t\t8",
                                 "3|     |     |     |     |",
                                 " +-----+-----+-----+-----+",
                                 "4|     |     |     |     |",
@@ -44,40 +45,78 @@ class test_City(unittest.TestCase):
         self.assertFalse(city.validCitySize('a',10))
         self.assertFalse(city.validCitySize(1,27))
 
+    def test_viewCity_1(self):
+        sample_map = city.newGrid(1,26)
+        print_values = []
+        builtins.print = lambda s: print_values.append(s)
+        city.viewCity(sample_map,poolList)
+        assert print_values == ["     A     B     C     D     E     F     G     H     I     J     K     L     M     N     O     P     Q     R     S     T     U     V     W     X     Y     Z   \t\tBuildings\tRemaining",
+                                "  +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+\t\tBCH\t\t8",
+                                " 1|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |\t\tFAC\t\t8",
+                                "  +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+\t\tHSE\t\t8",
+                                "                                                                                                                                                               \t\tSHP\t\t8",
+                                "                                                                                                                                                               \t\tHWY\t\t8",
+                                ]
 
+    def test_viewCity_2(self):
+        sample_map = city.newGrid(1,10)
+        print_values = []
+        builtins.print = lambda s: print_values.append(s)
+        city.viewCity(sample_map,poolList)
+        assert print_values == ["     A     B     C     D     E     F     G     H     I     J   \t\tBuildings\tRemaining",
+                                "  +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+\t\tBCH\t\t8",
+                                " 1|     |     |     |     |     |     |     |     |     |     |\t\tFAC\t\t8",
+                                "  +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+\t\tHSE\t\t8",
+                                "                                                               \t\tSHP\t\t8",
+                                "                                                               \t\tHWY\t\t8",
+                                ]
 
+    def test_viewCity_3(self):
+        sample_map = city.newGrid(2,5)
+        print_values = []
+        builtins.print = lambda s: print_values.append(s)
+        city.viewCity(sample_map,poolList)
+        assert print_values == ["     A     B     C     D     E   \t\tBuildings\tRemaining",
+                                "  +-----+-----+-----+-----+-----+\t\tBCH\t\t8",
+                                " 1|     |     |     |     |     |\t\tFAC\t\t8",
+                                "  +-----+-----+-----+-----+-----+\t\tHSE\t\t8",
+                                " 2|     |     |     |     |     |\t\tSHP\t\t8",
+                                "  +-----+-----+-----+-----+-----+\t\tHWY\t\t8",
+                                ]
 
     # checks whether it creates the city map accordingly to the dimension size given by user
     # should return a 2d array list
     # should also include the header + gridlines
     def test_NewGrid_smallest(self):
         #test scenario for 1x1 dimension city size
-        expected_city = ["     A   ",
-                         "  +-----+",
-                         " 1|     |",
-                         "  +-----+"
+        expected_city = ["     A   \t\tBuildings\tRemaining",
+                         "  +-----+\t\tBCH\t\t8",
+                         " 1|     |\t\tFAC\t\t8",
+                         "  +-----+\t\tHSE\t\t8",
+                         "         \t\tSHP\t\t8",
+                         "         \t\tHWY\t\t8"
                             ]
 
         print_values = []
         builtins.print = lambda s: print_values.append(s)
         map_1 = city.newGrid(1,1)
-        city.viewCity(map_1)
+        city.viewCity(map_1,poolList)
         assert print_values == expected_city
 
     def test_NewGrid_biggest(self):
-
         #test scenario for 2x10 dimension city size
-        expected_city_2 = [
-                            "     A     B     C     D     E     F     G     H     I     J     K     L     M     N     O     P     Q     R     S     T     U     V     W     X     Y     Z   ",
-                            "  +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+",
-                            " 1|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |",
-                            "  +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+"
-                            ]
+        expected_city_2 = ["     A     B     C     D     E     F     G     H     I     J     K     L     M     N     O     P     Q     R     S     T     U     V     W     X     Y     Z   \t\tBuildings\tRemaining",
+                                "  +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+\t\tBCH\t\t8",
+                                " 1|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |\t\tFAC\t\t8",
+                                "  +-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+\t\tHSE\t\t8",
+                                "                                                                                                                                                               \t\tSHP\t\t8",
+                                "                                                                                                                                                               \t\tHWY\t\t8",
+                                ]
        
         print_values = []
         builtins.print = lambda s: print_values.append(s)
         map_2 = city.newGrid(1,26)
-        city.viewCity(map_2)
+        city.viewCity(map_2,poolList)
         assert print_values == expected_city_2
 
     
@@ -85,12 +124,12 @@ class test_City(unittest.TestCase):
         # for rows > 10, there should be a space added infront of the number
         # so that the displayed numbers will be aligned 
         expected_city_3 = [
-                            "     A     B     C     D   ",
-                            "  +-----+-----+-----+-----+",
-                            " 1|     |     |     |     |",
-                            "  +-----+-----+-----+-----+",
-                            " 2|     |     |     |     |",
-                            "  +-----+-----+-----+-----+",
+                            "     A     B     C     D   \t\tBuildings\tRemaining",
+                            "  +-----+-----+-----+-----+\t\tBCH\t\t8",
+                            " 1|     |     |     |     |\t\tFAC\t\t8",
+                            "  +-----+-----+-----+-----+\t\tHSE\t\t8",
+                            " 2|     |     |     |     |\t\tSHP\t\t8",
+                            "  +-----+-----+-----+-----+\t\tHWY\t\t8",
                             " 3|     |     |     |     |",
                             "  +-----+-----+-----+-----+",
                             " 4|     |     |     |     |",
@@ -107,13 +146,12 @@ class test_City(unittest.TestCase):
                             "  +-----+-----+-----+-----+",
                             "10|     |     |     |     |",
                             "  +-----+-----+-----+-----+"
-
                             ]
         
         print_values = []
         builtins.print = lambda s: print_values.append(s)
         map_3 = city.newGrid(10,4)
-        city.viewCity(map_3)
+        city.viewCity(map_3,poolList)
         assert print_values == expected_city_3
         
 
@@ -135,12 +173,12 @@ class test_City(unittest.TestCase):
         assert output == [
                     "Option 1 - Start New Game",
                     "\n-----------------------Turn 1-----------------------\n",
-                    "     A     B     C     D   ",
-                    "  +-----+-----+-----+-----+",
-                    " 1|     |     |     |     |",
-                    "  +-----+-----+-----+-----+",
-                    " 2|     |     |     |     |",
-                    "  +-----+-----+-----+-----+",
+                    "     A     B     C     D   \t\tBuildings\tRemaining",
+                    "  +-----+-----+-----+-----+\t\tBCH\t\t8",
+                    " 1|     |     |     |     |\t\tFAC\t\t8",
+                    "  +-----+-----+-----+-----+\t\tHSE\t\t8",
+                    " 2|     |     |     |     |\t\tSHP\t\t8",
+                    "  +-----+-----+-----+-----+\t\tHWY\t\t8",
                     " 3|     |     |     |     |",
                     "  +-----+-----+-----+-----+",
                     " 4|     |     |     |     |",
@@ -170,12 +208,12 @@ class test_City(unittest.TestCase):
         assert output == [
                     "Option 1 - Start New Game",
                     "\n-----------------------Turn 1-----------------------\n",
-                    "     A     B     C     D     E     F   ",
-                    "  +-----+-----+-----+-----+-----+-----+",
-                    " 1|     |     |     |     |     |     |",
-                    "  +-----+-----+-----+-----+-----+-----+",
-                    " 2|     |     |     |     |     |     |",
-                    "  +-----+-----+-----+-----+-----+-----+",
+                    "     A     B     C     D     E     F   \t\tBuildings\tRemaining",
+                    "  +-----+-----+-----+-----+-----+-----+\t\tBCH\t\t8",
+                    " 1|     |     |     |     |     |     |\t\tFAC\t\t8",
+                    "  +-----+-----+-----+-----+-----+-----+\t\tHSE\t\t8",
+                    " 2|     |     |     |     |     |     |\t\tSHP\t\t8",
+                    "  +-----+-----+-----+-----+-----+-----+\t\tHWY\t\t8",
                     " 3|     |     |     |     |     |     |",
                     "  +-----+-----+-----+-----+-----+-----+",
                     " 4|     |     |     |     |     |     |",

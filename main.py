@@ -6,7 +6,7 @@ from saveGame import saveGame
 from copy import error
 import city
 from gameMenu import gameMenu
-
+import city
 
 #Variables
 loc_col = []
@@ -41,6 +41,11 @@ def mainMenu():
     # Exit Menu
     elif (choice == '0'):
         return False
+
+    elif choice =='5':
+        playCity = city.newGrid(2,5)
+        buildingPools = loadSavedBuildingPools('savedBuildingPools')
+        city.viewCity(playCity,buildingPools)
     # Validate for Invalid Input
     else:
         print('\nInvalid option, please try again!')

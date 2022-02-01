@@ -15,8 +15,3 @@ def deductBPoolCopies(bPool,bName):
     index = x[0][0]
     bPool[index]['Copies']-=1
     return bPool
-
-def viewRemainingBuilds(bPool):
-    print('Buildings\tRemaining\n----------\t----------')
-    for i in range(len(bPool)):
-        print('{}\t\t{}'.format(bPool['Building'][i],bPool['Copies'][i]))
