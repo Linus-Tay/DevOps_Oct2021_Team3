@@ -60,6 +60,7 @@ def gameMenu(bPool,playCity,turn,b1,b2):
                     turn = buildings.insertBuild(playCity,bPool,build_loc,b1,turn)
                 except:
                     print("Invalid Input, Please try again")
+                
                     
         
                 if turn> currentT:

@@ -1,6 +1,6 @@
 # Imports
 
-from buildingPools import initBuildingPools, rollBuilding
+from buildingPools import chooseBuildingPools, initBuildingPools, rollBuilding
 from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
 from saveGame import saveGame
 from copy import error
@@ -46,6 +46,8 @@ def mainMenu():
         playCity = city.newGrid(2,5)
         buildingPools = loadSavedBuildingPools('savedBuildingPools')
         city.viewCity(playCity,buildingPools)
+    elif choice =='6':
+        chosen_list = chooseBuildingPools()
     # Validate for Invalid Input
     else:
         print('\nInvalid option, please try again!')

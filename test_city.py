@@ -1,13 +1,14 @@
 
 import builtins
 from io import StringIO
+from multiprocessing import pool
 import sys
 import unittest
-from buildingPools import initBuildingPools
+import buildingPools
 import city
 import main
 import testBase
-poolList = initBuildingPools()
+poolList = buildingPools.initBuildingPools('BCH','FAC','HSE','SHP','HWY')
 
 
 class test_City(unittest.TestCase):
@@ -165,8 +166,8 @@ class test_City(unittest.TestCase):
         testBase.set_keyboard_input(['0'])  
         #default building settings
         citymap = city.newGrid(4,4)
-        pool = initBuildingPools()
-        city.startNewGame(citymap,pool)
+
+        city.startNewGame(citymap,poolList)
         output = testBase.get_display_output()
         b1 = output[12]
         b2 = output[13]
@@ -200,8 +201,8 @@ class test_City(unittest.TestCase):
         testBase.set_keyboard_input(['0'])
         #assuming user set the city size to 6x6
         citymap = city.newGrid(6,6)
-        pool = initBuildingPools()
-        city.startNewGame(citymap,pool)
+
+        city.startNewGame(citymap,poolList)
         output = testBase.get_display_output()
         b1 = output[16]
         b2 = output[17]
