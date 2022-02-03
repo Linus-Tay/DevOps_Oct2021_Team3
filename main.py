@@ -12,6 +12,10 @@ import city
 loc_col = []
 loc_row = []
 
+default_pool = initBuildingPools()
+default_map = city.newGrid(4,4)
+
+
 def mainMenu():
 
     print('\nWelcome, mayor of Simp City!')
@@ -25,7 +29,7 @@ def mainMenu():
 
     # Start New Game
     if (choice == '1'):    
-        city.startNewGame()
+        city.startNewGame(default_map,default_pool)
 
     # Load Saved game
     elif (choice == '2'): 
