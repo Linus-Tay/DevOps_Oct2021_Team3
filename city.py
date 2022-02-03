@@ -168,9 +168,12 @@ def newGrid(x_axis,y_axis):
 
     return playCity
 
-
+# function for the process of choosing city size
 def chooseCitySize(city_map,bPool):
+    # print option header
     print("Choose City size with dimension of row and column")
+
+    # variables to control loop
     opt = 0
     updated = False
     while opt == 0 and updated != True:
@@ -180,12 +183,14 @@ def chooseCitySize(city_map,bPool):
         except ValueError:
             print("Invalid Input! Please enter a number input!")
         else:
+            # should print out the city map to show user their new map 
+            # allow user the option to re-configure or go back to previous menu
             if validCitySize(row,col) == True:
                 print("Your city map is now {}x{}: ".format(row,col))
                 updated = True
                 city_map = newGrid(row,col)
                 viewCity(city_map,bPool)
-                a_file = open("citymap.csv","w")
+                a_file = open("playmap.csv","w")
                 a_file.truncate()
                 for i in range(len(city_map)):
                     a_file.write(str(''.join(city_map[i])))
@@ -193,11 +198,11 @@ def chooseCitySize(city_map,bPool):
                 a_file.close()
                 print("[1] re-configure city map")
                 print("[0] return to previous menu")
-                opt = input(str("Enter your choice?"))
-                if opt == '1':
+                option = int(input("Enter your choice?"))
+                if option == 1:
                     updated = False
                 else:
-                    exit
+                    return
 
 def startNewGame(citymap,pool):
     

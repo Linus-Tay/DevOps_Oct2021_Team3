@@ -5,8 +5,6 @@ import sys
 import unittest
 from buildingPools import initBuildingPools
 import city
-from loadSavedGame import loadSavedGame
-import main
 import testBase
 poolList = initBuildingPools()
 
@@ -186,9 +184,8 @@ class test_City(unittest.TestCase):
                     "  +-----+-----+-----+-----+",
                     "[1] Build a" + b1[11:15],
                     "[2] Build a" + b2[11:15],
-                    "[3] See remaining buildings",
-                    "[4] See Current Score\n",
-                    "[5] Save Game",
+                    "[3] See Current Score\n",
+                    "[4] Save Game",
                     "[0] Exit to main menu",
                     "\nYour Choice? "
                     ]
@@ -225,9 +222,8 @@ class test_City(unittest.TestCase):
                     "  +-----+-----+-----+-----+-----+-----+",
                     "[1] Build a" + b1[11:15],
                     "[2] Build a" + b2[11:15],
-                    "[3] See remaining buildings",
-                    "[4] See Current Score\n",
-                    "[5] Save Game",
+                    "[3] See Current Score\n",
+                    "[4] Save Game",
                     "[0] Exit to main menu",
                     "\nYour Choice? "
                     ]

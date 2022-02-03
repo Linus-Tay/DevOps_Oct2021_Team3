@@ -33,9 +33,8 @@ class test_MainMenu_function(unittest.TestCase):
                             
                             "[1] Build a FAC",
                             "[2] Build a SHP",
-                            "[3] See remaining buildings",
-                            "[4] See Current Score\n",
-                            "[5] Save Game",
+                            "[3] See Current Score\n",
+                            "[4] Save Game",
                             "[0] Exit to main menu",
                             "\nYour Choice? ",
                             "\nInvalid option, please try again",
@@ -53,16 +52,15 @@ class test_MainMenu_function(unittest.TestCase):
                                 
                             "[1] Build a FAC",
                             "[2] Build a SHP",
-                            "[3] See remaining buildings",
-                            "[4] See Current Score\n",
-                            "[5] Save Game",
+                            "[3] See Current Score\n",
+                            "[4] Save Game",
                             "[0] Exit to main menu",
                             "\nYour Choice? "]
 
-    def test_GameMenuOpt4(self):
+    def test_GameMenuOpt3(self):
             out = StringIO()
             sys.stdout = out 
-            testBase.set_keyboard_input(["4",'0'])
+            testBase.set_keyboard_input(["3",'0'])
             city.gameMenu(default_pool,default_map,1,"FAC","SHP")
             output = testBase.get_display_output()
             assert output == [
@@ -80,12 +78,11 @@ class test_MainMenu_function(unittest.TestCase):
                         
                         "[1] Build a FAC",
                         "[2] Build a SHP",
-                        "[3] See remaining buildings",
-                        "[4] See Current Score\n",
-                        "[5] Save Game",
+                        "[3] See Current Score\n",
+                        "[4] Save Game",
                         "[0] Exit to main menu",
                         "\nYour Choice? ",
-                        "Option 4, View Current Score!",
+                        "Option 3, View Current Score!",
                         "\n-------------------Current Score--------------------\n",
                         "HSE: 0",
                         "FAC: 0",
@@ -107,21 +104,20 @@ class test_MainMenu_function(unittest.TestCase):
                           
                           "[1] Build a FAC",
                           "[2] Build a SHP",
-                          "[3] See remaining buildings",
-                          "[4] See Current Score\n",
-                          "[5] Save Game",
+                          "[3] See Current Score\n",
+                          "[4] Save Game",
                           "[0] Exit to main menu",
                           "\nYour Choice? "
             ]
-    def test_GameMenuOpt5(self):
+    def test_GameMenuOpt4(self):
             out = StringIO()
             sys.stdout = out 
-            testBase.set_keyboard_input(["5"])
+            testBase.set_keyboard_input(["4"])
             try:
               city.gameMenu(default_pool,default_map,1,"FAC","SHP")
             except:
                 output = testBase.get_display_output()
-                assert output[-1] == "Option 5, save game!"
+                assert output[-1] == "Option 4, save game!"
 
     def test_EndGame(self):
       self.assertEqual(city.gameMenu(default_pool,default_map,17,"FAC","SHP"),"End") 
