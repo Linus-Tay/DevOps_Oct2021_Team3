@@ -3,7 +3,7 @@ import numpy as np
 # MenuMenu Option 2 - Load Saved Game
 def loadSavedGame(filename):
     try:
-        file=open('{}.csv'.format(filename),'r')
+        file=open('{}.csv'.format(filename),'r',encoding='utf-8-sig')
         mainCity=[]
         lineList=[]
         for line in file:

@@ -1,6 +1,8 @@
 import csv
 import copy
 
+from numpy import empty
+
 from buildingPools import initBuildingPools, rollBuilding
 from gameMenu import gameMenu
 
@@ -168,6 +170,37 @@ def newGrid(x_axis,y_axis):
 
     return playCity
 
+
+def chooseCitySize(city_map,bPool):
+    print("Choose City size with dimension of row and column")
+    opt = 0
+    updated = False
+    while opt == 0 and updated != True:
+        try:
+            row = int(input("Please enter the number of rows desired: "))
+            col = int(input("Please enter the number of columns desired: "))
+        except ValueError:
+            print("Invalid Input! Please enter a number input!")
+        else:
+            if validCitySize(row,col) == True:
+                print("Your city map is now {}x{}: ".format(row,col))
+                updated = True
+                city_map = newGrid(row,col)
+                viewCity(city_map,bPool)
+                a_file = open("playmap.csv", "w")
+                a_file.truncate()
+                for i in range(len(city_map)):
+                    a_file.write(str(''.join(city_map[i])))
+                    a_file.write('\n')
+                a_file.close()
+                print("[1] re-configure city map")
+                print("[0] return to previous menu")
+                option = int(input("Enter your choice?"))
+                if option == 1:
+                    updated = False
+                
+                else:
+                    return                  
 
 
 def startNewGame(citymap,pool):

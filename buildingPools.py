@@ -23,6 +23,7 @@ def chooseBuildingPools():
                     ('Monuments','MON'),('Parks','PRK')]
     chosen_list = []
     counter = 1 
+
     print("Choose your buildings")
     while counter < 6:
         print("Available Buildings:\n")    
@@ -31,14 +32,15 @@ def chooseBuildingPools():
             print("[{}] {} ({})".format((buildingList.index(x)+1),x[0],x[1]))
 
         try:
-            b_idx = int(input("\nPlease choose your building (number) from the given options:"))  
-            chosen = buildingList[b_idx-1][1]
+            b_idx = int(input("\nPlease choose your building (number) from the given options:"))
+            chosen = buildingList[b_idx-1][1] 
+        
         except IndexError:
             print("Invalid option, please retry with the options given")
         except ValueError:
             print('Invalid input given, please retry with the options given')
         
-        else:        
+        else: 
             #appends chosen building to chosen_list
             chosen_list.append(chosen)
             #removes the chosen building from buildingList
@@ -47,6 +49,7 @@ def chooseBuildingPools():
                 print("Your current list: ({})".format(",".join(chosen_list)))
             else:
                 print("Your final list: ({})".format(",".join(chosen_list)))
+        
             counter +=1
                    
     return chosen_list
