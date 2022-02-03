@@ -23,19 +23,48 @@ def loadCity(file):
             return False
 
 
-def viewCity(map):
-    # print(map)
+def viewCity(map,bpool):
+    city=[]
     for i in map:
-        print("{}".format("".join(i)))
-    # city=[]
-    # for i in map:
-    #     string = ''
-    #     for char in i:
-    #         string += char
-    #     city.append(string)
-    # for i in city:
-    #     print(i)
-    # print('')
+        string = ''
+        for char in i:
+            string += char
+        city.append(string)
+
+    i = 0 
+    k = 0
+    # in the case where the length of city is more than building pools list
+    if len(city) > len(bpool):
+        while i < len(city):
+            if i < len(city):
+                if i == 0:
+                    print("{}\t\tBuildings\tRemaining".format(city[i]))
+                elif i <= len(bpool):
+                    print("{}\t\t{}\t\t{}".format(city[i],bpool[k]['Building'],bpool[k]['Copies']))
+                    k+=1
+                else:
+                    #print remaining of city
+                    print("{}".format(city[i]))
+            i +=1
+    #case when length of building pools is longer            
+    else:
+        while i <= len(bpool):
+            if i < len(bpool):
+                if i == 0:
+                    print("{}\t\tBuildings\tRemaining".format(city[i]))
+
+                elif i < len(city):
+                    # need this statment so all elements in city can be printed
+                    print("{}\t\t{}\t\t{}".format(city[i],bpool[k]['Building'],bpool[k]['Copies']))
+                    k +=1
+                else:
+                    #print remaining of building pools
+                    print("{}\t\t{}\t\t{}".format(" "*len(city[0]),bpool[k]['Building'],bpool[k]['Copies']))
+                    k +=1            
+            else:
+                #print the last item 
+                print("{}\t\t{}\t\t{}".format(" "*len(city[0]),bpool[k]['Building'],bpool[k]['Copies']))
+            i +=1
 
 
 def validCitySize(x_axis,y_axis):
@@ -140,6 +169,35 @@ def newGrid(x_axis,y_axis):
     return playCity
 
 
+def chooseCitySize(city_map,bPool):
+    print("Choose City size with dimension of row and column")
+    opt = 0
+    updated = False
+    while opt == 0 and updated != True:
+        try:
+            row = int(input("Please enter the number of rows desired: "))
+            col = int(input("Please enter the number of columns desired: "))
+        except ValueError:
+            print("Invalid Input! Please enter a number input!")
+        else:
+            if validCitySize(row,col) == True:
+                print("Your city map is now {}x{}: ".format(row,col))
+                updated = True
+                city_map = newGrid(row,col)
+                viewCity(city_map,bPool)
+                a_file = open("citymap.csv","w")
+                a_file.truncate()
+                for i in range(len(city_map)):
+                    a_file.write(str(''.join(city_map[i])))
+                    a_file.write('\n')
+                a_file.close()
+                print("[1] re-configure city map")
+                print("[0] return to previous menu")
+                opt = input(str("Enter your choice?"))
+                if opt == '1':
+                    updated = False
+                else:
+                    exit
 
 def startNewGame(citymap,pool):
     

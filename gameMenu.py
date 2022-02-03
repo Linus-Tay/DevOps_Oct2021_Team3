@@ -14,7 +14,7 @@ def gameMenu(bPool,playCity,turn,b1,b2):
         if turn == 17:
             # Diplay Final layout
             print('\nFinal layout of Simp City:\n')
-            city.viewCity(playCity)
+            city.viewCity(playCity,bPool)
             calculateScore.calculateScore(playCity)
             return "End"
         else:
@@ -27,7 +27,7 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             print('\n-----------------------Turn {}-----------------------\n'.format(turn))
 
             # Display City
-            city.viewCity(playCity)
+            city.viewCity(playCity,bPool)
 
             # Display Game Menu Options
             for i in range(len(game_menu)):
@@ -65,10 +65,6 @@ def gameMenu(bPool,playCity,turn,b1,b2):
                 if turn> currentT:
                     b1 = buildingPools.rollBuilding(bPool)
                     b2 = buildingPools.rollBuilding(bPool)
-            # GameOption 3 - View Remaining Building Available
-            elif game_option == '3':
-                print("Option 3, View Remaining Building Available!")
-                buildingPools.viewRemainingBuilds(bPool)
             # GameOption 4 - View Current Score
             elif game_option == '4':
                 print("Option 4, View Current Score!")
