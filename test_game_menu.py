@@ -1,32 +1,36 @@
-from numpy.lib.utils import info
-from gameMenu import gameMenu
-from unittest import mock, TestCase
-from testBase import get_display_output, set_keyboard_input
+# from numpy.lib.utils import info
+# from gameMenu import gameMenu
+
+# from unittest import mock, TestCase
+import unittest
+# from testBase import get_display_output, set_keyboard_input
+import testBase
 import sys 
 from io import StringIO
-import numpy as np
 import buildingPools 
 import city
+default_pool = buildingPools.initBuildingPools()
+default_map = city.newGrid(4,4)
 
-class test_MainMenu_function(TestCase):
+class test_MainMenu_function(unittest.TestCase):
     def test_GameMenuInvOptAndOpt0(self):
         out = StringIO()
         sys.stdout = out 
-        set_keyboard_input(["InvalidInput","0"])
-        gameMenu(buildingPools.initBuildingPools,city.loadCity('start.csv'),1,"FAC","SHP")
-        output = get_display_output()
+        testBase.set_keyboard_input(["InvalidInput","0"])
+        city.gameMenu(default_pool,default_map,1,"FAC","SHP")
+        output = testBase.get_display_output()
         assert output == ["\n-----------------------Turn 1-----------------------\n",
-                            "    A     B     C     D   ",
-                            " +-----+-----+-----+-----+",
-                            "1|     |     |     |     |",
-                            " +-----+-----+-----+-----+",
-                            "2|     |     |     |     |",
-                            " +-----+-----+-----+-----+",
-                            "3|     |     |     |     |",
-                            " +-----+-----+-----+-----+",
-                            "4|     |     |     |     |",
-                            " +-----+-----+-----+-----+",
-                            '',
+                            "     A     B     C     D   \t\tBuildings\tRemaining",
+                            "  +-----+-----+-----+-----+\t\tBCH\t\t8",
+                            " 1|     |     |     |     |\t\tFAC\t\t8",
+                            "  +-----+-----+-----+-----+\t\tHSE\t\t8",
+                            " 2|     |     |     |     |\t\tSHP\t\t8",
+                            "  +-----+-----+-----+-----+\t\tHWY\t\t8",
+                            " 3|     |     |     |     |",
+                            "  +-----+-----+-----+-----+",
+                            " 4|     |     |     |     |",
+                            "  +-----+-----+-----+-----+",
+                            
                             "[1] Build a FAC",
                             "[2] Build a SHP",
                             "[3] See remaining buildings",
@@ -36,17 +40,17 @@ class test_MainMenu_function(TestCase):
                             "\nYour Choice? ",
                             "\nInvalid option, please try again",
                             "\n-----------------------Turn 1-----------------------\n",
-                            "    A     B     C     D   ",
-                            " +-----+-----+-----+-----+",
-                            "1|     |     |     |     |",
-                            " +-----+-----+-----+-----+",
-                            "2|     |     |     |     |",
-                            " +-----+-----+-----+-----+",
-                            "3|     |     |     |     |",
-                            " +-----+-----+-----+-----+",
-                            "4|     |     |     |     |",
-                            " +-----+-----+-----+-----+",
-                            '',
+                            "     A     B     C     D   \t\tBuildings\tRemaining",
+                            "  +-----+-----+-----+-----+\t\tBCH\t\t8",
+                            " 1|     |     |     |     |\t\tFAC\t\t8",
+                            "  +-----+-----+-----+-----+\t\tHSE\t\t8",
+                            " 2|     |     |     |     |\t\tSHP\t\t8",
+                            "  +-----+-----+-----+-----+\t\tHWY\t\t8",
+                            " 3|     |     |     |     |",
+                            "  +-----+-----+-----+-----+",
+                            " 4|     |     |     |     |",
+                            "  +-----+-----+-----+-----+",
+                                
                             "[1] Build a FAC",
                             "[2] Build a SHP",
                             "[3] See remaining buildings",
@@ -54,34 +58,26 @@ class test_MainMenu_function(TestCase):
                             "[5] Save Game",
                             "[0] Exit to main menu",
                             "\nYour Choice? "]
-    def test_GameMenuOpt3(self):
-            out = StringIO()
-            sys.stdout = out 
-            set_keyboard_input(["3"])
-            try:
-              gameMenu(buildingPools.initBuildingPools,city.loadCity('start.csv'),1,"FAC","SHP")
-            except:
-                output = get_display_output()
-                assert output[-2] + output[-1] == "Option 3, View Remaining Building Available!" + 'Buildings\tRemaining\n----------\t----------'
-    
+
     def test_GameMenuOpt4(self):
             out = StringIO()
             sys.stdout = out 
-            set_keyboard_input(["4","0"])
-            gameMenu(buildingPools.initBuildingPools,city.loadCity('start.csv'),1,"FAC","SHP")
-            output = get_display_output()
-            assert output == ["\n-----------------------Turn 1-----------------------\n",
-                        "    A     B     C     D   ",
-                        " +-----+-----+-----+-----+",
-                        "1|     |     |     |     |",
-                        " +-----+-----+-----+-----+",
-                        "2|     |     |     |     |",
-                        " +-----+-----+-----+-----+",
-                        "3|     |     |     |     |",
-                        " +-----+-----+-----+-----+",
-                        "4|     |     |     |     |",
-                        " +-----+-----+-----+-----+",
-                        '',
+            testBase.set_keyboard_input(["4",'0'])
+            city.gameMenu(default_pool,default_map,1,"FAC","SHP")
+            output = testBase.get_display_output()
+            assert output == [
+                        "\n-----------------------Turn 1-----------------------\n",
+                        "     A     B     C     D   \t\tBuildings\tRemaining",
+                        "  +-----+-----+-----+-----+\t\tBCH\t\t8",
+                        " 1|     |     |     |     |\t\tFAC\t\t8",
+                        "  +-----+-----+-----+-----+\t\tHSE\t\t8",
+                        " 2|     |     |     |     |\t\tSHP\t\t8",
+                        "  +-----+-----+-----+-----+\t\tHWY\t\t8",
+                        " 3|     |     |     |     |",
+                        "  +-----+-----+-----+-----+",
+                        " 4|     |     |     |     |",
+                        "  +-----+-----+-----+-----+",
+                        
                         "[1] Build a FAC",
                         "[2] Build a SHP",
                         "[3] See remaining buildings",
@@ -98,35 +94,36 @@ class test_MainMenu_function(TestCase):
                         "BCH: 0 ",
                         "\nTotal Score: 0",
                         "\n-----------------------Turn 1-----------------------\n",
-                          "    A     B     C     D   ",
-                          " +-----+-----+-----+-----+",
-                          "1|     |     |     |     |",
-                          " +-----+-----+-----+-----+",
-                          "2|     |     |     |     |",
-                          " +-----+-----+-----+-----+",
-                          "3|     |     |     |     |",
-                          " +-----+-----+-----+-----+",
-                          "4|     |     |     |     |",
-                          " +-----+-----+-----+-----+",
-                          '',
+                          "     A     B     C     D   \t\tBuildings\tRemaining",
+                          "  +-----+-----+-----+-----+\t\tBCH\t\t8",
+                          " 1|     |     |     |     |\t\tFAC\t\t8",
+                          "  +-----+-----+-----+-----+\t\tHSE\t\t8",
+                          " 2|     |     |     |     |\t\tSHP\t\t8",
+                          "  +-----+-----+-----+-----+\t\tHWY\t\t8",
+                          " 3|     |     |     |     |",
+                          "  +-----+-----+-----+-----+",
+                          " 4|     |     |     |     |",
+                          "  +-----+-----+-----+-----+",
+                          
                           "[1] Build a FAC",
                           "[2] Build a SHP",
                           "[3] See remaining buildings",
                           "[4] See Current Score\n",
                           "[5] Save Game",
                           "[0] Exit to main menu",
-                          "\nYour Choice? "]
+                          "\nYour Choice? "
+            ]
     def test_GameMenuOpt5(self):
             out = StringIO()
             sys.stdout = out 
-            set_keyboard_input(["5"])
+            testBase.set_keyboard_input(["5"])
             try:
-              gameMenu(buildingPools.initBuildingPools,city.loadCity('start.csv'),1,"FAC","SHP")
+              city.gameMenu(default_pool,default_map,1,"FAC","SHP")
             except:
-                output = get_display_output()
+                output = testBase.get_display_output()
                 assert output[-1] == "Option 5, save game!"
 
     def test_EndGame(self):
-      self.assertEqual(gameMenu(buildingPools.initBuildingPools,city.loadCity('start.csv'),17,"FAC","SHP"),"End") 
+      self.assertEqual(city.gameMenu(default_pool,default_map,17,"FAC","SHP"),"End") 
 
                              

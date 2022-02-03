@@ -10,7 +10,7 @@ import numpy as np
 import builtins
 import unittest.mock
 sample_map = loadCity('start.csv')
-bPool = initBuildingPools()
+bPool = buildingPools.initBuildingPools()
 x = np.where(bPool['Building']=="BCH")
 index = x[0][0]
 testBuild = bPool[index]
@@ -82,6 +82,7 @@ class test_InsertBuildings(unittest.TestCase):
     def test(self):
         with mock.patch('buildingPools.rollBuilding',side_effect=['Data1']):
             self.assertEqual(buildingPools.rollBuilding(),"Data1")
+
 
 
        
