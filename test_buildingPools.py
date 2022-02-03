@@ -12,3 +12,5 @@ class testbuildings_improve(unittest.TestCase):
             dtype=[('Building','U5'),('Copies','<i4')])
 
         self.assertCountEqual(buildingPools.deductBPoolCopies(bPool,"BCH"),expected)
+
+        #self.assertEqual(deductBPoolCopies(bPool,"BCH"),bPool[index]['Copies']-1)

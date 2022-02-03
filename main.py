@@ -6,11 +6,15 @@ from saveGame import saveGame
 from copy import error
 import city
 from gameMenu import gameMenu
-
+import city
 
 #Variables
 loc_col = []
 loc_row = []
+
+default_pool = initBuildingPools()
+default_map = city.newGrid(4,4)
+
 
 def mainMenu():
 
@@ -25,7 +29,7 @@ def mainMenu():
 
     # Start New Game
     if (choice == '1'):    
-        city.startNewGame()
+        city.startNewGame(default_map,default_pool)
 
     # Load Saved game
     elif (choice == '2'): 
@@ -41,6 +45,11 @@ def mainMenu():
     # Exit Menu
     elif (choice == '0'):
         return False
+
+    elif choice =='5':
+        playCity = city.newGrid(2,5)
+        buildingPools = loadSavedBuildingPools('savedBuildingPools')
+        city.viewCity(playCity,buildingPools)
     # Validate for Invalid Input
     else:
         print('\nInvalid option, please try again!')
