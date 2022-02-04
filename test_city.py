@@ -36,7 +36,7 @@ class test_City(unittest.TestCase):
         self.assertTrue(city.validCitySize(8,5))
         self.assertTrue(city.validCitySize(1,1))
         self.assertTrue(city.validCitySize(2,20))
-        self.assertTrue(city.validCitySize(1,26))
+        self.assertTrue(city.validCitySize(1,20))
 
     def test_inValidCitySize(self):
         self.assertFalse(city.validCitySize(9,5))
@@ -237,10 +237,10 @@ class test_City(unittest.TestCase):
         city.chooseCitySize(default_citymap,default_pool)
         output = testBase.get_display_output()
         assert output == [
-                        "Choose City size with dimension of row and column",
+                        "Choose City size with dimension of row and column\n",
                         "Please enter the number of rows desired: ",
                         "Please enter the number of columns desired: ",
-                        "Your city map is now 5x5: ",
+                        "Your city map is now 5x5\n",
                         "     A     B     C     D     E   \t\tBuildings\tRemaining",
                         "  +-----+-----+-----+-----+-----+\t\tBCH\t\t8",
                         " 1|     |     |     |     |     |\t\tFAC\t\t8",
@@ -253,9 +253,9 @@ class test_City(unittest.TestCase):
                         "  +-----+-----+-----+-----+-----+",
                         " 5|     |     |     |     |     |",
                         "  +-----+-----+-----+-----+-----+",
-                        "[1] re-configure city map",
-                        "[0] return to previous menu",
-                        "Enter your choice?"
+                        "\n[1] Re-configure city map",
+                        "[0] Return to previous menu\n",
+                        "Enter your choice? "
         ]
 
     def test_ChooseCitySize_InvalidOpt(self):
@@ -267,15 +267,15 @@ class test_City(unittest.TestCase):
         city.chooseCitySize(default_citymap,default_pool)
         output = testBase.get_display_output()
         assert output == [
-                        "Choose City size with dimension of row and column",
+                        "Choose City size with dimension of row and column\n",
                         "Please enter the number of rows desired: ",
-                        "Invalid Input! Please enter a number input!",
-                        "Please enter the number of rows desired: ",
-                        "Please enter the number of columns desired: ",
-                        "Invalid size! Please retry with a size of minimum of 1 squares and maximum of 40 squares",
+                        "Invalid Input! Please enter a number input!\n",
                         "Please enter the number of rows desired: ",
                         "Please enter the number of columns desired: ",
-                        "Your city map is now 5x5: ",
+                        "Invalid size! Please retry with a size of minimum of 1 squares and maximum of 40 squares\n",
+                        "Please enter the number of rows desired: ",
+                        "Please enter the number of columns desired: ",
+                        "Your city map is now 5x5\n",
                         "     A     B     C     D     E   \t\tBuildings\tRemaining",
                         "  +-----+-----+-----+-----+-----+\t\tBCH\t\t8",
                         " 1|     |     |     |     |     |\t\tFAC\t\t8",
@@ -288,7 +288,7 @@ class test_City(unittest.TestCase):
                         "  +-----+-----+-----+-----+-----+",
                         " 5|     |     |     |     |     |",
                         "  +-----+-----+-----+-----+-----+",
-                        "[1] re-configure city map",
-                        "[0] return to previous menu",
-                        "Enter your choice?"
+                        "\n[1] Re-configure city map",
+                        "[0] Return to previous menu\n",
+                        "Enter your choice? "
         ]

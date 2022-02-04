@@ -26,17 +26,10 @@ class test_MainMenu_function(unittest.TestCase):
                             "----------------------------",
                             "[1] Start new game",
                             "[2] Load saved game",
-                            "[3] Building Settings",
+                            "[3] Settings",
                             "\n[0] Exit",
                             "\nEnter your choice? ",
-                            "All building settings resetted to default! See you again"]
-        default_map = 'defaultmap.csv'
-        default_pool = 'defaultpool.csv'
-        play_map = 'playmap.csv'
-        play_pool = 'playpool.csv'
-        
-        self.assertTrue(filecmp.cmp(default_map,play_map))
-        self.assertTrue(filecmp.cmp(default_pool,play_pool))    
+        ]
                             
     def test_MainMenu_InvalidOpt(self):
         set_keyboard_input(['123','0'])
@@ -46,7 +39,7 @@ class test_MainMenu_function(unittest.TestCase):
                             "----------------------------",
                             "[1] Start new game",
                             "[2] Load saved game",
-                            "[3] Building Settings",
+                            "[3] Settings",
                             "\n[0] Exit",
                             "\nEnter your choice? ",
                             '\nInvalid option, please try again!']
@@ -62,13 +55,13 @@ class test_MainMenu_function(unittest.TestCase):
                             "----------------------------",
                             "[1] Start new game",
                             "[2] Load saved game",
-                            "[3] Building Settings",
+                            "[3] Settings",
                             "\n[0] Exit",
                             "\nEnter your choice? ",
-                            "Option 3 - Building Settings",
+                            "Option 3 - Settings\n",
                             "[1] Choose City Size",
                             "[2] Choose Building Pool",
-                            "[0] Return to previous menu",
+                            "\n[0] Return to main menu",
                             "\nEnter your choice? ",
         ]
 
@@ -84,18 +77,18 @@ class test_MainMenu_function(unittest.TestCase):
                             "----------------------------",
                             "[1] Start new game",
                             "[2] Load saved game",
-                            "[3] Building Settings",
+                            "[3] Settings",
                             "\n[0] Exit",
                             "\nEnter your choice? ",
-                            "Option 3 - Building Settings",
+                            "Option 3 - Settings\n",
                             "[1] Choose City Size",
                             "[2] Choose Building Pool",
-                            "[0] Return to previous menu",
+                            "\n[0] Return to main menu",
                             "\nEnter your choice? ",
-                            "Choose City size with dimension of row and column",
+                            "Choose City size with dimension of row and column\n",
                             "Please enter the number of rows desired: ",
                             "Please enter the number of columns desired: ",
-                            "Your city map is now 5x5: ",
+                            "Your city map is now 5x5\n",
                             "     A     B     C     D     E   \t\tBuildings\tRemaining",
                             "  +-----+-----+-----+-----+-----+\t\tBCH\t\t8",
                             " 1|     |     |     |     |     |\t\tFAC\t\t8",
@@ -108,12 +101,12 @@ class test_MainMenu_function(unittest.TestCase):
                             "  +-----+-----+-----+-----+-----+",
                             " 5|     |     |     |     |     |",
                             "  +-----+-----+-----+-----+-----+",
-                            "[1] re-configure city map",
-                            "[0] return to previous menu",
-                            "Enter your choice?",
-                            "Option 3 - Building Settings",
+                            "\n[1] Re-configure city map",
+                            "[0] Return to previous menu\n",
+                            "Enter your choice? ",
+                            "Option 3 - Settings\n",
                             "[1] Choose City Size",
                             "[2] Choose Building Pool",
-                            "[0] Return to previous menu",
+                            "\n[0] Return to main menu",
                             "\nEnter your choice? ",
         ]

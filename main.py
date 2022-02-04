@@ -9,15 +9,17 @@ import city
 from gameMenu import gameMenu
 import city
 
+dimension = [4,4]
 
 def mainMenu():
     #load game with default settings
-    citymap = loadSavedGame('playmap')
+    #citymap = loadSavedGame('playmap')
+    citymap = city.newGrid(dimension[0],dimension[1]) 
     pool = loadSavedBuildingPools('playpool')
-
+    
     print('\nWelcome, mayor of Simp City!')
     print('----------------------------')
-    option_list=('Start new game','Load saved game','Building Settings')
+    option_list=('Start new game','Load saved game','Settings')
 
     for i in range(len(option_list)):
         print('[{}] {}'.format(i+1,option_list[i]))
@@ -25,7 +27,8 @@ def mainMenu():
     choice = input(str('\nEnter your choice? '))
 
     # Start New Game
-    if (choice == '1'):    
+    if (choice == '1'):
+        
         city.startNewGame(citymap,pool)
 
     # Load Saved game
@@ -43,25 +46,21 @@ def mainMenu():
         settings_menu = ('Choose City Size','Choose Building Pool')
         opt = 1
         while opt != 0:
-            print("Option 3 - Building Settings")
+            print("Option 3 - Settings\n")
             for x in range(len(settings_menu)):
                 print("[{}] {}".format(x+1,settings_menu[x]))
-            print("[0] Return to previous menu")
+
+            print("\n[0] Return to main menu")
             option = input(str('\nEnter your choice? '))
             if option == '1':
-                city.chooseCitySize(citymap,pool)
+                city_size = city.chooseCitySize(citymap,pool)
+                dimension.insert(0,city_size[0])
+                dimension.insert(0,city_size[1])
             else:
                 opt = 0
-
-
     
     # Exit Menu
     elif (choice == '0'):
-        # Leave a goodbye message
-        print("All building settings resetted to default! See you again")
-        # reset Building Settings by doing a copy 
-        shutil.copyfile('defaultmap.csv','playmap.csv')
-        shutil.copyfile('defaultpool.csv','playpool.csv')
         return False
 
     # Validate for Invalid Input
