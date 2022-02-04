@@ -1,4 +1,15 @@
 # GameOption 4 - View Current Score
+from distutils.command.build import build
+from itertools import tee, islice, chain
+# https://stackoverflow.com/questions/1011938/loop-that-also-accesses-previous-and-next-values
+
+# This Function gets the previous and next item from the selected item in an array
+def previous_and_next(some_iterable):
+    prevs, items, nexts = tee(some_iterable, 3)
+    prevs = chain([None], prevs)
+    nexts = chain(islice(nexts, 1, None), [None])
+    return zip(prevs, items, nexts)
+
 def calculateScore(playCity):
 
     dict = mapBuildingsToCords(playCity)
@@ -43,7 +54,6 @@ def mapBuildingsToCords(playCity):
             AlphaNum += 6
             row += 6
             col = 2
-        # print(dict)
         return(dict)
 
 def calculateBCH(dict):
@@ -202,71 +212,33 @@ def calculateSHP(dict):
         print("SHP: {} = {}".format(stmt, totalScore))
         return totalScore
 
-def getLeftBuilding(dict,cord):
-    # if cord[-1] == "0" or cord[-1] == "5":
-    #     return None
-    if cord[0] == "D":
-        left = "C" + cord[1]
-    elif cord[0] == "C":
-        left = "B" + cord[1]
-    elif cord[0] == "B":
-        left = "A" + cord[1]
-    else:
-        return None
-    building = dict.get(left)
-    leftList = [left,building]
-    return leftList
-
-def getRightBuilding(dict,cord):
-    # if cord[-1] == "0" or cord[-1] == "5":
-    #     return None
-    if cord[0] == "A":
-        right = "B" + cord[1]
-    elif cord[0] == "B":
-        right = "C" + cord[1]
-    elif cord[0] == "C":
-        right = "D" + cord[1]
-    else:
-        return None
-    building = dict.get(right)
-    rightList = [right,building]
-    return rightList
-
 def calculateHWY(dict):
     stmt = ""
     num = 0
     HWYCount = 0 
     totalScore = 0
     for item in dict.items():
+        # Check if Item is Park
         if item[1] == "HWY":
             subScore = 1
+            # Get Coordinates of building
             cords = item[0]
             while True :
                 left = getLeftBuilding(dict,cords)
-                # print(left,"LEFT")
                 if left == None or left[-1] != "HWY":
                     break
                 else: 
                     cords = left[0]
                     subScore += 1
+            # Set coords back to item HWY
             cords = item[0]
             while True :
                 right = getRightBuilding(dict,cords)
-                # print(right,"right")
                 if right == None or right[-1] != "HWY":
                     break
                 else: 
                     cords = right[0]
                     subScore += 1
-                # if right == None:
-                #     break
-                # elif right[-1] == "HWY":
-                #     subScore += 1
-                #     cords = right[0]
-                # else:
-                #     print("TESTING123")
-                #     break
-            # print(subScore, "SUB")
             if subScore>1: 
                 totalScore += subScore
             else:
@@ -285,3 +257,226 @@ def calculateHWY(dict):
     else:
         print("HWY: {} = {}".format(stmt,totalScore))    
         return totalScore
+  
+def getLeftBuilding(dict,cord):
+    for previous, item, next in previous_and_next(alist):
+        if cord[0] == item:
+            if previous == None:
+                return None
+            else:
+                left = str(previous) + str(cord[1])
+                break
+    building = dict.get(left)
+    leftList = [left,building]
+    return leftList
+
+def getRightBuilding(dict,cord):
+    for previous, item, next in previous_and_next(alist):
+        if cord[0] == item:
+            if next == None:
+                return None
+            else:
+                right = str(next) + cord[1]
+                break
+    building = dict.get(right)
+    rightList = [right,building]
+    return rightList
+
+def getUpwwardsBuilding(dict,cord):
+    up = cord[0] + str(int(cord[-1]) - 1)
+    building = dict.get(up)
+    upList = [up,building]
+    return upList
+
+def getDownwardsBuilding(dict,cord):
+    down = cord[0] + str(int(cord[-1]) + 1)
+    building = dict.get(down)
+    downList = [down,building]
+    return downList
+
+def getPRKs(dict):
+    PRKAccounted = []
+    for item in dict.items():
+        # Check if item is PRK
+        if item[1] == "PRK":
+            cords = item[0]
+            tempList = []
+            tempList.append(cords)
+            # Count how many parks upwards and add to subscore
+            up = getUpwwardsBuilding(dict,cords)
+            # print(right,"right")
+            if up != None and up[-1] == "PRK":
+                tempList.append(up[0])
+            # # Count how many parks downwards and add to subscore
+            down = getDownwardsBuilding(dict,cords)
+                # print(right,"right")
+            if down != None and down[-1] == "PRK":
+                tempList.append(down[0])
+            # Count how many parks on the left and add to subscore
+            left = getLeftBuilding(dict,cords)
+            if left != None and left[-1] == "PRK":
+                tempList.append(left[0])
+            # Count how many parks on the right and add to subscore
+            right = getRightBuilding(dict,cords)
+            if right != None and right[-1] == "PRK":
+                tempList.append(right[0])
+
+            # print(tempList,"TEMP")
+            if len(PRKAccounted) == 0:
+                # If prkaccounted is empty just add list
+                PRKAccounted.append(tempList)
+            else:
+                # Get individual array in prkaccounted
+                for i in range(len(PRKAccounted)):
+                    # Set counter for cordz in templist to 1
+                    count = 1
+                    for cordz in tempList:
+                        # Check if cordz in temp list is inside individual array 
+                        if cordz in PRKAccounted[i]:
+                            # If yes, add cordz not inside into individual array
+                            for item in tempList:
+                                if not item in PRKAccounted[i]:
+                                    PRKAccounted[i].append(item)
+                        # Else if cordz in temp list not inside individual array
+                        # Check if all cordz in temp list has been checked using counter
+                        elif count == len(tempList):
+                            # if no cordz in temp list is not inside the individual park accounted list
+                            # check if he have check all park accounted list
+                            # If yes, add templist to Park accounted list as a new array (New Group)
+                            if (i+1) == len(PRKAccounted): 
+                                PRKAccounted.append(tempList)
+                            # Else, pass first
+                            else:
+                                pass
+                        count +=1
+    # print(PRKAccounted, "HEY")
+    return PRKAccounted
+
+def calculatePRK(dict):
+    stmt = ""
+    num = 0
+    PRKAccounted = []
+    PRKCountList = []
+    totalScore = 0
+    count = 1
+    PRKList = getPRKs(dict)
+    if len(PRKList) == 0:
+        print("PRK: 0")
+        return 0
+    else:
+        for item in PRKList:
+            if count == len(PRKList):
+                if len(item) == 1:
+                    totalScore += 1
+                    stmt += "1"
+                elif len(item) == 2:
+                    totalScore += 3
+                    stmt += "3"
+                elif len(item) == 3:
+                    totalScore +=  8
+                    stmt += "8"
+                elif len(item) == 4:
+                    totalScore += 16
+                    stmt += "16"
+                elif len(item) == 5:
+                    totalScore += 22 
+                    stmt += "22"
+                elif len(item) == 6:
+                    totalScore += 23
+                    stmt += "23"
+                elif len(item) == 7:
+                    totalScore += 24  
+                    stmt += "24"
+                elif len(item) == 8:
+                    totalScore += 25
+                    stmt += "25"
+            else:
+                if len(item) == 1:
+                    totalScore += 1
+                    stmt += "1"
+                elif len(item) == 2:
+                    totalScore += 3
+                    stmt += "3"
+                elif len(item) == 3:
+                    totalScore +=  8
+                    stmt += "8"
+                elif len(item) == 4:
+                    totalScore += 16
+                    stmt += "16"
+                elif len(item) == 5:
+                    totalScore += 22 
+                    stmt += "22"
+                elif len(item) == 6:
+                    totalScore += 23
+                    stmt += "23"
+                elif len(item) == 7:
+                    totalScore += 24  
+                    stmt += "24"
+                elif len(item) == 8:
+                    totalScore += 25
+                    stmt += "25"
+                stmt += " + "
+                count += 1
+            
+        print("PRK: {} = {}".format(stmt,totalScore))
+        return totalScore
+
+def calculateMON(dict,dimension):
+    # Using dimension get the A1, last aplha 1, last alpha last row, a last row
+    if dimension[0] == "1":
+        # Only 2 sides ["A1", "A4"] 
+        corners = ["A1", "A" + dimension[-1]]
+    elif dimension[-1] == "1":
+        # Only 2 sides ["A1", "D1"] 
+        corners = ["A1", alist[int(dimension[0])-1] + "1"]
+    else:
+        # 4 sides ["A1", "A4", "D1", "D4"] 
+        corners = ["A1",
+                    "A" + dimension[-1],
+                    alist[int(dimension[0])-1] + "1",
+                    alist[int(dimension[0])-1] + dimension[-1]]
+    monCoords = []
+    scoreStatementList = []
+    for item in dict.items():
+        if item[1] == "MON":
+            monCoords.append(item[0])
+    if len(monCoords) >= 3:
+        score = len(monCoords) * 4
+        for i in range(len(monCoords)):
+            scoreStatementList.append("4")
+    else:
+        score = 0
+        count = 1
+        for item in monCoords:
+            for side in corners:
+                if item == side:
+                    score += 2
+                    scoreStatementList.append("2")
+                    break
+                # elif by the end of the last side in corners, 
+                # and the item is not a side, add 1 to score
+                elif count == len(corners): 
+                    score += 1
+                    scoreStatementList.append("1")
+                count += 1
+    if score == 0:
+        print("MON: 0")
+        return 0
+    else:
+        scoreStatement = "MON: "
+        count = 1
+        for i in scoreStatementList:
+            if count == len(scoreStatementList):
+                scoreStatement += "{}".format(i)
+            else:
+                scoreStatement += "{} + ".format(i)
+            count += 1
+        print(scoreStatement + " = " + str(score))
+        return score
+
+# Alphabet list
+alist = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+         'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+         'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH',
+         'AI', 'AJ', 'AK', 'AL', 'AM', 'AN']
+

@@ -5,7 +5,7 @@ import unittest
 
 class test_saveGame_function(unittest.TestCase):
     def test_saveGame(self):
-        mockCity = loadSavedGame.loadSavedGame('mockGame')
+        mockCity = loadSavedGame.loadSavedGame('./mockGames/mockGame')
         mockbPool = buildingPools.initBuildingPools()
         saveGame.saveGame(mockCity,mockbPool,17,"BCH","FAC")
 class test_loadSavedGame_functions(unittest.TestCase):
