@@ -14,7 +14,7 @@ dimension = [4,4]
 def mainMenu():
     #load game with default settings
     #citymap = loadSavedGame('playmap')
-    citymap = city.newGrid(dimension[0],dimension[1]) 
+    citymap = city.newGrid(dimension[1],dimension[0]) 
     pool = loadSavedBuildingPools('playpool')
     
     print('\nWelcome, mayor of Simp City!')
@@ -68,7 +68,8 @@ def mainMenu():
         print('\nInvalid option, please try again!')
 
 # Menu Menu
-# while True:
-#     if mainMenu() == False:
-#         print('\nThank you for playing Simp City!\n')
-#         break
+while True:
+
+    if mainMenu() == False:
+        print('\nThank you for playing Simp City!\n')
+        break
