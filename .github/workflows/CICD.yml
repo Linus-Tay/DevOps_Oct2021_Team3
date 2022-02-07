@@ -1,0 +1,180 @@
+name: CI for QA Test Scripts & CD
+
+on: 
+  push:
+    branches: [master]
+    
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Checkout Repository Code
+      uses: actions/checkout@v2
+
+    - name: Setup Python 3.10 Test
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest pytest-cov numpy
+    
+    - name: Checkout Own Repo to cloud
+      uses: actions/checkout@v2
+
+    - name: Checkout private repo remotely
+      uses: actions/checkout@v2
+      with:
+        repository: s10196161/Devscantseethis
+        path: tests
+        token: ${{ secrets.QA_REMOTE }}
+
+    - name: Linter Check with Flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics  
+      
+    - name: Begin Pytest
+      run: |
+        ls
+        mv ./tests/*.* ./
+        pytest --cov -v --junitxml=report.xml
+      
+    - name: Send Telegram Message (Success)
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.actor }} created commit:
+          Commit message: ${{ github.event.commits[0].message }}
+
+          The current build and push for the commit above is successful!
+
+          Repository: ${{ github.repository }}
+          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+            
+    - name: Send Telegram Message (Failure)
+      if: failure()
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.actor }} created commit:
+          Commit message: ${{ github.event.commits[0].message }}
+          
+          The current build and push for the commit above is unsuccessful, please take a look!
+
+          Repository: ${{ github.repository }}
+          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+    - name: Send Discord Message 
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#00ff00"
+        username: "GitHub DevOps Bot"
+        message: "A Successful Build has been completed!\n\nSee changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}"
+
+    - name: Send Discord Message (Failure)
+      if: failure()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        color: "#ff0000"
+        username: "GitHub DevOps Bot"
+        message: "A Unsuccessful Build has been completed!\n\nSee changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}"
+    
+    
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.24
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        files: report.xml 
+
+    - name: Login into Jira
+      if: failure()
+      uses: atlassian/gajira-login@master
+      env:
+        JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+        JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+        JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
+    - name: Jira Task Creation (Failure)
+      if: failure()
+      id: create
+      uses: atlassian/gajira-create@master
+      with:
+        project: DG
+        issuetype: Task
+        summary: |
+          Build failed for ${{ github.repository }}
+        description: |
+          Build failed for the following commit: 
+          
+          ${{ github.event.commits[0].message }}
+
+          Please check it out.
+
+    - name: Log Created Issue for Jira Task Creation
+      if: failure()
+      run: echo "Issue ${{ steps.create.outputs.issue }} was created"
+
+  CD:  
+    needs: [CI]
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Repository Code
+        uses: actions/checkout@v2
+
+      - name: Setup Python 3.10 Test
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest pytest-cov numpy
+      
+      - name: Checkout Own Repo to cloud
+        uses: actions/checkout@v2
+
+      - name: Checkout private repo remotely
+        uses: actions/checkout@v2
+        with:
+          repository: s10196161/Devscantseethis
+          path: tests
+          token: ${{ secrets.QA_REMOTE }}
+
+      - name: Linter Check with Flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics  
+        
+      - name: Begin Pytest
+        run: |
+          ls
+          mv ./tests/*.* ./
+          pytest --cov -v --junitxml=report.xml
+
+      - name: Send Email to Stakeholder
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{secrets.MAIL_USERNAME}}
+          password: ${{secrets.MAIL_PASSWORD}}
+          subject: New GitHub Release - Simp City
+          to: regimelt@hotmail.com #, ict.devops.consultants@gmail.com
+          from: Linus Tay - Scrum Master of Team 3
+          body: Dear Stakeholder, we have succesfully released a new version of the Simp City game with significant features developed! We can schedule to meet up for an acceptance testing whenver you are free. Do feel free to reply to my email to get more information!\n\nThis email is automated whenever all unit tests, system tests and coverages of these tests are satisfactory. Yours sincerely, The Scrum Team.
