@@ -26,7 +26,7 @@ def getHSList(dimension):
 def displayHighScore(dimension):
     highScores = getHSList(dimension)
     if highScores == []:
-        filename = dimension[0] + "x" + dimension[-1]
+        filename = str(dimension[0]) + "x" + str(dimension[-1])
         print("\nCurrently, there is not high score set for city size {}.\n".format(filename))
     else:
         # Print High Score

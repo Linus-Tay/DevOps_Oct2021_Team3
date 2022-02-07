@@ -194,16 +194,6 @@ class Check_High_Score_function(unittest.TestCase):
             "An error occured, parameters for checkHighScore function is invalid."
         ]
 
-    def test_with_negative_dimension(self):
-        dimension = [10,"10"]
-        playerScore = 80
-        set_keyboard_input([''])
-        highScore.checkHighScore(dimension,playerScore)
-        output = get_display_output()
-        assert output == [
-            "An error occured, parameters for checkHighScore function is invalid."
-        ]
-
     def test_with_negative_player_score(self):
         dimension = ["10","10"]
         playerScore = "80"

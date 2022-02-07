@@ -19,18 +19,17 @@ class test_MainMenu_function(unittest.TestCase):
         assert output[8] == "Option 2 - Load Save Game"
 
     def test_MainMenu_Opt3(self):
-        set_keyboard_input(['3','1','2'])
+        set_keyboard_input(['3','0','0'])
         main.mainMenu()
         output = get_display_output()
         assert output[8] == "\nOption 3 - Show High Scores\n"
 
-    def test_MainMenu_Opt3_Invalid_Dimension(self):
-        set_keyboard_input(['3','10','10'])
+    def test_MainMenu_Opt3_View_Other_City_Highscore_Invalid_Dimension(self):
+        set_keyboard_input(['3','1','10','10','0','0'])
         main.mainMenu()
         output = get_display_output()
-        assert output[8:11] == ["\nOption 3 - Show High Scores\n",
-                                "Please enter the number of rows desired: ",
-                                "Please enter the number of columns desired: "]
+        assert output[15] == "\nDimension entered is invalid!"
+
     def test_MainMenu_Opt0(self):
         set_keyboard_input(['0'])
         main.mainMenu()

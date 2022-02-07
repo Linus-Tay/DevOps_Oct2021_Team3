@@ -47,15 +47,30 @@ def mainMenu():
     # Option 3 - Show High Scores
     elif (choice == '3'):
         print("\nOption 3 - Show High Scores\n")
-        x_axis = int(input("Please enter the number of rows desired: "))
-        y_axis = int(input("Please enter the number of columns desired: "))
-        if x_axis*y_axis <= 40 and x_axis*y_axis >0:
-            newdimension = []
-            newdimension.append(str(x_axis))
-            newdimension.append(str(y_axis))
-            highScore.displayHighScore(newdimension)
-        else:
-            print("\nDimension entered is invalid!")
+        dimension[0] = str(dimension[0])
+        dimension[-1] = str(dimension[-1])
+        # Prints current dimension highscore 
+        highScore.displayHighScore(dimension)
+        while True:
+            print("[1] View other city high score")
+            print("[0] exit")
+            choice = input("\nEnter your choice: ")
+            if (choice == "1"):
+                x_axis = int(input("Please enter the number of rows desired: "))
+                y_axis = int(input("Please enter the number of columns desired: "))
+                if x_axis*y_axis <= 40 and x_axis*y_axis >0:
+                    newdimension = []
+                    newdimension.append(str(x_axis))
+                    newdimension.append(str(y_axis))
+                    highScore.displayHighScore(newdimension)
+                else:
+                    print("\nDimension entered is invalid!")
+            elif (choice == "0"):
+                dimension[0] = int(dimension[0])
+                dimension[-1] = int(dimension[-1])
+                break
+            else:
+                print('\nInvalid option, please try again!')
     elif choice == '4':
         settings_menu = ('Choose City Size','Choose Building Pool')
         opt = 1
@@ -68,8 +83,9 @@ def mainMenu():
             option = input(str('\nEnter your choice? '))
             if option == '1':
                 city_size = city.chooseCitySize(citymap,pool)
-                dimension.insert(0,city_size[0])
-                dimension.insert(0,city_size[1])
+                dimension.clear()
+                dimension.append(city_size[0])
+                dimension.append(city_size[1])
             else:
                 opt = 0
     # Exit Menu
