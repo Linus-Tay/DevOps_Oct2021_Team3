@@ -95,12 +95,6 @@ jobs:
       with:
         project: DG
         issuetype: Task
-        summary: |
-          Build failed for the following commit: 
-          
-          ${{ github.event.commits[0].message }}
-
-          Please check it out :(
         description: |
           Build failed for the following commit: 
           
