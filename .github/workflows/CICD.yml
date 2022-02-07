@@ -102,7 +102,7 @@ jobs:
           
           ${{ github.event.commits[0].message }}
 
-          Please check it out :(
+          Please check it out.
 
     - name: Log Created Issue for Jira Task Creation
       if: failure()
