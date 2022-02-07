@@ -52,8 +52,6 @@ def gameMenu(bPool,playCity,turn,b1,b2):
                 if turn> currentT:
                     b1 = buildingPools.rollBuilding(bPool)
                     b2 = buildingPools.rollBuilding(bPool)
-                
-                
             # GameOption 2 - Build A Building
             elif game_option == '2':
                 currentT = turn

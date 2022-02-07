@@ -5,7 +5,6 @@ from buildingPools import initBuildingPools, rollBuilding
 from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
 from saveGame import saveGame
 from copy import error
-from gameMenu import gameMenu
 import city
 import highScore
 
@@ -34,14 +33,14 @@ def mainMenu():
     # Load Saved game
     elif (choice == '2'): 
         print("Option 2 - Load Save Game")
-        playCity = loadSavedGame('savedGame')
-        if (playCity != ''):
-            buildingPools = loadSavedBuildingPools('savedBuildingPools')
-            # Load Building Options
-            bList = loadSavedBuildings("savedBuildings")
-            status = gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
-        if status == "End":
-            return False
+        # playCity = loadSavedGame('savedGame')
+        # if (playCity != ''):
+        #     buildingPools = loadSavedBuildingPools('savedBuildingPools')
+        #     # Load Building Options
+        #     bList = loadSavedBuildings("savedBuildings")
+        #     status = gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
+        # if status == "End":
+        #     return False
     # Option 3 - Show High Scores
     elif (choice == '3'):
         print("\nOption 3 - Show High Scores\n")
@@ -95,8 +94,7 @@ def mainMenu():
         print('\nInvalid option, please try again!')
 
 # Menu Menu
-while True:
-
-    if mainMenu() == False:
-        print('\nThank you for playing Simp City!\n')
-        break
+# while True:
+    # if mainMenu() == False:
+    #     print('\nThank you for playing Simp City!\n')
+    #     break
