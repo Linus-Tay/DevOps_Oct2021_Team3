@@ -95,6 +95,8 @@ jobs:
       with:
         project: DG
         issuetype: Task
+        summary: |
+          Build failed for ${{ github.repository }}
         description: |
           Build failed for the following commit: 
           
