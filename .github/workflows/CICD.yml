@@ -87,12 +87,18 @@ jobs:
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
         JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
-    - name: Jira TODO
+    - name: Jira Task Creation (Failure)
+      if: failure()
       uses: atlassian/gajira-todo@master
       with:
-        project: GA
-        issuetype: Task
-        description: Created automatically via GitHub Actions
+        project: DG
+        issuetype: Build
+        description: |
+          Issue arose when the commit below was pushed:
+          
+          ${{ github.event.commits[0].message }}
+
+          Please check it out :D
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
