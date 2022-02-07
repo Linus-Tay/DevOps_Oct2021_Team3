@@ -175,6 +175,6 @@ jobs:
           username: ${{secrets.MAIL_USERNAME}}
           password: ${{secrets.MAIL_PASSWORD}}
           subject: New GitHub Release - Simp City
-          to: regimelt@hotmail.com #, ict.devops.consultants@gmail.com
+          to: regimelt@hotmail.com , ict.devops.consultants@gmail.com
           from: Linus Tay - Scrum Master of Team 3
-          body: Dear Stakeholder,\nWe have succesfully released a new version of the Simp City game with significant features developed! We can schedule to meet up for an acceptance testing whenver you are free.\nFeel free to reply to my email to get more information!\n\nThis email is automated whenever all unit tests, system tests and coverages of these tests are satisfactory.\n\nYours sincerely,\nLinus Tay
+          body: Dear Stakeholder, we have succesfully released a new version of the Simp City game with significant features developed! We can schedule to meet up for an acceptance testing whenver you are free. Do feel free to reply to my email to get more information!\n\nThis email is automated whenever all unit tests, system tests and coverages of these tests are satisfactory. Yours sincerely, The Scrum Team.
