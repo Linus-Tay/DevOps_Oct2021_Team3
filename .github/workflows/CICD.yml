@@ -78,3 +78,11 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         files: report.xml 
+
+  CD:  
+    needs: [CI]
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Checkout Repository Code
+        uses: actions/checkout@v2
