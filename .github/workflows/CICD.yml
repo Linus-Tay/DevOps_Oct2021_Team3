@@ -1,0 +1,85 @@
+name: CI for QA Test Scripts & CD
+
+on: 
+  push:
+    branches: [master]
+    
+jobs:
+  GitHubCI:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: Checkout Repository Code
+      uses: actions/checkout@v2
+
+    - name: Setup Python 3.8 Test
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest pytest-cov
+    
+    - name: Checkout Own Repo to cloud
+      uses: actions/checkout@v2
+
+    - name: Checkout private repo remotely
+      uses: actions/checkout@v2
+      with:
+        repository: s10196161/Devscantseethis
+        path: tests
+        token: ${{ secrets.QA_REMOTE }}
+    - name: Linter Check with Flake8
+      run: |
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics  
+      
+    - name: Begin Pytest
+      run: |
+        ls
+        mv ./tests/*.* ./
+        pytest --cov -v --junitxml=report.xml
+ 
+    - name: Send Telegram Message (Success)
+        if: failure()
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+
+            The current build and push for the commit above is successful!
+
+            Repository: ${{ github.repository }}
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+            
+    - name: Send Telegram Message (Failure)
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            The current build and push for the commit above is unsuccessful, please take a look!
+
+            Repository: ${{ github.repository }}
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1.24
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        files: report.xml 
+
+  CD:  
+    needs: [CI]
+    runs-on: ubuntu-latest
+    steps:
