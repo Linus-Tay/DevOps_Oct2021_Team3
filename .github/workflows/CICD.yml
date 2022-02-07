@@ -32,6 +32,7 @@ jobs:
         repository: s10196161/Devscantseethis
         path: tests
         token: ${{ secrets.QA_REMOTE }}
+
     - name: Linter Check with Flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -90,18 +91,27 @@ jobs:
 
     - name: Jira Task Creation (Failure)
       if: failure()
-      uses: atlassian/gajira-todo@master
+      id: create
+      uses: atlassian/gajira-create@master
       with:
         project: DG
-        issuetype: Build
-        description: |
-          Issue arose when the commit below was pushed:
+        issuetype: Issue
+        summary: |
+          Build failed for the following commit: 
           
           ${{ github.event.commits[0].message }}
 
-          Please check it out :D
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          Please check it out :(
+        description: |
+          Build failed for the following commit: 
+          
+          ${{ github.event.commits[0].message }}
+
+          Please check it out :(
+
+    - name: Log Created Issue for Jira Task Creation
+      if: failure()
+      run: echo "Issue ${{ steps.create.outputs.issue }} was created"
 
   CD:  
     needs: [CI]
