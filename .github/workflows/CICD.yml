@@ -2,7 +2,7 @@ name: CI for QA Test Scripts & CD
 
 on: 
   push:
-    branches: [master]
+    branches: [master, Linus-Tay]
     
 jobs:
   GitHubCI:
@@ -83,6 +83,6 @@ jobs:
     needs: [CI]
     runs-on: ubuntu-latest
     steps:
-    
+
       - name: Checkout Repository Code
         uses: actions/checkout@v2
