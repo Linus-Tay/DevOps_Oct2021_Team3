@@ -48,6 +48,8 @@ class test_MainMenu_function(unittest.TestCase):
         set_keyboard_input(['123','0'])
         main.mainMenu()
         output = get_display_output()
+        # there should be a sub-menu in "Option 3 - Building Settings"
+        # function should print as expected
         assert output == ["\nWelcome, mayor of Simp City!",
                             "----------------------------",
                             "[1] Start New Game",

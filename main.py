@@ -1,17 +1,15 @@
 # Imports
 
 import shutil
-from buildingPools import chooseBuildingPools, initBuildingPools, rollBuilding
+from buildingPools import initBuildingPools, rollBuilding
 from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
 from saveGame import saveGame
 from copy import error
-import city
 from gameMenu import gameMenu
-import shutil
+import city
 import highScore
+
 dimension = [4,4]
-# initpool = initBuildingPools('BCH','FAC','HSE','SHP','HWY')
-# default_pool =[initpool]
 
 def mainMenu():
     #load game with default settings
@@ -30,7 +28,7 @@ def mainMenu():
 
     # Start New Game
     if (choice == '1'):
-
+        
         city.startNewGame(citymap,pool)
 
     # Load Saved game
@@ -91,12 +89,14 @@ def mainMenu():
     # Exit Menu
     elif (choice == '0'):
         return False
+
     # Validate for Invalid Input
     else:
         print('\nInvalid option, please try again!')
 
 # Menu Menu
-# while True:
-#     if mainMenu() == False:
-#         print('\nThank you for playing Simp City!\n')
-#         break
+while True:
+
+    if mainMenu() == False:
+        print('\nThank you for playing Simp City!\n')
+        break
