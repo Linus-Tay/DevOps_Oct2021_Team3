@@ -167,7 +167,7 @@ jobs:
           mv ./tests/*.* ./
           pytest --cov -v --junitxml=report.xml
 
-      - name: Send Email to Stakeholder
+      - name: Send Email to Stakeholder Regarding Release
         uses: dawidd6/action-send-mail@v3
         with:
           # Required mail server address:
