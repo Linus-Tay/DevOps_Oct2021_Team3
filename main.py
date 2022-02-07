@@ -1,36 +1,39 @@
 # Imports
-from highScore import displayHighScore
-from buildings import *
-from buildingPools import *
+
+import shutil
+from buildingPools import chooseBuildingPools, initBuildingPools, rollBuilding
 from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
 from saveGame import saveGame
 from copy import error
+import city
 from gameMenu import gameMenu
-from city import loadCity
-from buildings import initBuildingPools, rollBuilding
-
-#Variables
-loc_col = []
-loc_row = []
+import shutil
+import highScore
+dimension = [4,4]
+# initpool = initBuildingPools('BCH','FAC','HSE','SHP','HWY')
+# default_pool =[initpool]
 
 def mainMenu():
+    #load game with default settings
+    #citymap = loadSavedGame('playmap')
+    citymap = city.newGrid(dimension[1],dimension[0]) 
+    # playpool = default_pool[0]
+    pool = loadSavedBuildingPools('playpool')
     print('\nWelcome, mayor of Simp City!')
     print('----------------------------')
-    option_list=('Start New Game','Load Saved Game','Show High Scores')
+    option_list=('Start New Game','Load Saved Game','Show High Scores','Settings')
+
     for i in range(len(option_list)):
         print('[{}] {}'.format(i+1,option_list[i]))
     print('\n[0] Exit')
     choice = input(str('\nEnter your choice? '))
-    # Option 1 - Start New Game
-    if (choice == '1'):    
-        print("Option 1 - Start New Game")
-        playCity = loadCity('start.csv')
-        buildingPools = initBuildingPools()
-         # Get Random Building Options
-        b1 = rollBuilding(buildingPools)
-        b2 = rollBuilding(buildingPools)
-        gameMenu(buildingPools,playCity,1,b1,b2)
-    # Option 2 - Load Saved game
+
+    # Start New Game
+    if (choice == '1'):
+
+        city.startNewGame(citymap,pool)
+
+    # Load Saved game
     elif (choice == '2'): 
         print("Option 2 - Load Save Game")
         playCity = loadSavedGame('savedGame')
@@ -47,12 +50,28 @@ def mainMenu():
         x_axis = int(input("Please enter the number of rows desired: "))
         y_axis = int(input("Please enter the number of columns desired: "))
         if x_axis*y_axis <= 40 and x_axis*y_axis >0:
-            dimension = []
-            dimension.append(str(x_axis))
-            dimension.append(str(y_axis))
-            displayHighScore(dimension)
+            newdimension = []
+            newdimension.append(str(x_axis))
+            newdimension.append(str(y_axis))
+            highScore.displayHighScore(newdimension)
         else:
             print("\nDimension entered is invalid!")
+    elif choice == '4':
+        settings_menu = ('Choose City Size','Choose Building Pool')
+        opt = 1
+        while opt != 0:
+            print("Option 4 - Settings\n")
+            for x in range(len(settings_menu)):
+                print("[{}] {}".format(x+1,settings_menu[x]))
+
+            print("\n[0] Return to main menu")
+            option = input(str('\nEnter your choice? '))
+            if option == '1':
+                city_size = city.chooseCitySize(citymap,pool)
+                dimension.insert(0,city_size[0])
+                dimension.insert(0,city_size[1])
+            else:
+                opt = 0
     # Exit Menu
     elif (choice == '0'):
         return False
