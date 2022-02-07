@@ -1,9 +1,7 @@
 # Imports
 
-
-#from buildingPools import chooseBuildingPools, initBuildingPools, rollBuilding
-from turtle import back
-from buildingPools import chooseBuildingPools, initBuildingPools
+import shutil
+from buildingPools import initBuildingPools, rollBuilding
 from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedGame, loadSavedTurns
 from saveGame import saveGame
 from copy import error
@@ -11,20 +9,18 @@ import city
 from gameMenu import gameMenu
 import shutil
 
-#Variables
-loc_col = []
-loc_row = []
+dimension = [4,4]
 
 
 def mainMenu():
     #load game with default settings
-    citymap = loadSavedGame('playmap')
+    #citymap = loadSavedGame('playmap')
+    citymap = city.newGrid(dimension[1],dimension[0]) 
     pool = loadSavedBuildingPools('playpool')
-
-    #print main menu
+    
     print('\nWelcome, mayor of Simp City!')
     print('----------------------------')
-    option_list=('Start new game','Load saved game','Building Settings')
+    option_list=('Start new game','Load saved game','Settings')
 
     for i in range(len(option_list)):
         print('[{}] {}'.format(i+1,option_list[i]))
@@ -32,7 +28,8 @@ def mainMenu():
     choice = input(str('\nEnter your choice? '))
 
     # Start New Game
-    if (choice == '1'):    
+    if (choice == '1'):
+        
         city.startNewGame(citymap,pool)
 
     # Load Saved game
@@ -50,41 +47,32 @@ def mainMenu():
         settings_menu = ('Choose City Size','Choose Building Pool')
         opt = 1
         while opt != 0:
-            print("Option 3 - Building Settings")
+            print("Option 3 - Settings\n")
             for x in range(len(settings_menu)):
                 print("[{}] {}".format(x+1,settings_menu[x]))
-            print("[0] Return to previous menu")
-           
-            option = input(str('\nEnter your choice? '))
 
+            print("\n[0] Return to main menu")
+            option = input(str('\nEnter your choice? '))
             if option == '1':
-                city.chooseCitySize(citymap,pool)
-            elif option == '2':
-                chosen_list = chooseBuildingPools()
-                final_pool = initBuildingPools(chosen_list[0],chosen_list[1],chosen_list[2],chosen_list[3],chosen_list[4])
-                pool_file=open('playpool.csv','w')
-                pool_file.truncate()
-                for i in range(len(final_pool)):
-                    pool_file.write(str(final_pool[i][0]))
-                    pool_file.write(',')
-                    pool_file.write(str(final_pool[i][-1]))
-                    pool_file.write('\n')
-                pool_file.close()
-                exit
+                city_size = city.chooseCitySize(citymap,pool)
+                dimension.insert(0,city_size[0])
+                dimension.insert(0,city_size[1])
             else:
                 opt = 0
-
-                
+    
     # Exit Menu
     elif choice == '0':
         print("All building settings resetted to default! See you again")
         shutil.copyfile('defaultmap.csv','playmap.csv')
         shutil.copyfile('defaultpool.csv','playpool.csv')
 
-        return False
+    # Validate for Invalid Input
+    else:
+        print('\nInvalid option, please try again!')
 
 # Menu Menu
 while True:
+
     if mainMenu() == False:
         print('\nThank you for playing Simp City!\n')
         break

@@ -19,9 +19,8 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             return "End"
         else:
             # Game Menu Options
-            game_menu = [[1,'Build a ' + b1],[2,'Build a '+b2],
-            [3,'See remaining buildings'],[4,'See Current Score\n'],
-            [5,'Save Game'],[0,'Exit to main menu']]
+            game_menu = [[1,'Build a ' + b1],[2,'Build a '+b2],[3,'See Current Score\n'],
+            [4,'Save Game'],[0,'Exit to main menu']]
             
             # Diplay Turn
             print('\n-----------------------Turn {}-----------------------\n'.format(turn))
@@ -67,13 +66,13 @@ def gameMenu(bPool,playCity,turn,b1,b2):
                     b1 = buildingPools.rollBuilding(bPool)
                     b2 = buildingPools.rollBuilding(bPool)
             # GameOption 4 - View Current Score
-            elif game_option == '4':
-                print("Option 4, View Current Score!")
+            elif game_option == '3':
+                print("Option 3, View Current Score!")
                 print('\n-------------------Current Score--------------------\n')
                 calculateScore.calculateScore(playCity)
             # GameOption 5 - Save Game
-            elif game_option =='5':
-                print("Option 5, save game!")
+            elif game_option =='4':
+                print("Option 4, save game!")
                 saveGame.saveGame(playCity,bPool,turn,b1,b2)
                 break
             # GameOption 0 - Exit To Main Menu
