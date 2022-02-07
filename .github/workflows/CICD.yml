@@ -94,7 +94,7 @@ jobs:
       uses: atlassian/gajira-create@master
       with:
         project: DG
-        issuetype: Build
+        issuetype: Task
         summary: |
           Build failed for the following commit: 
           
