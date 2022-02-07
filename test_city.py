@@ -233,8 +233,7 @@ class test_City(unittest.TestCase):
         sys.stdout = out 
         testBase.set_keyboard_input(['5','5','0'])
         default_citymap = city.newGrid(5,5)
-        default_pool = initBuildingPools()
-        city.chooseCitySize(default_citymap,default_pool)
+        city.chooseCitySize(default_citymap,poolList)
         output = testBase.get_display_output()
         assert output == [
                         "Choose City size with dimension of row and column\n",
@@ -263,8 +262,7 @@ class test_City(unittest.TestCase):
         sys.stdout = out 
         testBase.set_keyboard_input(['a','5','0','5','5','0'])
         default_citymap = city.newGrid(5,5)
-        default_pool = initBuildingPools()
-        city.chooseCitySize(default_citymap,default_pool)
+        city.chooseCitySize(default_citymap,poolList)
         output = testBase.get_display_output()
         assert output == [
                         "Choose City size with dimension of row and column\n",

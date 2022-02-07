@@ -9,7 +9,7 @@ import sys
 from io import StringIO
 import buildingPools 
 import city
-default_pool = buildingPools.initBuildingPools()
+default_pool = buildingPools.initBuildingPools('BCH','FAC','HSE','SHP','HWY')
 default_map = city.newGrid(4,4)
 
 class test_MainMenu_function(unittest.TestCase):
