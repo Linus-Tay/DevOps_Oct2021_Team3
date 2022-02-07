@@ -82,6 +82,7 @@ jobs:
         files: report.xml 
 
     - name: Login into Jira
+      if: failure()
       uses: atlassian/gajira-login@master
       env:
         JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
