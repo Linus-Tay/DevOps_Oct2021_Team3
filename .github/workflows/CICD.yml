@@ -5,7 +5,7 @@ on:
     branches: [master, Linus-Tay]
     
 jobs:
-  GitHubCI:
+  CI:
     runs-on: ubuntu-latest
     steps:
     
