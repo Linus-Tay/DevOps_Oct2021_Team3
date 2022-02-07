@@ -170,17 +170,11 @@ jobs:
       - name: Send Email to Stakeholder
         uses: dawidd6/action-send-mail@v3
         with:
-          # Required mail server address:
           server_address: smtp.gmail.com
-          # Required mail server port:
           server_port: 465
-          # Optional (recommended): mail server username:
           username: ${{secrets.MAIL_USERNAME}}
-          # Optional (recommended) mail server password:
           password: ${{secrets.MAIL_PASSWORD}}
-          # Required mail subject:
           subject: New GitHub Release - Simp City
-          # Required recipients' addresses:
-          to: regimelt@hotmail.com #ict.devops.consultants@gmail.com
-          # Required sender full name (address can be skipped):
-          from: Linus Tay # <user@example.com>
+          to: regimelt@hotmail.com #, ict.devops.consultants@gmail.com
+          from: Linus Tay - Scrum Master of Team 3
+          body: Dear Stakeholder,\nWe have succesfully released a new version of the Simp City game with significant features developed! We can schedule to meet up for an acceptance testing whenver you are free.\nFeel free to reply to my email to get more information!\n\nThis email is automated whenever all unit tests, system tests and coverages of these tests are satisfactory.\n\nYours sincerely,\nLinus Tay
