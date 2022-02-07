@@ -5,7 +5,6 @@ import sys
 import unittest
 from buildingPools import initBuildingPools
 import city
-import main
 import testBase
 poolList = initBuildingPools()
 
@@ -37,7 +36,7 @@ class test_City(unittest.TestCase):
         self.assertTrue(city.validCitySize(8,5))
         self.assertTrue(city.validCitySize(1,1))
         self.assertTrue(city.validCitySize(2,20))
-        self.assertTrue(city.validCitySize(1,26))
+        self.assertTrue(city.validCitySize(1,20))
 
     def test_inValidCitySize(self):
         self.assertFalse(city.validCitySize(9,5))
@@ -185,9 +184,8 @@ class test_City(unittest.TestCase):
                     "  +-----+-----+-----+-----+",
                     "[1] Build a" + b1[11:15],
                     "[2] Build a" + b2[11:15],
-                    "[3] See remaining buildings",
-                    "[4] See Current Score\n",
-                    "[5] Save Game",
+                    "[3] See Current Score\n",
+                    "[4] Save Game",
                     "[0] Exit to main menu",
                     "\nYour Choice? "
                     ]
@@ -224,10 +222,73 @@ class test_City(unittest.TestCase):
                     "  +-----+-----+-----+-----+-----+-----+",
                     "[1] Build a" + b1[11:15],
                     "[2] Build a" + b2[11:15],
-                    "[3] See remaining buildings",
-                    "[4] See Current Score\n",
-                    "[5] Save Game",
+                    "[3] See Current Score\n",
+                    "[4] Save Game",
                     "[0] Exit to main menu",
                     "\nYour Choice? "
                     ]
                 
+    def test_ChooseCitySize_valid(self):
+        out = StringIO()
+        sys.stdout = out 
+        testBase.set_keyboard_input(['5','5','0'])
+        default_citymap = city.newGrid(5,5)
+        default_pool = initBuildingPools()
+        city.chooseCitySize(default_citymap,default_pool)
+        output = testBase.get_display_output()
+        assert output == [
+                        "Choose City size with dimension of row and column\n",
+                        "Please enter the number of rows desired: ",
+                        "Please enter the number of columns desired: ",
+                        "Your city map is now 5x5\n",
+                        "     A     B     C     D     E   \t\tBuildings\tRemaining",
+                        "  +-----+-----+-----+-----+-----+\t\tBCH\t\t8",
+                        " 1|     |     |     |     |     |\t\tFAC\t\t8",
+                        "  +-----+-----+-----+-----+-----+\t\tHSE\t\t8",
+                        " 2|     |     |     |     |     |\t\tSHP\t\t8",
+                        "  +-----+-----+-----+-----+-----+\t\tHWY\t\t8",
+                        " 3|     |     |     |     |     |",
+                        "  +-----+-----+-----+-----+-----+",
+                        " 4|     |     |     |     |     |",
+                        "  +-----+-----+-----+-----+-----+",
+                        " 5|     |     |     |     |     |",
+                        "  +-----+-----+-----+-----+-----+",
+                        "\n[1] Re-configure city map",
+                        "[0] Return to previous menu\n",
+                        "Enter your choice? "
+        ]
+
+    def test_ChooseCitySize_InvalidOpt(self):
+        out = StringIO()
+        sys.stdout = out 
+        testBase.set_keyboard_input(['a','5','0','5','5','0'])
+        default_citymap = city.newGrid(5,5)
+        default_pool = initBuildingPools()
+        city.chooseCitySize(default_citymap,default_pool)
+        output = testBase.get_display_output()
+        assert output == [
+                        "Choose City size with dimension of row and column\n",
+                        "Please enter the number of rows desired: ",
+                        "Invalid Input! Please enter a number input!\n",
+                        "Please enter the number of rows desired: ",
+                        "Please enter the number of columns desired: ",
+                        "Invalid size! Please retry with a size of minimum of 1 squares and maximum of 40 squares\n",
+                        "Please enter the number of rows desired: ",
+                        "Please enter the number of columns desired: ",
+                        "Your city map is now 5x5\n",
+                        "     A     B     C     D     E   \t\tBuildings\tRemaining",
+                        "  +-----+-----+-----+-----+-----+\t\tBCH\t\t8",
+                        " 1|     |     |     |     |     |\t\tFAC\t\t8",
+                        "  +-----+-----+-----+-----+-----+\t\tHSE\t\t8",
+                        " 2|     |     |     |     |     |\t\tSHP\t\t8",
+                        "  +-----+-----+-----+-----+-----+\t\tHWY\t\t8",
+                        " 3|     |     |     |     |     |",
+                        "  +-----+-----+-----+-----+-----+",
+                        " 4|     |     |     |     |     |",
+                        "  +-----+-----+-----+-----+-----+",
+                        " 5|     |     |     |     |     |",
+                        "  +-----+-----+-----+-----+-----+",
+                        "\n[1] Re-configure city map",
+                        "[0] Return to previous menu\n",
+                        "Enter your choice? "
+        ]

@@ -84,7 +84,6 @@ class test_InsertBuildings(unittest.TestCase):
             self.assertEqual(buildingPools.rollBuilding(),"Data1")
 
 
-
        
 # # if __name__ == '__main__':
 # #     print(testBuild)

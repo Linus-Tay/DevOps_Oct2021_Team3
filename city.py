@@ -69,19 +69,18 @@ def viewCity(map,bpool):
 
 def validCitySize(x_axis,y_axis):
     
-    if isinstance(x_axis, int)  and isinstance(y_axis, int) :
-        if y_axis <= 26:
-            if x_axis*y_axis > 0 and x_axis*y_axis <=40:
+    if isinstance(x_axis, int)  and isinstance(y_axis, int):
+        if x_axis*y_axis > 0 and x_axis*y_axis <=40:
+            if y_axis <= 20:
                 return True
             else:
-                print("Invalid size! Please retry with a size of minimum of 1 squares and maximum of 40 squares")
+                print("Column size can only be up to 20, please retry!\n")
                 return False
-           
         else:
-            print("Column size can only be up to 26, please retry!")
+            print("Invalid size! Please retry with a size of minimum of 1 squares and maximum of 40 squares\n")
             return False
     else:
-        print("Invalid Input! Please enter a number input!")
+        print("Invalid Input! Please enter a number input!\n")
         return False
 
 def newGrid(x_axis,y_axis):
@@ -168,7 +167,45 @@ def newGrid(x_axis,y_axis):
 
     return playCity
 
+# function for the process of choosing city size
+def chooseCitySize(city_map,bPool):
+    # print option header
+    print("Choose City size with dimension of row and column\n")
 
+    # variables to control loop
+    opt = 0
+    updated = False
+    while opt == 0 and updated != True:
+        try:
+            row = int(input("Please enter the number of rows desired: "))
+            col = int(input("Please enter the number of columns desired: "))
+        except ValueError:
+            print("Invalid Input! Please enter a number input!\n")
+        else:
+            # should print out the city map to show user their new map 
+            # allow user the option to re-configure or go back to previous menu
+            if validCitySize(row,col) == True:
+                print("Your city map is now {}x{}\n".format(row,col))
+                updated = True
+                city_map = newGrid(row,col)
+                viewCity(city_map,bPool)
+                a_file = open("playmap.csv","w")
+                a_file.truncate()
+                for i in range(len(city_map)):
+                    a_file.write(str(''.join(city_map[i])))
+                    a_file.write('\n')
+                a_file.close()
+
+                print("\n[1] Re-configure city map")
+                print("[0] Return to previous menu\n")
+                option = int(input("Enter your choice? "))
+                
+                if option == 1:
+                    updated = False
+                else:
+                    return row,col
+                
+                
 
 def startNewGame(citymap,pool):
     
