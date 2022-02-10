@@ -74,7 +74,7 @@ def mainMenu():
         print('\nInvalid option, please try again!')
 
 # Menu Menu
-# while True:
-#     if mainMenu() == False:
-#         print('\nThank you for playing Simp City!\n')
-#         break
+while True:
+    if mainMenu() == False:
+        print('\nThank you for playing Simp City!\n')
+        break
