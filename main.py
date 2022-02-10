@@ -6,18 +6,19 @@ from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedG
 from saveGame import saveGame
 from copy import error
 import city
-from gameMenu import gameMenu
+import gameMenu
 import shutil
 
+#Load default Settings, city size of 4x4 and default building pools
 dimension = [4,4]
 initpool = initBuildingPools('BCH','FAC','HSE','SHP','HWY')
 default_pool =[initpool]
+
+
 def mainMenu():
     #load game with default settings
-    #citymap = loadSavedGame('playmap')
-    citymap = city.newGrid(dimension[1],dimension[0]) 
+    playmap = city.newGrid(dimension[1],dimension[0]) 
     playpool = default_pool[0]
-    #pool = loadSavedBuildingPools('playpool')
     
     print('\nWelcome, mayor of Simp City!')
     print('----------------------------')
@@ -31,7 +32,7 @@ def mainMenu():
     # Start New Game
     if (choice == '1'):
         
-        city.startNewGame(citymap,playpool)
+        city.startNewGame(playmap,playpool)
 
     # Load Saved game
     elif (choice == '2'): 
@@ -41,7 +42,7 @@ def mainMenu():
             buildingPools = loadSavedBuildingPools('savedBuildingPools')
             # Load Building Options
             bList = loadSavedBuildings("savedBuildings")
-            status = gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
+            status = gameMenu.gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
         if status == "End":
             return False
     elif choice == '4':
@@ -55,7 +56,7 @@ def mainMenu():
             print("\n[0] Return to main menu")
             option = input(str('\nEnter your choice? '))
             if option == '1':
-                city_size = city.chooseCitySize(citymap,playpool)
+                city_size = city.chooseCitySize(playmap,playpool)
                 dimension.insert(0,city_size[0])
                 dimension.insert(0,city_size[1])
             elif option == '2':
@@ -73,8 +74,10 @@ def mainMenu():
     else:
         print('\nInvalid option, please try again!')
 
-# Menu Menu
-while True:
-    if mainMenu() == False:
-        print('\nThank you for playing Simp City!\n')
-        break
+if __name__ == '__main__':
+    
+    # Menu Menu
+    while True:
+        if mainMenu() == False:
+            print('\nThank you for playing Simp City!\n')
+            break

@@ -1,14 +1,11 @@
-# from numpy.lib.utils import info
-# from gameMenu import gameMenu
 
-# from unittest import mock, TestCase
 import unittest
-# from testBase import get_display_output, set_keyboard_input
 import testBase
 import sys 
 from io import StringIO
 import buildingPools 
 import city
+import gameMenu
 default_pool = buildingPools.initBuildingPools('BCH','FAC','HSE','SHP','HWY')
 default_map = city.newGrid(4,4)
 
@@ -17,7 +14,7 @@ class test_MainMenu_function(unittest.TestCase):
         out = StringIO()
         sys.stdout = out 
         testBase.set_keyboard_input(["InvalidInput","0"])
-        city.gameMenu(default_pool,default_map,1,"FAC","SHP")
+        gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP")
         output = testBase.get_display_output()
         assert output == ["\n-----------------------Turn 1-----------------------\n",
                             "     A     B     C     D   \t\tBuildings\tRemaining",
@@ -61,7 +58,7 @@ class test_MainMenu_function(unittest.TestCase):
             out = StringIO()
             sys.stdout = out 
             testBase.set_keyboard_input(["3",'0'])
-            city.gameMenu(default_pool,default_map,1,"FAC","SHP")
+            gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP")
             output = testBase.get_display_output()
             assert output == [
                         "\n-----------------------Turn 1-----------------------\n",
@@ -114,12 +111,12 @@ class test_MainMenu_function(unittest.TestCase):
             sys.stdout = out 
             testBase.set_keyboard_input(["4"])
             try:
-              city.gameMenu(default_pool,default_map,1,"FAC","SHP")
+              gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP")
             except:
                 output = testBase.get_display_output()
                 assert output[-1] == "Option 4, save game!"
 
     def test_EndGame(self):
-      self.assertEqual(city.gameMenu(default_pool,default_map,17,"FAC","SHP"),"End") 
+      self.assertEqual(gameMenu.gameMenu(default_pool,default_map,17,"FAC","SHP"),"End") 
 
                              

@@ -1,4 +1,5 @@
 
+import buildingPools
 
 #====================================================================================================#
 
@@ -24,9 +25,8 @@ param 1: playMap (the array list containing the city map)
 param 2,3: x,y (index of letter-number based on playmap)
 return: returns if theres a building else return none
 '''
-import main
 
-import buildingPools
+
 
 
 def getBuildName(arrMap,x,y):
@@ -62,6 +62,7 @@ param 2: userinput (what user entered __)
 return: boolean accordingly
 '''
 def validatePosition(playMap,userinput):
+    import main
 
     #retrieve city size in terms of row x column from main global dimension variable
     city_size = main.dimension
@@ -156,7 +157,7 @@ def verifyPosition(playmap,new_row,new_col):
         if checkAdjBuild(playmap,new_row,new_col) == True:
             return True
         else:
-            print("Invalid Position, Please build on adjacent to existing building!")
+            print("You must build next to an existing building.")
             return False
     else:
         print("Building already exists! Please try another location!")   
@@ -187,17 +188,17 @@ def insertBuild(playMap, bPool, userinput, bName, t):
     if new_row != 0 and new_col != 0:
         # user can insert anywhere on turn 1
         if t == 1:
-            playMap[new_row][new_col-1] = bName[0]
-            playMap[new_row][new_col] = bName[1]
-            playMap[new_row][new_col+1] = bName[2]
+            playMap[new_row][new_col-2] = bName[0]
+            playMap[new_row][new_col-1] = bName[1]
+            playMap[new_row][new_col] = bName[2]
             t+=1
             bPool = buildingPools.deductBPoolCopies(bPool,bName)
         # validate position on turn 2 onwards
         else:
             if verifyPosition(playMap,new_row,new_col) == True:
-                playMap[new_row][new_col-1] = bName[0]
-                playMap[new_row][new_col] = bName[1]
-                playMap[new_row][new_col+1] = bName[2]
+                playMap[new_row][new_col-2] = bName[0]
+                playMap[new_row][new_col-1] = bName[1]
+                playMap[new_row][new_col] = bName[2]
                 t+=1
                 bPool = buildingPools.deductBPoolCopies(bPool,bName)
     return t

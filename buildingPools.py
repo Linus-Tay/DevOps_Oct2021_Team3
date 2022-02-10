@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from turtle import update
 import numpy as np
 from random import randrange
