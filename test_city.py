@@ -1,12 +1,14 @@
 
 import builtins
 from io import StringIO
+from multiprocessing import pool
 import sys
 import unittest
-from buildingPools import initBuildingPools
+import buildingPools
 import city
 import testBase
-poolList = initBuildingPools()
+import loadSavedGame
+poolList = buildingPools.initBuildingPools('BCH','FAC','HSE','SHP','HWY')
 
 
 class test_City(unittest.TestCase):
@@ -160,12 +162,10 @@ class test_City(unittest.TestCase):
         #successfull start new game
         out = StringIO()
         sys.stdout = out 
-        #testBase.set_keyboard_input(['1','a','2','0'])
         testBase.set_keyboard_input(['0'])  
         #default building settings
         citymap = city.newGrid(4,4)
-        pool = initBuildingPools()
-        city.startNewGame(citymap,pool)
+        city.startNewGame(citymap,poolList)
         output = testBase.get_display_output()
         b1 = output[12]
         b2 = output[13]
@@ -198,8 +198,8 @@ class test_City(unittest.TestCase):
         testBase.set_keyboard_input(['0'])
         #assuming user set the city size to 6x6
         citymap = city.newGrid(6,6)
-        pool = initBuildingPools()
-        city.startNewGame(citymap,pool)
+        custom_pool = buildingPools.initBuildingPools('FAC','HSE','PRK','MON','HWY')
+        city.startNewGame(citymap,custom_pool)
         output = testBase.get_display_output()
         b1 = output[16]
         b2 = output[17]
@@ -207,10 +207,10 @@ class test_City(unittest.TestCase):
                     "Option 1 - Start New Game",
                     "\n-----------------------Turn 1-----------------------\n",
                     "     A     B     C     D     E     F   \t\tBuildings\tRemaining",
-                    "  +-----+-----+-----+-----+-----+-----+\t\tBCH\t\t8",
-                    " 1|     |     |     |     |     |     |\t\tFAC\t\t8",
-                    "  +-----+-----+-----+-----+-----+-----+\t\tHSE\t\t8",
-                    " 2|     |     |     |     |     |     |\t\tSHP\t\t8",
+                    "  +-----+-----+-----+-----+-----+-----+\t\tFAC\t\t8",
+                    " 1|     |     |     |     |     |     |\t\tHSE\t\t8",
+                    "  +-----+-----+-----+-----+-----+-----+\t\tPRK\t\t8",
+                    " 2|     |     |     |     |     |     |\t\tMON\t\t8",
                     "  +-----+-----+-----+-----+-----+-----+\t\tHWY\t\t8",
                     " 3|     |     |     |     |     |     |",
                     "  +-----+-----+-----+-----+-----+-----+",
@@ -233,8 +233,7 @@ class test_City(unittest.TestCase):
         sys.stdout = out 
         testBase.set_keyboard_input(['5','5','0'])
         default_citymap = city.newGrid(5,5)
-        default_pool = initBuildingPools()
-        city.chooseCitySize(default_citymap,default_pool)
+        city.chooseCitySize(default_citymap,poolList)
         output = testBase.get_display_output()
         assert output == [
                         "Choose City size with dimension of row and column\n",
@@ -263,8 +262,7 @@ class test_City(unittest.TestCase):
         sys.stdout = out 
         testBase.set_keyboard_input(['a','5','0','5','5','0'])
         default_citymap = city.newGrid(5,5)
-        default_pool = initBuildingPools()
-        city.chooseCitySize(default_citymap,default_pool)
+        city.chooseCitySize(default_citymap,poolList)
         output = testBase.get_display_output()
         assert output == [
                         "Choose City size with dimension of row and column\n",

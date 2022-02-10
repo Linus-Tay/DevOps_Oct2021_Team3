@@ -1,6 +1,9 @@
 import filecmp
 import main
 import unittest
+from io import StringIO
+import filecmp
+
 from testBase import get_display_output, set_keyboard_input
 
 class test_MainMenu_function(unittest.TestCase):
@@ -10,13 +13,13 @@ class test_MainMenu_function(unittest.TestCase):
             main.mainMenu()
         except:
             output = get_display_output()
-            assert output[6] == "Option 1 - Start New Game"
+            assert output[7] == "Option 1 - Start New Game"
 
     def test_MainMenu_Opt2(self):
         set_keyboard_input(['2','0'])
         main.mainMenu()
         output = get_display_output()
-        assert output[7] == "Option 2 - Load Save Game"
+        assert output[8] == "Option 2 - Load Save Game"
 
     def test_MainMenu_Opt0(self):
         set_keyboard_input(['0'])
@@ -26,7 +29,8 @@ class test_MainMenu_function(unittest.TestCase):
                             "----------------------------",
                             "[1] Start new game",
                             "[2] Load saved game",
-                            "[3] Settings",
+                            "[3] View High Score",
+                            "[4] Settings",
                             "\n[0] Exit",
                             "\nEnter your choice? ",
         ]
@@ -39,14 +43,15 @@ class test_MainMenu_function(unittest.TestCase):
                             "----------------------------",
                             "[1] Start new game",
                             "[2] Load saved game",
-                            "[3] Settings",
+                            "[3] View High Score",
+                            "[4] Settings",
                             "\n[0] Exit",
                             "\nEnter your choice? ",
                             '\nInvalid option, please try again!']
 
-    # test case "Option 3 - Building Settings" in main menu
+    # test case "Option 4 - Building Settings" in main menu
     def test_BuildingSettingsMenu(self):
-        set_keyboard_input(['3','0'])
+        set_keyboard_input(['4','0'])
         main.mainMenu()
         output = get_display_output()
         # there should be a sub-menu in "Option 3 - Building Settings"
@@ -55,10 +60,11 @@ class test_MainMenu_function(unittest.TestCase):
                             "----------------------------",
                             "[1] Start new game",
                             "[2] Load saved game",
-                            "[3] Settings",
+                            "[3] View High Score",
+                            "[4] Settings",
                             "\n[0] Exit",
                             "\nEnter your choice? ",
-                            "Option 3 - Settings\n",
+                            "Option 4 - Settings\n",
                             "[1] Choose City Size",
                             "[2] Choose Building Pool",
                             "\n[0] Return to main menu",
@@ -68,7 +74,7 @@ class test_MainMenu_function(unittest.TestCase):
     #test case for "[1] choose city size" in "Building Settings"    
     def test_BuildingSetting_Op1(self):
 
-        set_keyboard_input(['3','1','5','5','0','0','0'])
+        set_keyboard_input(['4','1','5','5','0','0','0'])
         main.mainMenu()
         output = get_display_output()
         # the process of choosing city size should run when user selects it
@@ -77,10 +83,11 @@ class test_MainMenu_function(unittest.TestCase):
                             "----------------------------",
                             "[1] Start new game",
                             "[2] Load saved game",
-                            "[3] Settings",
+                            "[3] View High Score",
+                            "[4] Settings",
                             "\n[0] Exit",
                             "\nEnter your choice? ",
-                            "Option 3 - Settings\n",
+                            "Option 4 - Settings\n",
                             "[1] Choose City Size",
                             "[2] Choose Building Pool",
                             "\n[0] Return to main menu",
@@ -104,7 +111,185 @@ class test_MainMenu_function(unittest.TestCase):
                             "\n[1] Re-configure city map",
                             "[0] Return to previous menu\n",
                             "Enter your choice? ",
-                            "Option 3 - Settings\n",
+                            "Option 4 - Settings\n",
+                            "[1] Choose City Size",
+                            "[2] Choose Building Pool",
+                            "\n[0] Return to main menu",
+                            "\nEnter your choice? ",
+        ]
+
+    def test_BuildingSetting_Op2(self):
+        set_keyboard_input(['4','2','7','5','1','3','2','0','0'])
+        main.mainMenu()
+        output = get_display_output()
+        assert output == ["\nWelcome, mayor of Simp City!",
+                            "----------------------------",
+                            "[1] Start new game",
+                            "[2] Load saved game",
+                            "[3] View High Score",
+                            "[4] Settings",
+                            "\n[0] Exit",
+                            "\nEnter your choice? ",
+                            "Option 4 - Settings\n",
+                            "[1] Choose City Size",
+                            "[2] Choose Building Pool",
+                            "\n[0] Return to main menu",
+                            "\nEnter your choice? ",
+                            "Choose your buildings",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Highway (HWY)",
+                            "[6] Monuments (MON)",
+                            "[7] Parks (PRK)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK)",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Highway (HWY)",
+                            "[6] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY)",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY,BCH)",
+                            "Available Buildings:\n",
+                            "[1] Factory (FAC)",
+                            "[2] House (HSE)",
+                            "[3] Shop (SHP)",
+                            "[4] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY,BCH,SHP)",
+                            "Available Buildings:\n",
+                            "[1] Factory (FAC)",
+                            "[2] House (HSE)",
+                            "[3] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your final list: (PRK,HWY,BCH,SHP,HSE)",  
+                            "\n[1] Re-configure city map",
+                            "[0] Return to previous menu\n",
+                            "Enter your choice? ",
+                            "Option 4 - Settings\n",
+                            "[1] Choose City Size",
+                            "[2] Choose Building Pool",
+                            "\n[0] Return to main menu",
+                            "\nEnter your choice? ",
+        ]
+    def test_BuildingSetting_reconfig(self):
+        set_keyboard_input(['4','2','7','5','1','3','2','1','7','5','1','3','2','0','0'])
+        main.mainMenu()
+        output = get_display_output()
+        assert output == ["\nWelcome, mayor of Simp City!",
+                            "----------------------------",
+                            "[1] Start new game",
+                            "[2] Load saved game",
+                            "[3] View High Score",
+                            "[4] Settings",
+                            "\n[0] Exit",
+                            "\nEnter your choice? ",
+                            "Option 4 - Settings\n",
+                            "[1] Choose City Size",
+                            "[2] Choose Building Pool",
+                            "\n[0] Return to main menu",
+                            "\nEnter your choice? ",
+                            "Choose your buildings",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Highway (HWY)",
+                            "[6] Monuments (MON)",
+                            "[7] Parks (PRK)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK)",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Highway (HWY)",
+                            "[6] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY)",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY,BCH)",
+                            "Available Buildings:\n",
+                            "[1] Factory (FAC)",
+                            "[2] House (HSE)",
+                            "[3] Shop (SHP)",
+                            "[4] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY,BCH,SHP)",
+                            "Available Buildings:\n",
+                            "[1] Factory (FAC)",
+                            "[2] House (HSE)",
+                            "[3] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your final list: (PRK,HWY,BCH,SHP,HSE)",  
+                            "\n[1] Re-configure city map",
+                            "[0] Return to previous menu\n",
+                            "Enter your choice? ",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Highway (HWY)",
+                            "[6] Monuments (MON)",
+                            "[7] Parks (PRK)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK)",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Highway (HWY)",
+                            "[6] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY)",
+                            "Available Buildings:\n",
+                            "[1] Beach (BCH)",
+                            "[2] Factory (FAC)",
+                            "[3] House (HSE)",
+                            "[4] Shop (SHP)",
+                            "[5] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY,BCH)",
+                            "Available Buildings:\n",
+                            "[1] Factory (FAC)",
+                            "[2] House (HSE)",
+                            "[3] Shop (SHP)",
+                            "[4] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your current list: (PRK,HWY,BCH,SHP)",
+                            "Available Buildings:\n",
+                            "[1] Factory (FAC)",
+                            "[2] House (HSE)",
+                            "[3] Monuments (MON)",
+                            "\nPlease choose your building (number) from the given options: ",
+                            "Your final list: (PRK,HWY,BCH,SHP,HSE)",  
+                            "\n[1] Re-configure city map",
+                            "[0] Return to previous menu\n",
+                            "Enter your choice? ",
+                            "Option 4 - Settings\n",
                             "[1] Choose City Size",
                             "[2] Choose Building Pool",
                             "\n[0] Return to main menu",
