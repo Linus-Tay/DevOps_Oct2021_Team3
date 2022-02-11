@@ -1,8 +1,8 @@
 import csv
 import copy
-
-from buildingPools import initBuildingPools, rollBuilding
-from gameMenu import gameMenu
+from numpy import empty
+from buildingPools import rollBuilding
+import gameMenu
 
 
 def loadCity(file):
@@ -189,13 +189,6 @@ def chooseCitySize(city_map,bPool):
                 updated = True
                 city_map = newGrid(row,col)
                 viewCity(city_map,bPool)
-                a_file = open("playmap.csv","w")
-                a_file.truncate()
-                for i in range(len(city_map)):
-                    a_file.write(str(''.join(city_map[i])))
-                    a_file.write('\n')
-                a_file.close()
-
                 print("\n[1] Re-configure city map")
                 print("[0] Return to previous menu\n")
                 option = int(input("Enter your choice? "))
@@ -212,5 +205,5 @@ def startNewGame(citymap,pool):
     print("Option 1 - Start New Game")
     b1 = rollBuilding(pool)
     b2 = rollBuilding(pool)
-    gameMenu(pool,citymap,1,b1,b2)
+    gameMenu.gameMenu(pool,citymap,1,b1,b2)
     

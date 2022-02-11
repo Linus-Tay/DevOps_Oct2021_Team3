@@ -58,9 +58,10 @@ def gameMenu(bPool,playCity,turn,b1,b2):
                 build_loc = input(str('Build Where? '))
                 
                 try:
-                    turn = buildings.insertBuild(playCity,bPool,build_loc,b1,turn)
+                    turn = buildings.insertBuild(playCity,bPool,build_loc,b2,turn)
                 except:
                     print("Invalid Input, Please try again")
+                
                     
         
                 if turn> currentT:
