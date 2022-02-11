@@ -6,10 +6,17 @@ def loadSavedGame(filename):
         file=open('{}.csv'.format(filename),'r',encoding='utf-8-sig')
         mainCity=[]
         lineList=[]
+        appendlineList = []
         for line in file:
             line=line.strip('\n')
             lineList=list(line)
+            lineList.pop(0)
+            appendlineList = [' {0}'.format(i) for i in lineList]
+            lineList[0] = appendlineList[0]
+            print(lineList)
             mainCity.append(lineList)
+                
+
         return mainCity
     except Exception as e:
         print('\nThere is no saved game.')
