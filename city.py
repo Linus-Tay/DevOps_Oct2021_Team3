@@ -200,10 +200,10 @@ def chooseCitySize(city_map,bPool):
                 
                 
 
-def startNewGame(citymap,pool):
+def startNewGame(citymap,pool,dimension):
     
     print("Option 1 - Start New Game")
     b1 = rollBuilding(pool)
     b2 = rollBuilding(pool)
-    gameMenu.gameMenu(pool,citymap,1,b1,b2)
+    gameMenu.gameMenu(pool,citymap,1,b1,b2,dimension)
     

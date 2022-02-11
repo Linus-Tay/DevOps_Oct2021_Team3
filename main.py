@@ -32,7 +32,7 @@ def mainMenu():
     # Start New Game
     if (choice == '1'):
         
-        city.startNewGame(playmap,playpool)
+        city.startNewGame(playmap,playpool,dimension)
 
     # Load Saved game
     elif (choice == '2'): 
@@ -42,7 +42,7 @@ def mainMenu():
             buildingPools = loadSavedBuildingPools('savedBuildingPools')
             # Load Building Options
             bList = loadSavedBuildings("savedBuildings")
-            status = gameMenu.gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
+            status = gameMenu.gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1],dimension)
         if status == "End":
             return False
     elif choice == '4':

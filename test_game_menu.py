@@ -14,7 +14,7 @@ class test_MainMenu_function(unittest.TestCase):
         out = StringIO()
         sys.stdout = out 
         testBase.set_keyboard_input(["InvalidInput","0"])
-        gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP")
+        gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP",[4,4])
         output = testBase.get_display_output()
         assert output == ["\n-----------------------Turn 1-----------------------\n",
                             "     A     B     C     D   \t\tBuildings\tRemaining",
@@ -58,7 +58,7 @@ class test_MainMenu_function(unittest.TestCase):
             out = StringIO()
             sys.stdout = out 
             testBase.set_keyboard_input(["3",'0'])
-            gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP")
+            gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP",[4,4])
             output = testBase.get_display_output()
             assert output == [
                         "\n-----------------------Turn 1-----------------------\n",
@@ -111,12 +111,12 @@ class test_MainMenu_function(unittest.TestCase):
             sys.stdout = out 
             testBase.set_keyboard_input(["4"])
             try:
-              gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP")
+              gameMenu.gameMenu(default_pool,default_map,1,"FAC","SHP",[4,4])
             except:
                 output = testBase.get_display_output()
                 assert output[-1] == "Option 4, save game!"
 
     def test_EndGame(self):
-      self.assertEqual(gameMenu.gameMenu(default_pool,default_map,17,"FAC","SHP"),"End") 
+      self.assertEqual(gameMenu.gameMenu(default_pool,default_map,17,"FAC","SHP",[4,4]),"End") 
 
                              

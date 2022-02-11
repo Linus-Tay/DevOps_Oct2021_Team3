@@ -9,13 +9,13 @@ import buildings
 
 
 # Game Menu
-def gameMenu(bPool,playCity,turn,b1,b2):
+def gameMenu(bPool,playCity,turn,b1,b2,dimension):
     while True:
         if turn == 17:
             # Diplay Final layout
             print('\nFinal layout of Simp City:\n')
             city.viewCity(playCity,bPool)
-            calculateScore.calculateScore(playCity)
+            calculateScore.calculateScore(playCity,dimension)
             return "End"
         else:
             # Game Menu Options
@@ -69,7 +69,7 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             elif game_option == '3':
                 print("Option 3, View Current Score!")
                 print('\n-------------------Current Score--------------------\n')
-                calculateScore.calculateScore(playCity)
+                calculateScore.calculateScore(playCity,dimension)
             # GameOption 5 - Save Game
             elif game_option =='4':
                 print("Option 4, save game!")

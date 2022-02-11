@@ -165,7 +165,7 @@ class test_City(unittest.TestCase):
         testBase.set_keyboard_input(['0'])  
         #default building settings
         citymap = city.newGrid(4,4)
-        city.startNewGame(citymap,poolList)
+        city.startNewGame(citymap,poolList,[4,4])
         output = testBase.get_display_output()
         b1 = output[12]
         b2 = output[13]
@@ -199,7 +199,7 @@ class test_City(unittest.TestCase):
         #assuming user set the city size to 6x6
         citymap = city.newGrid(6,6)
         custom_pool = buildingPools.initBuildingPools('FAC','HSE','PRK','MON','HWY')
-        city.startNewGame(citymap,custom_pool)
+        city.startNewGame(citymap,custom_pool,[6,6])
         output = testBase.get_display_output()
         b1 = output[16]
         b2 = output[17]
