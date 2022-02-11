@@ -138,8 +138,8 @@ class test_MainMenu_function(unittest.TestCase):
         output = get_display_output()
         assert output == ["\nWelcome, mayor of Simp City!",
                             "----------------------------",
-                            "[1] Start new game",
-                            "[2] Load saved game",
+                            "[1] Start New Game",
+                            "[2] Load Saved Game",
                             '[3] Show High Scores',
                             "[4] Settings",
                             "\n[0] Exit",
@@ -205,8 +205,8 @@ class test_MainMenu_function(unittest.TestCase):
         output = get_display_output()
         assert output == ["\nWelcome, mayor of Simp City!",
                             "----------------------------",
-                            "[1] Start new game",
-                            "[2] Load saved game",
+                            "[1] Start New Game",
+                            "[2] Load Saved Game",
                             '[3] Show High Scores',
                             "[4] Settings",
                             "\n[0] Exit",
