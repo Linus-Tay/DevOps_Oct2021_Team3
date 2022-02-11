@@ -1,29 +1,32 @@
-from buildingPools import *
-from buildings import *
-from calculateScore import calculateScore
-from city import viewCity
-from saveGame import saveGame
+import buildingPools
+# from buildings import *
+# from calculateScore import calculateScore
+import city
+# from saveGame import saveGame
+import saveGame
+import calculateScore
+import buildings
+
 
 # Game Menu
-def gameMenu(bPool,playCity,turn,b1,b2):
+def gameMenu(bPool,playCity,turn,b1,b2,dimension):
     while True:
         if turn == 17:
             # Diplay Final layout
             print('\nFinal layout of Simp City:\n')
-            viewCity(playCity)
-            calculateScore(playCity)
+            city.viewCity(playCity,bPool)
+            calculateScore.calculateScore(playCity,dimension)
             return "End"
         else:
             # Game Menu Options
-            game_menu = [[1,'Build a ' + b1],[2,'Build a '+b2],
-            [3,'See remaining buildings'],[4,'See Current Score\n'],
-            [5,'Save Game'],[0,'Exit to main menu']]
+            game_menu = [[1,'Build a ' + b1],[2,'Build a '+b2],[3,'See Current Score\n'],
+            [4,'Save Game'],[0,'Exit to main menu']]
             
             # Diplay Turn
             print('\n-----------------------Turn {}-----------------------\n'.format(turn))
 
             # Display City
-            viewCity(playCity)
+            city.viewCity(playCity,bPool)
 
             # Display Game Menu Options
             for i in range(len(game_menu)):
@@ -35,49 +38,42 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             # GameOption 1 - Build A Building
             if game_option == '1':
                 currentT = turn
-                # x = np.where(bPool['Building'] == b1)
-                # currBuild = bPool['Building'][x]
                 build_loc = input(str('Build Where? '))
                 
                 try:
-                    turn = insertBuild(playCity,bPool,build_loc,b1,turn)
+                    turn = buildings.insertBuild(playCity,bPool,build_loc,b1,turn)
                 except Exception as e:
                     print("Invalid Input, Try again")
         
                 if turn> currentT:
-                    b1 = rollBuilding(bPool)
-                    b2 = rollBuilding(bPool)
+                    b1 = buildingPools.rollBuilding(bPool)
+                    b2 = buildingPools.rollBuilding(bPool)
                 
                 
             # GameOption 2 - Build A Building
             elif game_option == '2':
                 currentT = turn
-                # x = np.where(bPool['Building'] == b1)
-                # currBuild = bPool['Building'][x]
                 build_loc = input(str('Build Where? '))
                 
                 try:
-                    turn = insertBuild(playCity,bPool,build_loc,turn)
+                    turn = buildings.insertBuild(playCity,bPool,build_loc,b2,turn)
                 except:
                     print("Invalid Input, Please try again")
+                
                     
         
                 if turn> currentT:
-                    b1 = rollBuilding(bPool)
-                    b2 = rollBuilding(bPool)
-            # GameOption 3 - View Remaining Building Available
-            elif game_option == '3':
-                print("Option 3, View Remaining Building Available!")
-                viewRemainingBuilds(bPool)
+                    b1 = buildingPools.rollBuilding(bPool)
+                    b2 = buildingPools.rollBuilding(bPool)
             # GameOption 4 - View Current Score
-            elif game_option == '4':
-                print("Option 4, View Current Score!")
+            elif game_option == '3':
+                print("Option 3, View Current Score!")
                 print('\n-------------------Current Score--------------------\n')
-                calculateScore(playCity)
+                calculateScore.calculateScore(playCity,dimension)
             # GameOption 5 - Save Game
-            elif game_option =='5':
-                print("Option 5, save game!")
-                saveGame(playCity,bPool,turn,b1,b2)
+            elif game_option =='4':
+                print("Option 4, save game!")
+                saveGame.saveGame(playCity,bPool,turn,b1,b2)
                 break
             # GameOption 0 - Exit To Main Menu
             elif game_option =='0':

@@ -5,13 +5,31 @@ import calculateScore
 class test_ViewCurrentScore_function(unittest.TestCase):
     def test_ScoreCalculation(self):
         mockCity = loadSavedGame.loadSavedGame('./mockGames/mockGame')
-        self.assertEqual(calculateScore.calculateScore(mockCity),50)
+        self.assertEqual(calculateScore.calculateScore(mockCity,[4,4]),50)
         mockCity2 = loadSavedGame.loadSavedGame('./mockGames/mockGame2')
-        self.assertEqual(calculateScore.calculateScore(mockCity2),48)
+        self.assertEqual(calculateScore.calculateScore(mockCity2,[4,4]),48)
         mockCity3 = loadSavedGame.loadSavedGame('./mockGames/mockGame3')
-        self.assertEqual(calculateScore.calculateScore(mockCity3),19)
+        self.assertEqual(calculateScore.calculateScore(mockCity3,[4,4]),19)
         mockCity4 = loadSavedGame.loadSavedGame('./mockGames/mockGame4')
-        self.assertEqual(calculateScore.calculateScore(mockCity4),18)
+        self.assertEqual(calculateScore.calculateScore(mockCity4,[4,4]),31)
+class test_map_game_to_dict(unittest.TestCase):
+    def test_mapping_positive(self):
+        playcity = [[' ', ' ', ' ', ' ', 'A', ' ', ' ', ' ', ' ', ' ', 'B', ' ', ' ', ' ', ' ', ' ', 'C', ' ', ' ', ' ', ' ', ' ', 'D', ' ', ' ', ' '], 
+        [' ', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+'], 
+        ['1', '|', ' ', 'B', 'C', 'H', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|'], 
+        [' ', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+'], 
+        ['2', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|'], 
+        [' ', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+'], 
+        ['3', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|'], 
+        [' ', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+'], 
+        ['4', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|', ' ', ' ', ' ', ' ', ' ', '|'], 
+        [' ', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+', '-', '-', '-', '-', '-', '+']]
+        dict = {'A1': 'BCH', 'A2': None, 'A3': None, 'A4': None, 
+                'B1': None, 'B2': None, 'B3': None, 'B4': None, 
+                'C1': None, 'C2': None, 'C3': None, 'C4': None, 
+                'D1': None, 'D2': None, 'D3': None, 'D4': None}
+        self.assertEqual(calculateScore.mapBuildingsToCords(playcity),dict)
+
 
 class test_Calculate_Park_Building(unittest.TestCase):
     def test_calculate_0_park(self):
@@ -96,19 +114,19 @@ class test_Calculate_Monument_Building(unittest.TestCase):
                 'C1': 'HWY', 'C2': 'FAC', 'C3': 'FAC', 'C4': 'HWY',
                 'D1': 'PRK', 'D2': 'PRK', 'D3': 'PRK', 'D4': 'MON',
                 'E1': 'PRK', 'E2': 'PRK', 'E3': 'PRK', 'E4': 'MON'}
-        dimension = ["4","5"]
+        dimension = ['5','4']
         self.assertEqual(calculateScore.calculateMON(dict,dimension),12)
     def test_with_1x1_dimension(self):
-        dimension = ["1","1"]
+        dimension = ['1','1']
         dict = {'A1': 'MON'}
         self.assertEqual(calculateScore.calculateMON(dict,dimension),2)
     def test_with_10x1_dimension(self):
-        dimension = ["10","1"]
+        dimension = ['1','10']
         dict = {'A1': 'PRK', 'B1': 'MON', 'C1': 'PRK', 'D1': 'PRK','E1': 'PRK',
                  'F1': 'PRK', 'G1': 'PRK', 'H1': 'PRK', 'I1': 'PRK', 'J1': 'MON'}
         self.assertEqual(calculateScore.calculateMON(dict,dimension),3)
     def test_with_MON_not_in_corners(self):
-        dimension = ["1","10"]
+        dimension = ['10','1']
         dict = {'A1': 'PRK', 'A2': 'MON', 'A3': 'PRK', 'A4': 'PRK','A5': 'PRK',
                  'A6': 'PRK', 'A7': 'PRK', 'A8': 'PRK', 'A9': 'PRK', 'A10': 'PRK'}
         self.assertEqual(calculateScore.calculateMON(dict,dimension),1)

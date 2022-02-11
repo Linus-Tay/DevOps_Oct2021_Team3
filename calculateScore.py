@@ -10,7 +10,10 @@ def previous_and_next(some_iterable):
     nexts = chain(islice(nexts, 1, None), [None])
     return zip(prevs, items, nexts)
 
-def calculateScore(playCity):
+def calculateScore(playCity,dimension):
+    # Change Dimension to string
+    dimension[0] = str(dimension[0])
+    dimension[-1] = str(dimension[-1])
 
     dict = mapBuildingsToCords(playCity)
    
@@ -27,7 +30,7 @@ def calculateScore(playCity):
     HWPScore = calculateHWY(dict)
 
     # Calculate BCH
-    BCHScore = calculateBCH(dict)
+    BCHScore = calculateBCH(dict,playCity,dimension)
 
     totalScore = BCHScore + FACScore + HSEScore + SHPScore + HWPScore
     print("\nTotal Score: "+ str(totalScore))
@@ -36,39 +39,48 @@ def calculateScore(playCity):
     
 def mapBuildingsToCords(playCity):
     # Create Dictionary 
-        dict = {}
+    print(playCity)
+    dict = {}
+    col = 2
+    row = 3
+    AlphaNum = 4
+    while row < (len(playCity[0])-1):
+        rowNumCount = 1
+        while col < (len(playCity)-1):
+            colAlpha = playCity[0][AlphaNum]
+            building = str(playCity[col][row])+str(playCity[col][row+1])+str(playCity[col][row+2])
+            if building == '   ':
+                dict["{}{}".format(colAlpha,rowNumCount)] = None
+            else:
+                dict["{}{}".format(colAlpha,rowNumCount)] = building
+            rowNumCount +=1
+            col +=2
+        AlphaNum += 6
+        row += 6
         col = 2
-        row = 3
-        AlphaNum = 4
-        while row < 25:
-            rowNumCount = 1
-            while col < 9:
-                colAlpha = playCity[0][AlphaNum]
-                building = str(playCity[col][row])+str(playCity[col][row+1])+str(playCity[col][row+2])
-                if building == '   ':
-                    dict["{}{}".format(colAlpha,rowNumCount)] = None
-                else:
-                    dict["{}{}".format(colAlpha,rowNumCount)] = building
-                rowNumCount +=1
-                col +=2
-            AlphaNum += 6
-            row += 6
-            col = 2
-        return(dict)
+    print(dict)
+    return(dict)
 
-def calculateBCH(dict):
-    i = 2
+def calculateBCH(dict,playCity,dimension):
+    i = 0
     BCHCount = 0
     rowNumCount = 1
-    while i < 9:
-        # print(str(dict.get("D{}".format(rowNumCount))), "DDD")
-        # print(str(dict.get("D2")))
-        if str(dict.get("A{}".format(rowNumCount))) == "BCH":
-            BCHCount += 1
-        if str(dict.get("D{}".format(rowNumCount))) == "BCH":
-            BCHCount += 1
-        i += 2
+    lastalph = alist[int(dimension[-1])-1]
+
+    while i < int(dimension[0]):
+        # Check if BCH 
+        # check if dimension is [*,1]
+        if dimension[-1] == "1":
+            if str(dict.get("A{}".format(rowNumCount))) == "BCH":
+                BCHCount += 1
+        else:
+            if str(dict.get("A{}".format(rowNumCount))) == "BCH":
+                BCHCount += 1
+            if str(dict.get("{}{}".format(lastalph,rowNumCount))) == "BCH":
+                BCHCount += 1
+        i += 1
         rowNumCount += 1
+    
     if BCHCount == 0:
         print("BCH: 0 ")
         return 0
@@ -87,25 +99,29 @@ def calculateBCH(dict):
 
 def calculateFAC(dict):
     FACCount = 0
+    # Get all FAC buildings
     for building in dict.values():
         if building == "FAC":
             FACCount +=1
-    # print(FACCount)
+    # Craft Statement
     stmt = ""
+    # If no FAC
     if FACCount == 0:
         print("FAC: 0")
         return 0
     else:
+        # IF there is 4 or more FAC
         if FACCount >= 4:
             stmt += "4 + 4 + 4 + 4"
             FACCount -= 4
             num=1
+            # Subsequenct FAC is 1 point
             while num <= FACCount:
                 stmt+=" + 1"
                 num +=1
             subScore = (4*4)+(num-1)
             print("FAC: " + stmt + " = " + str(subScore))
-        else:
+        else: # There is less than 4 FAC
             num=1
             while num <= FACCount:
                 if num == FACCount:
@@ -126,8 +142,8 @@ def calculateHSE(dict):
         if item[1] == "HSE":
             subScore = 0
             # Check building around HSE if its FAC
-            up = dict.get((item[0][0])+str(int(item[0][1])-1))
-            down = dict.get((item[0][0])+str(int(item[0][1])+1))
+            up = getUpwwardsBuilding(dict,item[0])
+            down = getDownwardsBuilding(dict,item[0])
             left = getLeftBuilding(dict,item[0])
             right = getRightBuilding(dict,item[0])
             if right == None:
@@ -138,7 +154,14 @@ def calculateHSE(dict):
                 left = None
             else:
                 left = left[-1]
-            # print(up,down,left,right)
+            if down == None:
+                down = None
+            else:
+                down = down[-1]
+            if up == None:
+                up = None
+            else:
+                up = up[-1]
             if up == "FAC" or down == "FAC" or left == "FAC" or right == "FAC":
                 subScore +=1
             else:
@@ -178,8 +201,8 @@ def calculateSHP(dict):
         if item[1] == "SHP":
             subScore = 0
             # Check building around SHP
-            up = dict.get(item[0][0]+str(int(item[0][1])-1))
-            down = dict.get(item[0][0]+str(int(item[0][1])+1))
+            up = getUpwwardsBuilding(dict,item[0])
+            down = getDownwardsBuilding(dict,item[0])
             left = getLeftBuilding(dict,item[0])
             right = getRightBuilding(dict,item[0])
             if right == None:
@@ -190,6 +213,14 @@ def calculateSHP(dict):
                 left = None
             else:
                 left = left[-1]
+            if down == None:
+                down = None
+            else:
+                down = down[-1]
+            if up == None:
+                up = None
+            else:
+                up = up[-1]
             list = [up,down,left,right]
             res = []
             for i in list:
@@ -259,6 +290,8 @@ def calculateHWY(dict):
         return totalScore
   
 def getLeftBuilding(dict,cord):
+    # print("dict",dict)
+    # print("cord",cord)
     for previous, item, next in previous_and_next(alist):
         if cord[0] == item:
             if previous == None:
@@ -423,18 +456,18 @@ def calculatePRK(dict):
 
 def calculateMON(dict,dimension):
     # Using dimension get the A1, last aplha 1, last alpha last row, a last row
-    if dimension[0] == "1":
-        # Only 2 sides ["A1", "A4"] 
-        corners = ["A1", "A" + dimension[-1]]
-    elif dimension[-1] == "1":
-        # Only 2 sides ["A1", "D1"] 
-        corners = ["A1", alist[int(dimension[0])-1] + "1"]
+    if dimension[-1] == "1":
+        # Only 2 sides eg. ["A1", "A4"] 
+        corners = ["A1", "A" + dimension[0]]
+    elif dimension[0] == "1":
+        # Only 2 sides eg. ["A1", "D1"] 
+        corners = ["A1", alist[int(dimension[-1])-1] + "1"]
     else:
-        # 4 sides ["A1", "A4", "D1", "D4"] 
+        # 4 sides eg. ["A1", "A4", "D1", "D4"] 
         corners = ["A1",
-                    "A" + dimension[-1],
-                    alist[int(dimension[0])-1] + "1",
-                    alist[int(dimension[0])-1] + dimension[-1]]
+                    "A" + dimension[0],
+                    alist[int(dimension[-1])-1] + "1",
+                    alist[int(dimension[-1])-1] + dimension[0]]
     monCoords = []
     scoreStatementList = []
     for item in dict.items():
@@ -474,9 +507,7 @@ def calculateMON(dict,dimension):
         print(scoreStatement + " = " + str(score))
         return score
 
-# Alphabet list
+# Alphabet list (First 20 Alplhabet)
 alist = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-         'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-         'Y', 'Z', 'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH',
-         'AI', 'AJ', 'AK', 'AL', 'AM', 'AN']
+         'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T']
 
