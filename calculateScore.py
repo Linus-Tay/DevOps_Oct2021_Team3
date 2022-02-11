@@ -39,7 +39,6 @@ def calculateScore(playCity,dimension):
     
 def mapBuildingsToCords(playCity):
     # Create Dictionary 
-    print(playCity)
     dict = {}
     col = 2
     row = 3
@@ -58,7 +57,6 @@ def mapBuildingsToCords(playCity):
         AlphaNum += 6
         row += 6
         col = 2
-    print(dict)
     return(dict)
 
 def calculateBCH(dict,playCity,dimension):
