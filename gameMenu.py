@@ -2,6 +2,7 @@ import buildingPools
 # from buildings import *
 # from calculateScore import calculateScore
 import city
+import highScore
 # from saveGame import saveGame
 import saveGame
 import calculateScore
@@ -15,7 +16,10 @@ def gameMenu(bPool,playCity,turn,b1,b2):
             # Diplay Final layout
             print('\nFinal layout of Simp City:\n')
             city.viewCity(playCity,bPool)
-            calculateScore.calculateScore(playCity)
+            totalScore = calculateScore.calculateScore(playCity)
+            # Currently the dimension I preset to 10x10 - Gerald
+            highScore.checkHighScore(["10","10"],totalScore)
+            highScore.displayHighScore(["10","10"])
             return "End"
         else:
             # Game Menu Options
@@ -48,8 +52,6 @@ def gameMenu(bPool,playCity,turn,b1,b2):
                 if turn> currentT:
                     b1 = buildingPools.rollBuilding(bPool)
                     b2 = buildingPools.rollBuilding(bPool)
-                
-                
             # GameOption 2 - Build A Building
             elif game_option == '2':
                 currentT = turn

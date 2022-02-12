@@ -6,8 +6,7 @@ from loadSavedGame import loadSavedBuildingPools, loadSavedBuildings, loadSavedG
 from saveGame import saveGame
 from copy import error
 import city
-import gameMenu
-import shutil
+import highScore
 
 #Load default Settings, city size of 4x4 and default building pools
 dimension = [4,4]
@@ -19,10 +18,9 @@ def mainMenu():
     #load game with default settings
     playmap = city.newGrid(dimension[1],dimension[0]) 
     playpool = default_pool[0]
-    
     print('\nWelcome, mayor of Simp City!')
     print('----------------------------')
-    option_list=('Start new game','Load saved game','View High Score','Settings')
+    option_list=('Start New Game','Load Saved Game','Show High Scores','Settings')
 
     for i in range(len(option_list)):
         print('[{}] {}'.format(i+1,option_list[i]))
@@ -37,14 +35,41 @@ def mainMenu():
     # Load Saved game
     elif (choice == '2'): 
         print("Option 2 - Load Save Game")
-        playCity = loadSavedGame('savedGame')
-        if (playCity != ''):
-            buildingPools = loadSavedBuildingPools('savedBuildingPools')
-            # Load Building Options
-            bList = loadSavedBuildings("savedBuildings")
-            status = gameMenu.gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
-        if status == "End":
-            return False
+        # playCity = loadSavedGame('savedGame')
+        # if (playCity != ''):
+        #     buildingPools = loadSavedBuildingPools('savedBuildingPools')
+        #     # Load Building Options
+        #     bList = loadSavedBuildings("savedBuildings")
+        #     status = gameMenu(buildingPools,playCity,loadSavedTurns('savedTurns'),bList[0],bList[-1])
+        # if status == "End":
+        #     return False
+    # Option 3 - Show High Scores
+    elif (choice == '3'):
+        print("\nOption 3 - Show High Scores\n")
+        dimension[0] = str(dimension[0])
+        dimension[-1] = str(dimension[-1])
+        # Prints current dimension highscore 
+        highScore.displayHighScore(dimension)
+        while True:
+            print("[1] View other city high score")
+            print("[0] exit")
+            choice = input("\nEnter your choice: ")
+            if (choice == "1"):
+                x_axis = int(input("Please enter the number of rows desired: "))
+                y_axis = int(input("Please enter the number of columns desired: "))
+                if x_axis*y_axis <= 40 and x_axis*y_axis >0:
+                    newdimension = []
+                    newdimension.append(str(x_axis))
+                    newdimension.append(str(y_axis))
+                    highScore.displayHighScore(newdimension)
+                else:
+                    print("\nDimension entered is invalid!")
+            elif (choice == "0"):
+                dimension[0] = int(dimension[0])
+                dimension[-1] = int(dimension[-1])
+                break
+            else:
+                print('\nInvalid option, please try again!')
     elif choice == '4':
         settings_menu = ('Choose City Size','Choose Building Pool')
         opt = 1
@@ -57,15 +82,15 @@ def mainMenu():
             option = input(str('\nEnter your choice? '))
             if option == '1':
                 city_size = city.chooseCitySize(playmap,playpool)
-                dimension.insert(0,city_size[0])
-                dimension.insert(0,city_size[1])
+                dimension.clear()
+                dimension.append(city_size[0])
+                dimension.append(city_size[1])
             elif option == '2':
                 chosen_Pool = chooseBuildingPools()
                 playpool = initBuildingPools(chosen_Pool[0],chosen_Pool[1],chosen_Pool[2],chosen_Pool[3],chosen_Pool[4])
                 default_pool.insert(0,playpool)
             else:
                 opt = 0
-    
     # Exit Menu
     elif choice == '0':
        return False
